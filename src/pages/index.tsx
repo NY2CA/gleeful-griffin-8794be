@@ -20,7 +20,6 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import { useEffect, useRef, useState, FormEvent, MouseEvent } from 'react';
-import '@/styles/landing.css';
 
 export default function Home() {
   // ── UI state ────────────────────────────────────────────────────────────

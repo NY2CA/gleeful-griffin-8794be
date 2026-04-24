@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { AuthProvider } from '@/hooks/useAuth';
 import Navigation from '@/components/Navigation';
 import '@/styles/globals.css';
+import '@/styles/landing.css';
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
