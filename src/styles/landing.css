@@ -301,8 +301,8 @@ h1.hero-title .underline::after {
 .hero-card-logo img {
   height: 44px;
   width: auto;
-  filter: brightness(0) invert(1);
-  opacity: 0.9;
+  /* Render the colored Rescia mark as-is — the prior brightness/invert
+     filter assumed a single-channel SVG and was hiding the PNG. */
 }
 .hero-card-logo-text .name {
   font-family: var(--display);
@@ -1150,7 +1150,7 @@ footer {
   gap: 32px;
 }
 .footer-brand { max-width: 360px; }
-.footer-brand .nav-logo img { filter: brightness(0) invert(1); opacity: 0.95; }
+.footer-brand .nav-logo img { opacity: 0.95; }
 .footer-brand .nav-logo-name { color: var(--cream); }
 .footer-brand p {
   margin-top: 16px;

@@ -195,7 +195,7 @@ export default function DashboardPage() {
                 </p>
               </div>
               {hasAccess ? (
-                <Button variant="secondary" onClick={() => router.push('/dashboard#toolkit')}>
+                <Button variant="secondary" onClick={() => router.push('/templates')}>
                   Open toolkit
                 </Button>
               ) : (

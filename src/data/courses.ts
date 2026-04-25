@@ -68,6 +68,7 @@ export const COURSES: Course[] = [
         description:
           'Rank MSAs on population, job, wage, and supply fundamentals. Build a top-5 market board.',
         duration: '52 min',
+        videoUrl: 'https://www.youtube.com/embed/nKq2-3Btioo',
         topics: [
           {
             id: 'w1-t01-demand-drivers',

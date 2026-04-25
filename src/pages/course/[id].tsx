@@ -71,14 +71,26 @@ export default function CoursePlayerPage() {
             </span>
           </div>
 
-          {/* Video frame (16:9) */}
+          {/* Video frame (16:9) — renders YouTube embed when videoUrl is set,
+              otherwise shows a placeholder until intro video lands. */}
           <div
             className="w-full bg-navy rounded-sm overflow-hidden"
             style={{ aspectRatio: '16 / 9', boxShadow: 'var(--shadow-card)' }}
           >
-            <div className="w-full h-full flex items-center justify-center text-cream-warm font-mono text-xs tracking-[0.18em]">
-              VIDEO PLACEHOLDER · REPLACE WITH EMBED
-            </div>
+            {mod.videoUrl ? (
+              <iframe
+                src={mod.videoUrl}
+                title={mod.title}
+                className="w-full h-full"
+                style={{ border: 0 }}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center text-cream-warm font-mono text-xs tracking-[0.18em]">
+                INTRO VIDEO COMING SOON
+              </div>
+            )}
           </div>
 
           <div>
