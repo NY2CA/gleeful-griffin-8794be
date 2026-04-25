@@ -33,23 +33,28 @@ export default function DashboardPage() {
   return (
     <main className="page">
       <div className="container grid gap-12">
-        {/* Paywall banner — shown until the user has an active plan. */}
+        {/* Access-pending banner — shown until Rescia Properties grants access. */}
         {billing && !hasAccess && (
           <Card variant="offer" className="border-gold" style={{ borderColor: 'var(--gold)', borderWidth: 2 }}>
             <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
               <div>
-                <span className="eyebrow" style={{ color: 'var(--gold-deep)' }}>Unlock access</span>
+                <span className="eyebrow" style={{ color: 'var(--gold-deep)' }}>Access pending</span>
                 <h3 className="font-display text-2xl text-navy mt-1">
-                  Pick a plan to start Week&nbsp;1.
+                  Welcome — your membership is under review.
                 </h3>
                 <p className="text-ink-dim mt-2" style={{ maxWidth: 560 }}>
-                  Your account is created. Choose Annual, Monthly, or Lifetime
-                  to unlock the full 12-week program and every model.
+                  Rescia Properties will reach out to confirm enrollment and
+                  activate your access. If you haven&rsquo;t heard from us
+                  within one business day, email{' '}
+                  <a
+                    href="mailto:lou@resciaproperties.com"
+                    className="text-navy underline underline-offset-2"
+                  >
+                    lou@resciaproperties.com
+                  </a>
+                  .
                 </p>
               </div>
-              <Link href="/pricing" className="btn-primary">
-                See plans
-              </Link>
             </div>
           </Card>
         )}

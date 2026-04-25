@@ -99,12 +99,32 @@ export async function saveProgress(userId: string, progress: ProgressMap): Promi
 
 /**
  * Returns true if the user currently has access to paid content.
- * Lifetime purchasers always have access. Subscribers have access when
- * their subscription is `active` or `trialing`.
+ * Access rules (in priority order):
+ *   1. Admins (emails listed in ADMIN_EMAILS env var) always have access.
+ *   2. Lifetime purchasers always have access.
+ *   3. Subscribers have access when their subscription is `active` or `trialing`.
  */
 export function hasActiveAccess(user: UserRecord | null | undefined): boolean {
   if (!user) return false;
+  if (isAdminEmail(user.email)) return true;
   if (user.lifetimePurchasedAt) return true;
   const s = user.subscriptionStatus;
   return s === 'active' || s === 'trialing';
+}
+
+/**
+ * Checks whether an email is in the ADMIN_EMAILS env list. The env var is a
+ * comma-separated list of emails (e.g. "lou@resciaproperties.com,
+ * diva@resciaproperties.com"). Empty / missing env returns false.
+ */
+export function isAdminEmail(email: string | null | undefined): boolean {
+  if (!email) return false;
+  const raw = process.env.ADMIN_EMAILS || '';
+  if (!raw.trim()) return false;
+  const normalized = email.trim().toLowerCase();
+  return raw
+    .split(',')
+    .map((e) => e.trim().toLowerCase())
+    .filter(Boolean)
+    .includes(normalized);
 }

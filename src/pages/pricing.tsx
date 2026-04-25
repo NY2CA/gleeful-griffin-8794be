@@ -31,25 +31,25 @@ const PLANS: PlanCard[] = [
   {
     id: 'monthly',
     label: 'Monthly',
-    price: '$149',
+    price: '$39',
     cadence: '/month',
-    blurb: 'Start this month. Cancel any time from the portal.',
+    blurb: 'Start this month. Billed monthly by Rescia Properties.',
     bullets: [
       '12-week Multifamily Mastery program',
       'Underwriting models, LOI, PPM outline',
-      'Cancel any time',
+      'Month-to-month — cancel any time',
     ],
   },
   {
     id: 'annual',
     label: 'Annual',
-    price: '$1,497',
+    price: '$400',
     cadence: '/year',
     blurb: 'Best value for committed operators. Billed once a year.',
     bullets: [
       'Everything in Monthly',
-      'Quarterly live Q&A with Lou Rescia',
-      'Save ~17% vs. monthly',
+      'Quarterly live Q&A with Diva Rescia & Lou Lopez',
+      'Save ~15% vs. monthly',
       'New content as it ships',
     ],
     highlight: true,
@@ -57,13 +57,13 @@ const PLANS: PlanCard[] = [
   {
     id: 'lifetime',
     label: 'Lifetime',
-    price: '$2,997',
+    price: '$2,500',
     cadence: 'once',
     blurb: 'One payment. Yours forever, including future releases.',
     bullets: [
       'Everything in Annual, never expires',
       'All future releases included',
-      'One-time payment',
+      'Available to existing members as an upgrade',
     ],
   },
 ];
@@ -86,18 +86,15 @@ export default function PricingPage() {
 
   async function choose(plan: Exclude<Plan, null>) {
     setError(null);
+    // Option-3 flow: we don't run Stripe checkout from the UI. Requesting
+    // access simply routes unsigned visitors to signup and signed-in
+    // members to their dashboard, where an "access pending" banner tells
+    // them Rescia Properties will reach out to activate enrollment.
     if (!user) {
-      router.push(`/signup?next=${encodeURIComponent('/pricing')}`);
+      router.push(`/signup?next=${encodeURIComponent('/dashboard')}`);
       return;
     }
-    setBusy(plan);
-    try {
-      await startCheckout(plan);
-      // Redirect happens inside startCheckout — keep busy until then.
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Unable to start checkout');
-      setBusy(null);
-    }
+    router.push('/dashboard');
   }
 
   return (
@@ -110,7 +107,7 @@ export default function PricingPage() {
           </h1>
           <p className="text-ink-dim" style={{ maxWidth: 640, margin: '0 auto' }}>
             Every plan unlocks the full 12-week Multifamily Mastery curriculum
-            and every model and template. Pick the cadence that fits.
+            and every module and template. Pick the cadence that fits.
           </p>
         </div>
 
@@ -172,10 +169,10 @@ export default function PricingPage() {
                 <Button
                   fullWidth
                   variant={p.highlight ? 'primary' : 'secondary'}
-                  disabled={busy !== null || authLoading}
+                  disabled={authLoading}
                   onClick={() => choose(p.id)}
                 >
-                  {busy === p.id ? 'Redirecting…' : user ? 'Choose' : 'Sign up and choose'}
+                  {user ? 'Request access' : 'Sign up to request access'}
                 </Button>
               </div>
             </Card>
@@ -187,8 +184,10 @@ export default function PricingPage() {
         )}
 
         <p className="text-center text-ink-dim text-sm">
-          Prices shown are defaults. The authoritative amount is confirmed on
-          Stripe&rsquo;s checkout page before you pay.
+          Memberships are activated by Rescia Properties after we confirm
+          payment details and onboarding. Click <strong>Request access</strong>
+          {' '}to create your account; we&rsquo;ll be in touch to finalize
+          enrollment.
         </p>
 
         <div className="text-center">
