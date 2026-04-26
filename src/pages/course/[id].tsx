@@ -77,6 +77,12 @@ export default function CoursePlayerPage() {
     useCourse('multifamily-mastery');
   const { status: billing, loading: billingLoading } = useBilling({ enabled: Boolean(user) });
   const [tab, setTab] = useState<Tab>('deep');
+  // Track which quiz items have had their answer revealed. Reset when the
+  // student navigates to a different module so each one starts fresh.
+  const [revealedAnswers, setRevealedAnswers] = useState<Set<number>>(new Set());
+  useEffect(() => {
+    setRevealedAnswers(new Set());
+  }, [moduleId]);
 
   useEffect(() => {
     if (!loading && !user) router.replace('/login');
@@ -193,14 +199,21 @@ export default function CoursePlayerPage() {
               )
             )}
             {tab === 'quiz' && (
-              <div className="bg-white border border-line rounded-xs p-8 space-y-6">
-                {mod.quiz.map((item, i) => (
-                  <details key={i} className="border-b border-line pb-5 last:border-0">
-                    <summary
-                      className="cursor-pointer font-display text-lg text-navy"
-                      style={{ listStyle: 'none' }}
+              <div className="bg-white border border-line rounded-xs p-8 space-y-8">
+                <p className="text-ink-dim text-sm" style={{ marginTop: '-8px' }}>
+                  Try to form your answer first. Then click <strong>Show answer</strong>{' '}
+                  to compare against the model response, with optional reveals for the
+                  reasoning and the most common wrong answer.
+                </p>
+                {mod.quiz.map((item, i) => {
+                  const revealed = revealedAnswers.has(i);
+                  return (
+                    <div
+                      key={i}
+                      className="border-b border-line pb-6 last:border-0 last:pb-0"
                     >
-                      <span className="flex items-start gap-3 flex-wrap">
+                      {/* Question — always visible */}
+                      <div className="flex items-start gap-3 flex-wrap">
                         <span
                           className="font-mono text-[11px] tracking-[0.18em] pt-2"
                           style={{ color: 'var(--gold-deep)' }}
@@ -212,46 +225,112 @@ export default function CoursePlayerPage() {
                             <DifficultyBadge level={item.difficulty} />
                           </span>
                         )}
-                        <span className="flex-1 min-w-0 leading-snug">{item.q}</span>
-                      </span>
-                    </summary>
-                    <div className="mt-4 ml-8 flex flex-col gap-3">
-                      <p className="text-ink leading-relaxed">{item.a}</p>
-                      {item.why && (
-                        <details className="text-sm">
-                          <summary
-                            className="cursor-pointer eyebrow"
-                            style={{ color: 'var(--gold-deep)' }}
-                          >
-                            Why this is right
-                          </summary>
-                          <p className="mt-2 text-ink-dim leading-relaxed">{item.why}</p>
-                        </details>
-                      )}
-                      {item.trap && (
-                        <details className="text-sm">
-                          <summary
-                            className="cursor-pointer eyebrow"
-                            style={{ color: 'var(--gold-deep)' }}
-                          >
-                            Common wrong answer
-                          </summary>
-                          <p className="mt-2 text-ink-dim leading-relaxed">{item.trap}</p>
-                        </details>
-                      )}
-                      {item.topicId && (
-                        <button
-                          type="button"
-                          onClick={() => jumpToTopic(item.topicId!, setTab)}
-                          className="text-xs text-navy underline underline-offset-2 self-start"
-                          style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
+                        <p
+                          className="font-display text-lg text-navy flex-1 min-w-0 leading-snug"
+                          style={{ margin: 0 }}
                         >
-                          ← Back to source topic
-                        </button>
-                      )}
+                          {item.q}
+                        </p>
+                      </div>
+
+                      {/* Reveal control / answer block */}
+                      <div className="mt-4 ml-8">
+                        {!revealed ? (
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setRevealedAnswers((prev) => new Set(prev).add(i))
+                            }
+                            className="btn-secondary"
+                            style={{ fontSize: 13, padding: '8px 16px' }}
+                          >
+                            Show answer →
+                          </button>
+                        ) : (
+                          <div className="flex flex-col gap-3">
+                            <div
+                              className="rounded-xs p-4"
+                              style={{
+                                background: 'var(--cream-warm)',
+                                borderLeft: '3px solid var(--gold)',
+                              }}
+                            >
+                              <span
+                                className="eyebrow block mb-2"
+                                style={{ color: 'var(--gold-deep)' }}
+                              >
+                                Model answer
+                              </span>
+                              <p className="text-ink leading-relaxed">{item.a}</p>
+                            </div>
+                            {item.why && (
+                              <details className="text-sm">
+                                <summary
+                                  className="cursor-pointer eyebrow"
+                                  style={{ color: 'var(--gold-deep)' }}
+                                >
+                                  Why this is right
+                                </summary>
+                                <p className="mt-2 text-ink-dim leading-relaxed">
+                                  {item.why}
+                                </p>
+                              </details>
+                            )}
+                            {item.trap && (
+                              <details className="text-sm">
+                                <summary
+                                  className="cursor-pointer eyebrow"
+                                  style={{ color: 'var(--gold-deep)' }}
+                                >
+                                  Common wrong answer
+                                </summary>
+                                <p className="mt-2 text-ink-dim leading-relaxed">
+                                  {item.trap}
+                                </p>
+                              </details>
+                            )}
+                            <div className="flex items-center gap-4 pt-1 flex-wrap">
+                              {item.topicId && (
+                                <button
+                                  type="button"
+                                  onClick={() => jumpToTopic(item.topicId!, setTab)}
+                                  className="text-xs text-navy underline underline-offset-2"
+                                  style={{
+                                    background: 'none',
+                                    border: 'none',
+                                    padding: 0,
+                                    cursor: 'pointer',
+                                  }}
+                                >
+                                  ← Back to source topic
+                                </button>
+                              )}
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  setRevealedAnswers((prev) => {
+                                    const next = new Set(prev);
+                                    next.delete(i);
+                                    return next;
+                                  })
+                                }
+                                className="text-xs text-ink-dim underline underline-offset-2 ml-auto"
+                                style={{
+                                  background: 'none',
+                                  border: 'none',
+                                  padding: 0,
+                                  cursor: 'pointer',
+                                }}
+                              >
+                                Hide answer
+                              </button>
+                            </div>
+                          </div>
+                        )}
+                      </div>
                     </div>
-                  </details>
-                ))}
+                  );
+                })}
               </div>
             )}
             {tab === 'mistakes' && (
