@@ -31,6 +31,7 @@ export default function DashboardPage() {
   const hasAccess = billing?.hasAccess ?? false;
 
   return (
+    <>
     <main className="page">
       <div className="container grid gap-12">
         {/* Access-pending banner — shown until Rescia Properties grants access. */}
@@ -208,5 +209,37 @@ export default function DashboardPage() {
         </section>
       </div>
     </main>
+
+    {/* ========== FOOTER ========== */}
+    {/* Replicates the landing page .footer-brand pattern so members see the
+        same Rescia/Multifamily Mastery branding and program tagline at the
+        bottom of the dashboard. The CSS class hooks (.footer-brand,
+        .nav-logo, .nav-logo-text, .footer-bottom) live in styles/landing.css
+        which is imported globally via _app.tsx. */}
+    <footer>
+      <div className="container">
+        <div className="footer-top">
+          <div className="footer-brand">
+            <Link href="/dashboard" className="nav-logo">
+              <img src="/rescia-logo.png" alt="Rescia Properties" />
+              <div className="nav-logo-text">
+                <span className="nav-logo-name">Rescia Properties</span>
+                <span className="nav-logo-tag">Multifamily Mastery</span>
+              </div>
+            </Link>
+            <p>
+              The complete multifamily real estate mentoring program. From market
+              identification to exit &mdash; the proven system for building wealth
+              through multifamily real estate.
+            </p>
+          </div>
+        </div>
+        <div className="footer-bottom">
+          <div>&copy; 2026 Rescia Properties &middot; Multifamily Mastery &middot; All rights reserved</div>
+          <div>Not a securities offering &middot; Past performance not indicative of future results</div>
+        </div>
+      </div>
+    </footer>
+    </>
   );
 }
