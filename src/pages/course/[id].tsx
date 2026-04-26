@@ -7,8 +7,65 @@ import TopicAccordion from '@/components/TopicAccordion';
 import { useAuth } from '@/hooks/useAuth';
 import { useCourse } from '@/hooks/useCourse';
 import { useBilling } from '@/hooks/useBilling';
+import type { QuizItem } from '@/data/courses';
 
 type Tab = 'deep' | 'quiz' | 'mistakes';
+
+/**
+ * Color-coded difficulty pill rendered in the quiz tab. Foundation =
+ * recall, Application = apply a concept/calc, Operator = real-deal
+ * judgment call. Designed to be understated so it doesn't compete with
+ * the question prose.
+ */
+function DifficultyBadge({ level }: { level: NonNullable<QuizItem['difficulty']> }) {
+  const styles: Record<NonNullable<QuizItem['difficulty']>, { bg: string; fg: string; label: string }> = {
+    foundation: {
+      bg: 'rgba(79, 109, 122, 0.10)',
+      fg: 'var(--ink-dim)',
+      label: 'Foundation',
+    },
+    application: {
+      bg: 'var(--gold-soft)',
+      fg: 'var(--gold-deep)',
+      label: 'Application',
+    },
+    operator: {
+      bg: 'rgba(43, 60, 90, 0.10)',
+      fg: 'var(--navy)',
+      label: 'Operator',
+    },
+  };
+  const s = styles[level];
+  return (
+    <span
+      style={{
+        background: s.bg,
+        color: s.fg,
+        fontFamily: 'var(--mono, ui-monospace, monospace)',
+        fontSize: 9,
+        letterSpacing: '0.18em',
+        textTransform: 'uppercase',
+        padding: '3px 9px',
+        borderRadius: 999,
+        whiteSpace: 'nowrap',
+      }}
+    >
+      {s.label}
+    </span>
+  );
+}
+
+/**
+ * Smooth-scrolls to a topic id on the deep-dive accordion. Used by the
+ * "Source: …" backlink under each quiz item so students who miss a
+ * question can jump to the source topic.
+ */
+function jumpToTopic(topicId: string, switchTab: (t: Tab) => void) {
+  switchTab('deep');
+  setTimeout(() => {
+    document.getElementById(topicId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 60);
+}
 
 export default function CoursePlayerPage() {
   const router = useRouter();
@@ -138,11 +195,61 @@ export default function CoursePlayerPage() {
             {tab === 'quiz' && (
               <div className="bg-white border border-line rounded-xs p-8 space-y-6">
                 {mod.quiz.map((item, i) => (
-                  <details key={i} className="border-b border-line pb-4 last:border-0">
-                    <summary className="cursor-pointer font-display text-lg text-navy">
-                      {i + 1}. {item.q}
+                  <details key={i} className="border-b border-line pb-5 last:border-0">
+                    <summary
+                      className="cursor-pointer font-display text-lg text-navy"
+                      style={{ listStyle: 'none' }}
+                    >
+                      <span className="flex items-start gap-3 flex-wrap">
+                        <span
+                          className="font-mono text-[11px] tracking-[0.18em] pt-2"
+                          style={{ color: 'var(--gold-deep)' }}
+                        >
+                          {String(i + 1).padStart(2, '0')}
+                        </span>
+                        {item.difficulty && (
+                          <span className="pt-1">
+                            <DifficultyBadge level={item.difficulty} />
+                          </span>
+                        )}
+                        <span className="flex-1 min-w-0 leading-snug">{item.q}</span>
+                      </span>
                     </summary>
-                    <p className="mt-3 text-ink-dim leading-relaxed">{item.a}</p>
+                    <div className="mt-4 ml-8 flex flex-col gap-3">
+                      <p className="text-ink leading-relaxed">{item.a}</p>
+                      {item.why && (
+                        <details className="text-sm">
+                          <summary
+                            className="cursor-pointer eyebrow"
+                            style={{ color: 'var(--gold-deep)' }}
+                          >
+                            Why this is right
+                          </summary>
+                          <p className="mt-2 text-ink-dim leading-relaxed">{item.why}</p>
+                        </details>
+                      )}
+                      {item.trap && (
+                        <details className="text-sm">
+                          <summary
+                            className="cursor-pointer eyebrow"
+                            style={{ color: 'var(--gold-deep)' }}
+                          >
+                            Common wrong answer
+                          </summary>
+                          <p className="mt-2 text-ink-dim leading-relaxed">{item.trap}</p>
+                        </details>
+                      )}
+                      {item.topicId && (
+                        <button
+                          type="button"
+                          onClick={() => jumpToTopic(item.topicId!, setTab)}
+                          className="text-xs text-navy underline underline-offset-2 self-start"
+                          style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
+                        >
+                          ← Back to source topic
+                        </button>
+                      )}
+                    </div>
                   </details>
                 ))}
               </div>

@@ -24,6 +24,27 @@ export interface Topic {
   related?: string[];
 }
 
+/**
+ * A single quiz item. Foundation = recall, Application = apply a
+ * concept/calc, Operator = real-deal judgment call. The `why` and `trap`
+ * fields are optional but expected on upgraded modules — they reinforce
+ * understanding rather than just confirming the answer.
+ */
+export interface QuizItem {
+  /** The question. */
+  q: string;
+  /** Model answer. Treat as the answer key the student measures against. */
+  a: string;
+  /** Reasoning that makes the answer correct — reinforces the topic. */
+  why?: string;
+  /** Common wrong answer + the cognitive bias / shortcut behind it. */
+  trap?: string;
+  /** Topic id this question is sourced from. Used for in-page backlinks. */
+  topicId?: string;
+  /** Question difficulty, used for the badge in the UI. */
+  difficulty?: 'foundation' | 'application' | 'operator';
+}
+
 export interface Module {
   id: string;
   title: string;
@@ -42,7 +63,7 @@ export interface Module {
    * otherwise this.
    */
   deepDive: string[];
-  quiz: { q: string; a: string }[];
+  quiz: QuizItem[];
   mistakes: string[];
 }
 
@@ -270,20 +291,84 @@ export const COURSES: Course[] = [
         ],
         quiz: [
           {
-            q: 'Which metric best predicts rent growth over a 5-year hold?',
-            a: 'Wage growth, confirmed by sustained in-migration. Population alone is a weak signal — population can grow with retirees and students who don\'t sign lease-signing households.',
+            q: 'Of the four canonical demand drivers — population growth, household formation, job growth, and real wage growth — which is the single most predictive of multifamily rent growth, and why?',
+            a: 'Real wage growth. Rent is paid out of take-home pay, and pricing power is bounded by what tenants can actually afford. Population can grow with retirees and students who do not sign lease-signing households, and jobs can be added at wage levels that do not support rent growth.',
+            why: 'Across cycles, MSAs that maintained 3%+ real wage growth on a 3-year trailing window delivered the strongest same-store NOI growth. MSAs with population growth but flat wages delivered headline rent gains followed by collection deterioration as concessions climbed.',
+            trap: 'The seductive wrong answer is population growth, because it is what brokers and city marketing materials lead with. Population is an outcome variable, not a driver — population growth without wage growth is a retiree or student migration story, not a renter migration story.',
+            topicId: 'w1-t01-demand-drivers',
+            difficulty: 'foundation',
           },
           {
-            q: 'Deliveries-to-stock above what threshold is a yellow flag?',
-            a: 'Roughly 2.5% annual supply / existing stock. Above 3.5% is a red flag. The long-term average is ~1.5%, so anything above 2.5% will compress rent growth for 12-18 months.',
+            q: 'You need to compare Indianapolis and Charlotte on three dimensions: 24-month supply pipeline, real wage growth, and renter affordability. Which authoritative free data sources do you pull for each, and what is the rough time-to-collect for both MSAs?',
+            a: 'Supply pipeline: HUD SoCDS for permits, plus the MSA planning department agendas for any project in the next 24 months that has not yet permitted. Real wage growth: BEA Regional Economic Accounts for per-capita personal income, plus BLS QCEW for sector-weighted wages. Renter affordability: Census ACS Table S2503 for median renter household income. Total time to collect for two MSAs: roughly 60-75 minutes.',
+            why: 'These sources together replace a CoStar subscription for MSA-level scoring at zero cost. The discipline is using the authoritative dataset for each metric — using BLS unemployment instead of QCEW wages, or ACS S1901 instead of S2503, will give you noisy or wrong answers that compound through the rest of the underwrite.',
+            trap: 'The common error is leaning on a single proprietary tool (Yardi Matrix, CoStar) and treating its blended numbers as ground truth. Those tools are useful, but they do not expose the underlying methodology and their MSA scoring weights are often opaque or biased toward markets where their data is densest.',
+            topicId: 'w1-t02-data-sources',
+            difficulty: 'application',
           },
           {
-            q: 'Why is rent-to-income ratio more useful than absolute rent?',
-            a: 'Rent can only rise as fast as your tenant pool can pay. A 30% rent-to-income is HUD\'s cost-burdened threshold and the deceleration point for pricing power. Above 35%, concessions replace rent growth.',
+            q: 'An associate hands you an MSA scorecard for Boise. Default weights have wage growth at 25%; Boise scores a 2/5 there. He suggests dropping wage weight to 15% and increasing population weight to 20% so the overall score reflects "what is actually working for Boise." What is your call, and why?',
+            a: 'Push back hard. Re-weighting the sheet for a specific market or deal so it scores higher is the textbook way to lose discipline. The weighting scheme exists precisely to keep weak signals from drowning out strong ones — and wage growth is the strongest single predictor of durable rent growth. If Boise scores poorly on wages, that is the signal, not a problem to engineer around.',
+            why: 'The whole point of a static, defensible weighting scheme is that it makes you walk away from markets that have not earned the slot. Once you re-weight per market, the scorecard becomes a justification document instead of a screen. This is one of the highest-leverage discipline mechanisms in the entire program.',
+            trap: 'It feels rigorous to "tailor the scoring to the market." It is the opposite — it is a way to make the math agree with a thesis you have already developed, which is exactly when the math is least useful.',
+            topicId: 'w1-t03-msa-scoring-weights',
+            difficulty: 'operator',
           },
           {
-            q: 'When should you shift your market-scoring weights?',
-            a: 'Whenever the capital-markets regime changes — in practice, whenever the 10-year Treasury moves more than ~75 bps in a quarter. Growth markets dominate in compression regimes; defensive markets win in expansion regimes.',
+            q: 'Your proforma rent on a 2-bedroom unit is $1,800/month. The MSA median renter household income (ACS S2503) is $65,000. The MSA current rent-to-income ratio is 28%. Calculate the proforma rent-to-income ratio and tell me whether you have rent-push room or are pushing into a ceiling.',
+            a: 'Proforma rent-to-income = ($1,800 × 12) ÷ $65,000 = 33.2%. The MSA is at 28%, you are underwriting at 33.2% — well above HUD\'s cost-burdened threshold and the MSA average. You have no headroom. Pricing power flattens above 30%, concessions replace rent growth above 35%, and delinquency climbs above 40%.',
+            why: 'The 30% threshold is a deceleration point, not a cliff. Underwriting to 33% means your rent assumptions have to come from rising incomes, not rising rent — which is a much slower curve. The proforma is asking the renter pool to absorb a step-change increase that the income data does not support.',
+            trap: 'The most common mistake is using median household income (ACS S1901) instead of median renter household income (S2503). Renter incomes typically run 20-40% lower than overall household incomes, so using S1901 makes your rent-to-income look 5-10 percentage points more affordable than it actually is.',
+            topicId: 'w1-t04-rent-to-income',
+            difficulty: 'application',
+          },
+          {
+            q: 'An MSA shows current deliveries at 1.8% of existing stock — comfortably below the yellow-flag line. But the 24-month permit pipeline is running at 4.2%. How do you adjust your rent-growth underwriting for a value-add deal closing this quarter?',
+            a: 'Underwrite flat or negative rent growth in years 1-2, with any rent push deferred to years 3-5. The 4.2% permit pipeline is past the red-flag threshold (3.5%), and the deliveries from those permits will land in the middle of your value-add execution. Closing today does not protect you — you are buying directly into the wave.',
+            why: 'Permits issued today deliver in 18-24 months, which is exactly when a value-add operator is in the middle of repositioning units and trying to push rents. Concessions on the new Class-A deliveries cascade into Class-B comps and erase your premium. The 2-year rule explicitly looks forward, not backward.',
+            trap: 'The wrong move is to use today\'s 1.8% deliveries (well below the 2.5% yellow flag) to justify standard rent-growth assumptions. Sponsors who underwrote 3%/yr rent growth in Charlotte at the 2023 peak broke covenant when 2024 deliveries hit; sponsors who underwrote flat for years 1-2 made it through.',
+            topicId: 'w1-t05-supply-pipeline',
+            difficulty: 'application',
+          },
+          {
+            q: 'Phoenix posted +38% rent growth and +19% wage growth from 2019-2022. The wage-rent delta is +19 percentage points. What does this delta tell you about underwriting Phoenix in early 2023, and what is the most defensible rent-growth assumption for years 1-2 of a new acquisition?',
+            a: 'A +19 pp delta is an extreme reading — rents have outrun wages so far that affordability has already been borrowed against. The most defensible underwrite is flat to negative rent growth in years 1-2 (mean reversion), with any thesis-level rent growth pushed out to years 3-5 once incomes catch up. Phoenix actually fell 6% in 2023, which is exactly what the delta predicted.',
+            why: 'The wage-rent delta is a leading indicator of mean reversion. A +5 pp delta is normal; +10 pp warrants caution; +15 pp or higher historically reverts. The chart uses changes (not levels), which makes it cleaner than rent-to-income for catching markets that look healthy on the surface but have already topped.',
+            trap: 'The most common wrong answer is to extrapolate the trailing rent number ("rents grew 8%/year, so I will underwrite 5%/year to be conservative"). That ignores the divergence and is just trend-fitting on the wrong variable. The variable that matters is the gap between rent and wages, not the rent number alone.',
+            topicId: 'w1-t06-wage-rent-ratio',
+            difficulty: 'operator',
+          },
+          {
+            q: 'An MSA shows net positive return migration on the IRS SOI data — gaining 3,200 returns last year. But net AGI is slightly negative (-$45M). What does this combination tell you about the rent-growth outlook, and what does it imply for your underwrite?',
+            a: 'The market is gaining people but losing income — inbound filers earn less than outbound ones. This predicts rent deceleration despite headline population growth. Underwrite below-market rent growth, or pass on the MSA depending on how negative the AGI gap is and which sectors are losing people.',
+            why: 'The AGI line is the wage check on the migration data. Net positive returns with negative AGI means lower-wage filers are arriving (often retirees, students, or service-sector workers), which does not translate into higher-rent-paying renters. Rent growth has to slow, even as population looks healthy.',
+            trap: 'Sponsors stop at the headline "net positive migration" and underwrite rent growth as if all migrants are equally rent-paying. The IRS AGI data is the cheapest way to catch this distinction — and most sponsors never look at it.',
+            topicId: 'w1-t07-migration-signal',
+            difficulty: 'application',
+          },
+          {
+            q: 'Your team is excited about an MSA scoring 4.2/5 on the demand and supply weights — strong wages, low deliveries, healthy migration. The regulatory screen comes back: rent stabilization passed last year (3% annual cap), eviction timeline 90 days, transfer tax 0.5%. Two of three regulatory checks are flagged. The deal pipeline in this MSA is unusually strong right now. What is the call?',
+            a: 'Walk. The rule is two-of-three flagged disqualifies the MSA, full stop. Rent stabilization compresses value-add IRR by 200-400 bps, and a 90-day eviction timeline doubles or triples your bad-debt reserve. The strong scoring on demand and supply does not compensate for those structural drags.',
+            why: 'Regulatory factors are non-negotiable in a way that demand and supply factors are not. A demand miss costs you a few percent on rent growth; a regulatory miss restructures the entire return profile and, in some cases, makes the value-add thesis impossible to execute. This discipline protects you from the most common "great market on paper" trap.',
+            trap: 'The seductive wrong answer is to negotiate a higher cap rate to "price in" the regulatory drag. That works in theory and fails in practice — the value-add IRR uplift you were underwriting depends on rent push that the rent cap explicitly prevents. You cannot price in something that breaks your model.',
+            topicId: 'w1-t09-regulatory-screen',
+            difficulty: 'operator',
+          },
+          {
+            q: 'It is late 2022. The 10-year Treasury has moved from 1.5% to 4.2% over four quarters. Your top-5 market board, built in 2021, is heavily weighted toward growth markets (Phoenix, Austin, Nashville, Tampa, Boise). What specific changes do you make to the scoring weights and the board itself?',
+            a: 'Shift weights from growth-leaning factors (wage growth, job growth) toward defensive ones (employment diversity, wage durability, rent-to-income headroom). Cap rates are now expanding against you, so operations must carry the entire return — markets with high deliveries and stretched affordability get punished twice. Likely outcome: Phoenix, Austin, and Boise drop off the board; replaced with Indianapolis, Columbus, and Kansas City.',
+            why: 'In a cap-rate-compressing regime, growth markets win because compression adds 200-400 bps of IRR on top of operations. In an expanding regime, that tailwind reverses and high-supply growth markets lose rent growth and cap rate at the same time. The 75-bps-in-a-quarter rule says revisit weights, not abandon the framework.',
+            trap: 'Two failure modes: refusing to update because "the fundamentals have not changed" (true but irrelevant — capitalization has), and overcorrecting by abandoning growth entirely (a normalized regime is the default, not the bottom of a cycle).',
+            topicId: 'w1-t10-macro-filters',
+            difficulty: 'operator',
+          },
+          {
+            q: 'What are the three discipline mechanisms that separate a working top-5 market board from a vanity document?',
+            a: '(1) A refresh cadence — quarterly inputs, semiannual re-ranking, with explicit willingness to let an MSA fall off if the score drops. (2) Per-MSA kill criteria — specific metrics that, if crossed, force reassessment (e.g., permits >3% of stock, rent-to-income >32%, rent control passed). (3) A two-market backup list, so when an MSA falls off you replace it with a ranked candidate, not "whatever deal just came in."',
+            why: 'Without these three, the board becomes a static document that justifies whatever the broker pipeline brings in. With them, the board replaces broker-led sourcing with thesis-led sourcing — which is the single biggest determinant of close rate and regret rate.',
+            trap: 'The most common failure is building the board, sharing it with LPs, and then never refreshing. A stale top-5 is worse than no list, because it is now a documented commitment to outdated thinking.',
+            topicId: 'w1-t11-market-board',
+            difficulty: 'foundation',
           },
         ],
         mistakes: [
