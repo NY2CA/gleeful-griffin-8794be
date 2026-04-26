@@ -7,7 +7,7 @@ import TopicAccordion from '@/components/TopicAccordion';
 import { useAuth } from '@/hooks/useAuth';
 import { useCourse } from '@/hooks/useCourse';
 import { useBilling } from '@/hooks/useBilling';
-import type { QuizItem } from '@/data/courses';
+import type { QuizItem, Mistake } from '@/data/courses';
 
 type Tab = 'deep' | 'quiz' | 'mistakes';
 
@@ -67,6 +67,108 @@ function jumpToTopic(topicId: string, switchTab: (t: Tab) => void) {
   }, 60);
 }
 
+/**
+ * Renders a single structured Mistake — trap visible, why+fix revealed
+ * on click. Mirrors the quiz reveal pattern visually so the two tabs
+ * feel like one discipline, not two.
+ *
+ * Only used when the underlying mistake is the upgraded object shape;
+ * legacy string mistakes render inline in the parent. Type narrowing
+ * happens at the call site.
+ */
+function MistakeCard({
+  item,
+  index,
+  revealed,
+  onToggle,
+  jumpToTopic,
+}: {
+  item: Exclude<Mistake, string>;
+  index: number;
+  revealed: boolean;
+  onToggle: () => void;
+  jumpToTopic: (topicId: string) => void;
+}) {
+  return (
+    <div className="bg-white border border-line rounded-xs p-5">
+      <div className="flex items-start gap-4">
+        <span
+          className="font-mono text-[11px] tracking-[0.18em] pt-1"
+          style={{ color: 'var(--gold-deep)' }}
+        >
+          {String(index + 1).padStart(2, '0')}
+        </span>
+        <div className="flex-1">
+          <p className="text-ink font-medium leading-relaxed">{item.trap}</p>
+          {!revealed && (
+            <button
+              type="button"
+              onClick={onToggle}
+              className="mt-3 text-sm font-mono tracking-wider"
+              style={{
+                color: 'var(--gold-deep)',
+                textTransform: 'uppercase',
+                letterSpacing: '0.18em',
+                fontSize: 11,
+              }}
+            >
+              Show fix &rarr;
+            </button>
+          )}
+          {revealed && (
+            <div className="mt-4 flex flex-col gap-3">
+              <div>
+                <span
+                  className="eyebrow block mb-1"
+                  style={{ color: 'var(--ink-dim)' }}
+                >
+                  Why operators fall for it
+                </span>
+                <p className="text-ink-dim text-sm leading-relaxed">{item.why}</p>
+              </div>
+              <div
+                className="rounded-xs p-4"
+                style={{
+                  background: 'var(--cream-warm)',
+                  borderLeft: '3px solid var(--gold)',
+                }}
+              >
+                <span
+                  className="eyebrow block mb-1"
+                  style={{ color: 'var(--gold-deep)' }}
+                >
+                  Fix
+                </span>
+                <p className="text-ink text-sm leading-relaxed">{item.fix}</p>
+              </div>
+              <div className="flex flex-wrap items-center gap-4 pt-1">
+                {item.topicId && (
+                  <button
+                    type="button"
+                    onClick={() => jumpToTopic(item.topicId!)}
+                    className="text-xs underline underline-offset-2"
+                    style={{ color: 'var(--ink-dim)' }}
+                  >
+                    Back to source topic &rarr;
+                  </button>
+                )}
+                <button
+                  type="button"
+                  onClick={onToggle}
+                  className="text-xs underline underline-offset-2"
+                  style={{ color: 'var(--ink-dim)' }}
+                >
+                  Hide fix
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function CoursePlayerPage() {
   const router = useRouter();
   const rawId = router.query.id;
@@ -80,8 +182,12 @@ export default function CoursePlayerPage() {
   // Track which quiz items have had their answer revealed. Reset when the
   // student navigates to a different module so each one starts fresh.
   const [revealedAnswers, setRevealedAnswers] = useState<Set<number>>(new Set());
+  // Same pattern for the upgraded Common Mistakes tab — each card starts
+  // collapsed showing the trap, expands to reveal the why + fix.
+  const [revealedMistakes, setRevealedMistakes] = useState<Set<number>>(new Set());
   useEffect(() => {
     setRevealedAnswers(new Set());
+    setRevealedMistakes(new Set());
   }, [moduleId]);
 
   useEffect(() => {
@@ -121,6 +227,7 @@ export default function CoursePlayerPage() {
   const done = isComplete(mod.id);
 
   return (
+    <>
     <main className="page">
       <div className="container grid gap-8 lg:grid-cols-[2fr_1fr]">
         {/* LEFT — player + content */}
@@ -335,13 +442,42 @@ export default function CoursePlayerPage() {
             )}
             {tab === 'mistakes' && (
               <div className="bg-white border border-line rounded-xs p-8">
-                <ul className="space-y-4">
+                {/* Per-module Common Mistakes. Two render paths: legacy
+                    single-string callouts and the upgraded trap/why/fix
+                    triplet tied to a source topic. The structured shape
+                    mirrors the quiz pattern — trap on top, why and fix
+                    layered below — so a student can scan or drill in. */}
+                <p className="text-ink-dim mb-6 text-sm leading-relaxed">
+                  Each mistake below is tied to a specific topic and follows the same
+                  {' '}<strong>trap → why → fix</strong> pattern operators use in post-mortems.
+                  Click <em>Show fix</em> to reveal the corrective action.
+                </p>
+                <ul className="flex flex-col gap-5">
                   {mod.mistakes.map((item, i) => (
-                    <li key={i} className="flex gap-4">
-                      <span className="font-mono text-[11px] tracking-[0.18em] text-gold-deep pt-1">
-                        ×
-                      </span>
-                      <p className="text-ink">{item}</p>
+                    <li key={i}>
+                      {typeof item === 'string' ? (
+                        <div className="flex gap-4">
+                          <span className="font-mono text-[11px] tracking-[0.18em] text-gold-deep pt-1">
+                            ×
+                          </span>
+                          <p className="text-ink leading-relaxed">{item}</p>
+                        </div>
+                      ) : (
+                        <MistakeCard
+                          item={item}
+                          index={i}
+                          revealed={revealedMistakes.has(i)}
+                          onToggle={() => {
+                            setRevealedMistakes((prev) => {
+                              const next = new Set(prev);
+                              if (next.has(i)) next.delete(i);
+                              else next.add(i);
+                              return next;
+                            });
+                          }}
+                          jumpToTopic={(topicId) => jumpToTopic(topicId, setTab)}
+                        />
+                      )}
                     </li>
                   ))}
                 </ul>
@@ -400,5 +536,37 @@ export default function CoursePlayerPage() {
         </aside>
       </div>
     </main>
+
+    {/* ========== FOOTER ========== */}
+    {/* Replicates the landing page .footer-brand pattern so members see the
+        same Rescia/Multifamily Mastery branding and program tagline at the
+        bottom of every course module page. The CSS class hooks (.footer-brand,
+        .nav-logo, .nav-logo-text, .footer-bottom) live in styles/landing.css
+        which is imported globally via _app.tsx. */}
+    <footer>
+      <div className="container">
+        <div className="footer-top">
+          <div className="footer-brand">
+            <Link href="/dashboard" className="nav-logo">
+              <img src="/rescia-logo.png" alt="Rescia Properties" />
+              <div className="nav-logo-text">
+                <span className="nav-logo-name">Rescia Properties</span>
+                <span className="nav-logo-tag">Multifamily Mastery</span>
+              </div>
+            </Link>
+            <p>
+              The complete multifamily real estate mentoring program. From market
+              identification to exit &mdash; the proven system for building wealth
+              through multifamily real estate.
+            </p>
+          </div>
+        </div>
+        <div className="footer-bottom">
+          <div>&copy; 2026 Rescia Properties &middot; Multifamily Mastery &middot; All rights reserved</div>
+          <div>Not a securities offering &middot; Past performance not indicative of future results</div>
+        </div>
+      </div>
+    </footer>
+    </>
   );
 }
