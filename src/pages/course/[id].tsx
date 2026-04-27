@@ -241,13 +241,15 @@ export default function CoursePlayerPage() {
             </span>
           </div>
 
-          {/* Video frame (16:9) — renders YouTube embed when videoUrl is set,
-              otherwise shows a placeholder until intro video lands. */}
-          <div
-            className="w-full bg-navy rounded-sm overflow-hidden"
-            style={{ aspectRatio: '16 / 9', boxShadow: 'var(--shadow-card)' }}
-          >
-            {mod.videoUrl ? (
+          {/* Video frame (16:9) — only renders when videoUrl is set. Modules
+              without a video skip the frame entirely so the layout flows
+              cleanly from header into deep-dive content. Re-enables
+              automatically when videoUrl is added back to courses.ts. */}
+          {mod.videoUrl && (
+            <div
+              className="w-full bg-navy rounded-sm overflow-hidden"
+              style={{ aspectRatio: '16 / 9', boxShadow: 'var(--shadow-card)' }}
+            >
               <iframe
                 src={mod.videoUrl}
                 title={mod.title}
@@ -256,12 +258,8 @@ export default function CoursePlayerPage() {
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
               />
-            ) : (
-              <div className="w-full h-full flex items-center justify-center text-cream-warm font-mono text-xs tracking-[0.18em]">
-                INTRO VIDEO COMING SOON
-              </div>
-            )}
-          </div>
+            </div>
+          )}
 
           <div>
             <h1 className="font-display font-medium text-navy" style={{ fontSize: 'clamp(28px, 3.5vw, 44px)' }}>
