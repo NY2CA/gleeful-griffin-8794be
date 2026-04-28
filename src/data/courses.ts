@@ -102,6 +102,193 @@ export const COURSES: Course[] = [
       'The definitive 12-week mentoring program for acquiring, underwriting, capitalizing, and operating multifamily real estate at scale.',
     modules: [
       {
+        id: 'orientation',
+        title: 'Start Here · Orientation',
+        description:
+          'A 20-minute orientation to set you up for success: how the program works, how to get the most from each module, and what to do in your first 7 days.',
+        duration: '~20 min',
+        topics: [
+          {
+            id: 'orient-t01-structure',
+            title: 'How this program is structured',
+            summary:
+              'Twelve modules, one per week — but at your pace. Deep Dive teaches, Quiz Me locks it in, Common Mistakes shows the trap.',
+            body:
+              'This is a self-paced 12-module program built to mirror how an institutional acquisition actually unfolds — from picking a market to closing your exit. Each module is a discrete topic in the multifamily lifecycle: MSA selection, submarket targeting, sourcing, underwriting, stress testing, debt, LOI, capital raise, PPM, PSA/DD, property management, and exit.\n\nThe recommended cadence is **one module per week**, completing the full program in 12 weeks. That said, there are no deadlines or scheduled cohorts. Some students sprint through in three weeks because they\'re underwriting a deal right now; others take six months because they\'re learning while running a portfolio. Both work. The platform tracks your progress and lets you resume where you left off.\n\nEach module has the same three-part structure: a **Deep Dive** (the content), a **Quiz Me** (knowledge check), and **Common Mistakes** (the traps that kill deals). Use them in that order the first time through. Re-read individual topics anytime — they\'re written so each one stands alone.\n\nWe strongly recommend completing modules in order at first. The curriculum builds: you can\'t underwrite (Module 4) without market context (Module 1) and a target deal type (Module 3). After your first pass, jumping around to revisit specific topics is exactly what the platform is built for.',
+            example:
+              'A typical first month looks like: Week 1 — Modules 1 and 2 (markets and submarkets, two evenings each). Week 2 — Module 3 + start Module 4 (sourcing + first pass at underwriting). Week 3 — finish Module 4 + Module 5 (stress testing forces you to re-underwrite the same deal). Week 4 — Module 6 (debt). Halfway done. Most students who finish Modules 1-6 finish the rest.',
+            pitfalls: [
+              'Treating it like a video course. This is a working program — you\'re expected to apply each module to a real or hypothetical deal. Passive watching creates no skill.',
+              'Skipping ahead because the topic feels familiar. Underwriting (Module 4) covers things experienced operators routinely miss; Module 1 isn\'t background — it\'s the most predictive module for whether your deal will work.',
+              'Trying to do it without a target market. Pick one in Week 1 even if it\'s tentative; everything else gets sharper when you have one in mind.',
+            ],
+            related: ['orient-t02-three-tabs', 'orient-t05-first-week'],
+          },
+          {
+            id: 'orient-t02-three-tabs',
+            title: 'How to use Deep Dive, Quiz Me, and Common Mistakes',
+            summary:
+              'Three tabs per module, each does a different job. Use them in order the first time. Revisit them out of order forever.',
+            body:
+              'Every module has three tabs that work together. Skip any of them and you\'ve cheated yourself.\n\n**Deep Dive** is the core content. Each module breaks down into 4-12 topics inside an accordion. Each topic has a one-line title, a 1-2 sentence summary, and a long-form body covering the _why_ behind the concept, a worked example with real figures, and the common pitfalls that trip up operators on that specific concept. Some topics have a "Related" section that lets you jump between connected ideas across the module.\n\n**Quiz Me** tests recall, application, and judgment. Foundation questions check that you remember the term. Application questions ask you to apply a calculation or framework. Operator questions are real-deal judgment calls with no clean right answer — the model answers show the reasoning a seasoned operator would walk through. Take the quiz the day _after_ you finish the Deep Dive — you want to test retention, not familiarity.\n\n**Common Mistakes** is the trap room. Each entry is a real mistake that kills real deals: the trap (what looks right but isn\'t), the why (the cognitive bias or shortcut behind it), and the fix (what to do instead). Read this section the day before you sit down to apply the module — it primes you to spot the pattern in your own work.\n\nInside the Deep Dive, the **"Ask about this topic"** box is your private study coach grounded in the active topic. The next orientation topic goes deeper on that.',
+            example:
+              'You\'re starting Module 4 (Underwriting). Recommended sequence: Read all of Deep Dive over 2-3 evenings. Take Quiz Me the next morning — see where retention is weak. Re-read those weak topics. Read Common Mistakes the night before you sit down to underwrite an actual deal. Then go underwrite. Come back to specific topics as questions surface.',
+            pitfalls: [
+              'Skipping Common Mistakes because the title sounds remedial. The mistakes are not "newbie" errors — they\'re sophisticated misjudgments by smart, experienced operators. Skipping this section is the single biggest leakage in the program.',
+              'Taking the quiz the same day you read the content. You\'re testing short-term memory, not retention. Wait at least overnight.',
+              'Reading Deep Dive linearly without ever using the "Related" jumps. The connections between topics are the actual mental model — using related links builds it faster than linear reading.',
+            ],
+            related: ['orient-t01-structure', 'orient-t03-ai-coach'],
+          },
+          {
+            id: 'orient-t03-ai-coach',
+            title: 'How to use the AI study coach (Ask about this topic)',
+            summary:
+              'Inside every Deep Dive topic, ask follow-up questions grounded in that exact topic. 25 questions per day. Use them on what you\'re stuck on, not what you can Google.',
+            body:
+              'At the bottom of every open Deep Dive topic accordion you\'ll find an **"Ask about this topic"** box. This is your private, in-context AI study coach — running on Claude — that knows the active topic you\'re reading and can go deeper, work through your specific deal, or explain something differently.\n\nIt is _not_ a general-purpose chatbot. It\'s grounded in the topic context you\'re currently reading. Ask it about the topic, your deal in the context of the topic, or the worked example. If you ask it about something unrelated (taxes, marketing, a tenant dispute), it\'ll redirect you back to the topic.\n\nYou get **25 questions per UTC day**, refreshing at 00:00 UTC (8 PM Eastern). The counter resets nightly. This isn\'t a budget constraint — it\'s a "use it on what matters" constraint. The questions where the AI delivers the most value are:\n\n- "Walk me through how to apply this to a 142-unit B-class deal in Charlotte" — applies the topic to your context\n- "What changes if my DSCR comes in at 1.18 instead of 1.25?" — tests sensitivity\n- "Give me a sharper version of the worked example with Sun Belt assumptions" — adapts the example\n- "Why does the rule of thumb in this topic break down for distressed deals?" — pushes the edge cases\n- "What\'s the operator instinct behind this — what would you check first?" — asks for judgment, not facts\n\nWhat it does badly: things you can find in 30 seconds via a calculator or Google ("what\'s a cap rate?"). Burn your daily questions on the messy stuff.',
+            example:
+              'You\'re in Module 4 reading about exit cap rate sensitivity. The worked example uses 6.0% entry / 6.5% exit. You ask: "How would the IRR change if I used 6.75% exit instead, and at what exit cap does the deal break the 17% return threshold?" The AI walks through the math, identifies the break point at roughly 7.05%, and tells you what that means for your underwriting cushion. That\'s a 2-minute answer that would have taken 15 minutes in Excel.',
+            pitfalls: [
+              'Asking off-topic questions and getting redirected. Save your slot by asking in the right module/topic.',
+              'Treating it as authoritative on legal or securities questions. It\'ll redirect you to a securities attorney or CPA — heed that. The platform isn\'t licensed legal/financial advice.',
+              'Forgetting it exists. The single biggest underuse pattern is reading the deep dive and never opening the box. The compound effect of asking 1-2 sharp questions per topic is where the program separates from a passive video course.',
+            ],
+            related: ['orient-t02-three-tabs', 'orient-t06-support'],
+          },
+          {
+            id: 'orient-t04-toolkit',
+            title: 'Templates, models, and tools',
+            summary:
+              'Working tools live in /templates — the underwriting model, LOI, PPM outline, PSA checklist, and more. Open them as you finish each module.',
+            body:
+              'The platform ships with the full operator toolkit you\'ll need to actually execute the curriculum. Find them at **/templates** (linked from your dashboard under "Toolkit · Open toolkit").\n\nThe most important ones, mapped to module:\n\n- **Underwriting model (Excel)** — Use after Module 4. Multi-tab model with rent roll, T-12 normalization, exit waterfall, sensitivity tables. Replace the sample numbers with your deal.\n- **Stress test workbook (Excel)** — Use after Module 5. Pre-built scenarios for rate shocks, cap rate expansion, expense overruns, lease-up risk.\n- **CapEx tracker (Excel)** — Use after Module 5. Item-by-item budget by unit and common area, with phasing.\n- **LOI template (Word)** — Use after Module 7. Clean, defensible offer language with the negotiable terms flagged.\n- **PPM outline (Word)** — Use after Module 9. The structural outline of a private placement memorandum — for your securities attorney, not for filing as-is.\n- **Investor pipeline CRM (Excel)** — Use during Module 8. Tracks contacts, interest level, soft commits, hard commits, and follow-up cadence.\n- **Distribution waterfall (Excel)** — Use after Module 12. Plug in your IRR and split tiers; outputs LP and GP cash flows.\n- **PSA + DD checklists (Word)** — Use during Module 10. The list of every line item you negotiate in the PSA and every document you collect in DD.\n- **Quarterly LP report template (Word)** — Use during Module 11. The investor communication cadence that earns repeat capital.\n- **PM RFP template (Word)** — Use during Module 11. The questions that separate a real PM from a pitch deck.\n\nTreat each template as a starting point. Customize for your structure, your market, your deal type. None of them are licensed legal documents — show them to your securities attorney before sending anything to investors.',
+            example:
+              'You finish Module 4 on a Wednesday. Thursday evening you open the Excel underwriting model, paste in the rent roll from a target deal, walk through each tab. You\'ll find gaps — that\'s the point. Take the gaps to the AI study coach inside Module 4: "I\'m running the underwriting model on a 90-unit deal. The expense ratio is showing 38% but most case studies in the module are 42-45%. What might be missing or aggressive?" The model is the working surface; the curriculum is what tells you whether the answer is reasonable.',
+            pitfalls: [
+              'Using a template without modifying it for your structure. The PPM outline expects a certain split structure — if yours is different, the document won\'t fit your deal.',
+              'Treating the underwriting model output as truth. Every output is a hypothesis until you\'ve stress-tested it (Module 5). Module 4 alone makes you dangerous, not safe.',
+              'Not customizing the LP report template. Investors notice when a quarterly report looks templated; the format is a starting point, the content is yours.',
+            ],
+            related: ['orient-t01-structure', 'orient-t06-support'],
+          },
+          {
+            id: 'orient-t05-first-week',
+            title: 'Your first 7 days — a concrete plan',
+            summary:
+              'Don\'t try to do everything. By end of day 7: finish this orientation, complete Module 1, take the quiz, ask one AI question, and pick a target market.',
+            body:
+              'Most online courses lose students in the first 14 days because the open-ended freedom feels like decision fatigue. Here\'s the recommended path through your first week. Don\'t deviate unless you know exactly why.\n\n**Day 1 (today):** Finish this orientation. All 6 topics. Roughly 20-30 minutes. Clear your assumptions about what kind of program this is and what you\'re going to get out of it.\n\n**Day 2-3:** Module 1 — MSA & Market Selection. Watch the intro video. Read all of Deep Dive across two evenings. Don\'t try to crush it in one sitting. Most students report 2-3 hours total reading time per module.\n\n**Day 4:** Take the Module 1 Quiz Me. Identify which topics you didn\'t actually retain. Re-read those.\n\n**Day 5:** Read Module 1\'s Common Mistakes. Open one Deep Dive topic that interested you most and ask the AI study coach one sharp question — preferably something specific to your situation or a market you\'re considering.\n\n**Day 6:** Pick a target MSA. Tentatively. Doesn\'t matter if you change your mind in Module 2. The program reads completely differently when you have a real market in mind. Use Module 1\'s frameworks to score 3-4 candidates and pick one to focus on as your "case study deal" through the program.\n\n**Day 7:** Skim the dashboard. Note which modules you\'re most curious about. Schedule next week\'s reading time on your calendar. Treat it like a recurring meeting — most students who put it on the calendar finish; most who don\'t, don\'t.',
+            example:
+              'Your first-week milestone isn\'t "I learned about MSAs." It\'s "I picked Charlotte as my target market and I can tell you in two sentences why — based on real wage growth, household formation, and supply pipeline." That\'s a working answer. Get there in 7 days and the rest of the program rolls naturally.',
+            pitfalls: [
+              'Trying to read 3 modules in week 1 to "get ahead." You\'ll burn out by week 2 and stop. The 1-module-per-week cadence is calibrated for retention, not speed.',
+              'Reading without picking a market. Without a target, every framework feels abstract; with a target, every framework feels personal.',
+              'Putting off the first quiz. The quiz is most valuable at the end of week 1, when the content is settled but recall is tested. Skipping it skips the most important consolidation step.',
+            ],
+            related: ['orient-t01-structure', 'orient-t06-support'],
+          },
+          {
+            id: 'orient-t06-support',
+            title: 'When and how to get human help',
+            summary:
+              'AI coach for content questions. Lou and Diva for program/access/billing. CPAs and attorneys for your deal.',
+            body:
+              'There are three layers of help. Use the right one for the right question.\n\n**Layer 1: AI study coach** (in-context, in every Deep Dive topic). Questions about the curriculum, applying a topic to your situation, sharpening worked examples, pushing on edge cases. Daily limit of 25 questions. Answer time: 3-5 seconds.\n\n**Layer 2: Lou and Diva (Rescia Properties).** Use email for these:\n\n- _Program access_ — login issues, billing, can\'t see content you should\n- _Curriculum gaps_ — "this topic doesn\'t address X, can you point me to the right module?"\n- _Real-world application_ — "I\'m closing a 142-unit deal next month and would like 30 minutes to walk through Modules 4-7 with my actual numbers" (paid coaching is available; ask)\n\nEmail **lou@resciaproperties.com** for program and curriculum questions. Diva is reachable at **rescia@resciaproperties.com** for access, account, and admin questions. Expect a response within one business day.\n\n**Layer 3: Licensed professionals.** The program does not give legal, securities, tax, or licensed real estate advice. For those, you need a qualified professional who has signed an engagement letter with you and whose license is on the line for the advice given.\n\n- _Securities attorney_ — for anything related to raising capital, structuring an offering, PPM, accredited investor verification, blue-sky filings. Module 9 covers what to expect from your attorney; it does not replace one.\n- _CPA_ — for tax structuring, depreciation, cost segregation, K-1 prep, entity selection. Modules 9 and 12 touch tax considerations; your CPA executes them.\n- _Property manager_ — for on-the-ground operations once you close. Module 11 helps you choose and manage one.\n- _Insurance broker_ — Module 10 (DD) sets your insurance scope; the broker writes the policies.\n\nBuild your professional team early. Most students who close their first deal had their securities attorney engaged by Module 8. Most who don\'t, didn\'t.',
+            example:
+              'You\'re stuck on a Module 5 stress test. AI coach (Layer 1). You can\'t log in to take the quiz. Diva (Layer 2). You\'re a week from signing a 90-unit LOI and want a structural review of your offer. Your real estate attorney plus Lou for paid coaching (Layers 2 + 3). Don\'t email Lou for stress test help; don\'t ask the AI to draft your PPM.',
+            pitfalls: [
+              'Asking the AI for legal advice. It will redirect you. Don\'t fight it — the redirect is the right answer.',
+              'Waiting until Module 9 to find a securities attorney. By then you should already have one engaged.',
+              'Treating Lou\'s coaching as a substitute for your own thinking. The program is built to make you the operator. Lou helps you think through a hard call; he\'s not going to underwrite your deal for you.',
+            ],
+            related: ['orient-t03-ai-coach', 'orient-t05-first-week'],
+          },
+        ],
+        deepDive: [
+          'A self-paced 12-week mentoring program. One module per week is the recommended cadence; no deadlines.',
+          'Each module has Deep Dive (content), Quiz Me (recall + application + judgment), and Common Mistakes (the trap room).',
+          'In-context AI study coach inside every Deep Dive topic. 25 questions per UTC day. Use them on what you can\'t Google.',
+          'Templates and working models live at /templates — Excel underwriting, LOI, PPM outline, PSA checklist, and more.',
+          'First-week milestone: pick a target market you can defend in two sentences using Module 1\'s frameworks.',
+          'Three layers of help: AI coach, Lou + Diva (program), licensed professionals (your deal). Use the right one.',
+        ],
+        quiz: [
+          {
+            q: 'What\'s the recommended cadence per module?',
+            a: 'One module per week — about 12 weeks for the full program — though there are no deadlines and you can move faster or slower as your situation requires.',
+            why: 'The cadence is calibrated for retention, not speed. Slower than that risks losing momentum; much faster typically means students aren\'t applying the curriculum to a deal as they go.',
+            trap: 'Assuming you should sprint through it because the content is unlocked. Sprint students typically don\'t retain operator-level judgment — only foundation recall.',
+            topicId: 'orient-t01-structure',
+            difficulty: 'foundation',
+          },
+          {
+            q: 'In what order should you use the three tabs (Deep Dive, Quiz Me, Common Mistakes) the first time through a module?',
+            a: 'Deep Dive first (over 2-3 sittings). Then Quiz Me the day after, to test retention rather than recall. Then Common Mistakes the night before you sit down to apply the module to a deal.',
+            why: 'Spacing the quiz overnight tests retention, which is what predicts whether you can use the concept under pressure. Reading Common Mistakes right before applying the module primes pattern recognition.',
+            trap: 'Taking Quiz Me on the same day as Deep Dive feels efficient but tests short-term memory, not retained judgment.',
+            topicId: 'orient-t02-three-tabs',
+            difficulty: 'application',
+          },
+          {
+            q: 'Where does the AI study coach live, and what kinds of questions get the most value out of it?',
+            a: 'It lives at the bottom of every open Deep Dive topic. The highest-value questions apply the topic to your specific situation ("how would I size the loan if my DSCR is 1.18?"), push edge cases, or adapt worked examples to your market — not definitions you can Google.',
+            why: 'The AI is grounded in the active topic and your context, which is where general chatbots fail. Definitions and basic calcs are not where it adds incremental value.',
+            trap: 'Using daily questions on things you could find in 30 seconds via a calculator or Google search.',
+            topicId: 'orient-t03-ai-coach',
+            difficulty: 'application',
+          },
+          {
+            q: 'A student tells you they want to finish all 12 modules in 4 weeks while running a full-time job. Do you encourage it?',
+            a: 'No. The 1-module-per-week cadence isn\'t a soft suggestion — it\'s the spacing that lets retention and application compound. Sprinting through 12 modules in 4 weeks while working full-time typically produces foundation recall but not operator judgment, and almost no application to an actual deal. Better to take 12-16 weeks and apply each module as you go.',
+            why: 'Application is what builds operator skill. Without time to apply each module to a real or hypothetical deal, the program collapses into video-course-style passive consumption.',
+            trap: 'Assuming the constraint is content volume. The constraint is application time, which can\'t be compressed below a certain floor without losing the skill transfer.',
+            topicId: 'orient-t01-structure',
+            difficulty: 'operator',
+          },
+          {
+            q: 'What\'s your single most important deliverable by the end of Week 1?',
+            a: 'A target market identified and defensible in two sentences using Module 1\'s frameworks (real wage growth, household formation, supply pipeline). It can be tentative — the point is to give yourself a real market to anchor every later module against.',
+            why: 'Every framework in the program reads completely differently when you\'re running it against a specific market. Without a target, the curriculum stays abstract.',
+            trap: 'Refusing to commit to a market because you\'re still gathering data. The tentative pick is the deliverable; refining it is what Modules 2+ are for.',
+            topicId: 'orient-t05-first-week',
+            difficulty: 'application',
+          },
+        ],
+        mistakes: [
+          {
+            trap: 'Treating the program as a video course to watch passively.',
+            why: 'We\'re conditioned to consume online content rather than work through it. The dashboard, accordion UI, and AI box all _look_ like consumption surfaces.',
+            fix: 'Apply each module to a real or hypothetical deal as you go. Open the Excel model after Module 4. Draft an LOI after Module 7. Passive watching builds zero skill regardless of how good the content is.',
+            topicId: 'orient-t01-structure',
+          },
+          {
+            trap: 'Skipping Common Mistakes because the title sounds remedial.',
+            why: 'It sounds like content for beginners, so experienced operators skim it.',
+            fix: 'These are sophisticated misjudgments by smart, experienced operators. The trap room is the highest-leverage section in every module — it\'s where the program differentiates from textbooks.',
+            topicId: 'orient-t02-three-tabs',
+          },
+          {
+            trap: 'Reading without picking a target market in Week 1.',
+            why: 'Feels like premature commitment when you\'re still learning the framework.',
+            fix: 'Pick one tentatively. The frameworks read entirely differently when you have a real market in mind. Refining the choice is what Modules 2-3 are for.',
+            topicId: 'orient-t05-first-week',
+          },
+          {
+            trap: 'Asking the AI broad, generic questions instead of sharp, contextual ones.',
+            why: 'Habit transfer from general-purpose chatbots that reward open-ended prompts.',
+            fix: 'Burn your 25 daily questions on "apply this to my deal" or "what changes if my DSCR is 1.18 instead of 1.25?" — not on definitions you can Google in 30 seconds.',
+            topicId: 'orient-t03-ai-coach',
+          },
+          {
+            trap: 'Waiting until Module 9 to engage a securities attorney.',
+            why: 'Module 9 is when PPMs come up, so it feels like the natural moment to bring counsel in.',
+            fix: 'Engage by Module 8. Your attorney needs ramp-up time on your structure, market, and capital plan before you start Module 9 work in earnest.',
+            topicId: 'orient-t06-support',
+          },
+        ],
+      },
+      {
         id: 'w1-msa',
         title: 'Week 1 · MSA & Market Selection',
         description:
