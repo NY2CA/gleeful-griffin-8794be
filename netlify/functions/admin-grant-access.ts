@@ -1,7 +1,8 @@
 import type { Config } from '@netlify/functions';
 import { requireSession, normalizeEmail } from './_lib/auth';
-import { isAdminEmail, getUserByEmail, saveUser } from './_lib/store';
+import { isAdminEmail, getUserByEmail, saveUser, markAccessGranted } from './_lib/store';
 import { json, error, handleOptions, parseJsonBody } from './_lib/response';
+import { sendWelcomeNow } from './_lib/drip';
 
 interface Body {
   email?: string;
@@ -33,13 +34,28 @@ export default async (req: Request): Promise<Response> => {
 
     user.adminGrantedAt = new Date().toISOString();
     user.adminGrantedBy = session.email;
+    // Set the drip anchor on first-ever access. markAccessGranted is a no-op
+    // if the anchor was already set (e.g. via a prior Stripe purchase that
+    // was later canceled and is now being re-granted manually).
+    const isFirstAccess = markAccessGranted(user);
     await saveUser(user);
+
+    // Fire the welcome email immediately on first-ever access. Errors here
+    // are logged but don't fail the grant — the daily cron will retry.
+    if (isFirstAccess) {
+      try {
+        await sendWelcomeNow(user);
+      } catch (err) {
+        console.error('[admin-grant-access] welcome email failed', err);
+      }
+    }
 
     return json({
       ok: true,
       email: user.email,
       adminGrantedAt: user.adminGrantedAt,
       adminGrantedBy: user.adminGrantedBy,
+      welcomeQueued: isFirstAccess,
     });
   } catch (err) {
     console.error('[admin-grant-access] error', err);

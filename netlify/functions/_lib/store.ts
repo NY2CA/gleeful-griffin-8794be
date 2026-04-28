@@ -56,6 +56,20 @@ export interface UserRecord {
   adminGrantedAt?: string;
   /** Email of the admin who last granted access. */
   adminGrantedBy?: string;
+  // ── Drip campaign ──────────────────────────────────────────────────────
+  /**
+   * ISO — set the FIRST time access becomes active (admin grant or paid
+   * Stripe). Drives the 12-week drip schedule. Once set, never overwritten,
+   * so a member who churns and re-subscribes doesn't re-receive the welcome
+   * arc. Clear this manually if you ever want to restart the sequence.
+   */
+  dripAnchorAt?: string;
+  /**
+   * Map of drip-id → ISO timestamp when sent. Idempotent send guard: if the
+   * key exists, the scheduled function won't re-send. Drip ids: 'welcome',
+   * 'w1', 'w2', ..., 'w12', 'capstone'.
+   */
+  dripSent?: Record<string, string>;
 }
 
 export type ProgressMap = Record<string, Record<string, boolean>>;
@@ -137,6 +151,22 @@ export async function listAllUsers(): Promise<UserRecord[]> {
     }
   }
   return out;
+}
+
+/**
+ * Marks a user's drip anchor (the day-zero of their 12-week drip schedule)
+ * the first time access becomes active. Idempotent — subsequent calls are
+ * no-ops, so a churn → re-sub user does NOT restart the sequence.
+ *
+ * Returns true if the anchor was just set (caller can fire the welcome
+ * email immediately), false if it was already set previously.
+ *
+ * The caller is responsible for persisting the user record.
+ */
+export function markAccessGranted(user: UserRecord): boolean {
+  if (user.dripAnchorAt) return false;
+  user.dripAnchorAt = new Date().toISOString();
+  return true;
 }
 
 /**

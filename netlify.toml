@@ -32,6 +32,14 @@
   # No transform — Functions v2 already delivers Request with an untouched body.
   included_files = []
 
+# Daily drip cron. The actual cron expression is set inside the function
+# file via `export const config = { schedule: '0 13 * * *' }` (9am ET).
+# This stanza is here only to surface the intent in repo configuration; if
+# you want to override the schedule at the toml layer, uncomment the line.
+[functions."scheduled-drip"]
+  # schedule = "0 13 * * *"
+  included_files = []
+
 # Classic fallback — only uncomment if Functions v2 route registration fails
 # for some reason:
 # [[redirects]]

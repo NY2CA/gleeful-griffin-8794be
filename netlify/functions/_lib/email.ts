@@ -26,6 +26,8 @@ interface ResendPayload {
   html: string;
   text?: string;
   reply_to?: string;
+  cc?: string | string[];
+  bcc?: string | string[];
 }
 
 function getEnv(name: string): string {
@@ -48,6 +50,49 @@ async function resendSend(payload: ResendPayload): Promise<void> {
     const text = await res.text();
     throw new Error(`Resend ${res.status}: ${text}`);
   }
+}
+
+/**
+ * Generic Resend send used by the drip sequence. If `from` is omitted, falls
+ * back to the RESEND_FROM env var. Throws on non-2xx so the caller can mark
+ * the drip as un-sent and retry on the next cron tick.
+ */
+export async function sendBrandedEmail(input: {
+  to: string;
+  subject: string;
+  html: string;
+  text: string;
+  from?: string;
+  replyTo?: string;
+  cc?: string | string[];
+  bcc?: string | string[];
+}): Promise<void> {
+  const from = input.from || getEnv('RESEND_FROM');
+  await resendSend({
+    from,
+    to: input.to,
+    subject: input.subject,
+    html: input.html,
+    text: input.text,
+    reply_to: input.replyTo,
+    cc: input.cc,
+    bcc: input.bcc,
+  });
+}
+
+/**
+ * Returns just the `<address>` portion of a Resend From string. Useful when
+ * you want to keep the verified sender address but swap the display name
+ * (e.g. "Lou — Rescia Properties <no-reply@mail.resciaproperties.com>").
+ */
+export function extractEmailAddress(fromString: string): string {
+  const match = fromString.match(/<([^>]+)>/);
+  return match ? match[1] : fromString.trim();
+}
+
+/** HTML escape — exposed so drip.ts doesn't have to re-implement it. */
+export function escapeHtmlForEmail(s: string): string {
+  return escapeHtml(s);
 }
 
 export interface PasswordResetEmailInput {

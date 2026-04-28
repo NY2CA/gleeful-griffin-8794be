@@ -91,6 +91,11 @@ Auth lifecycle:
 | `STRIPE_PRICE_ANNUAL` | yes (for billing) | Stripe recurring-yearly price id. |
 | `STRIPE_PRICE_MONTHLY` | yes (for billing) | Stripe recurring-monthly price id. |
 | `STRIPE_PRICE_LIFETIME` | yes (for billing) | Stripe one-off price id. |
+| `ADMIN_EMAILS` | yes | Comma-separated list of admin emails (controls who can grant access via `/admin/members` and who has implicit access regardless of billing). |
+| `DRIP_FROM_NAME_LOU` | no | Display name shown in From for Lou-authored drip emails. Default: `Lou Lopez — Rescia Properties`. |
+| `DRIP_FROM_NAME_DIVA` | no | Display name shown in From for Diva-authored drip emails. Default: `Diva Lopez — Rescia Properties`. |
+| `DRIP_REPLY_TO_LOU` | no | Reply-to address for Lou-authored drip emails. Default: `lou@resciaproperties.com`. Also used as the CC when Diva is the visible sender. |
+| `DRIP_REPLY_TO_DIVA` | no | Reply-to address for Diva-authored drip emails. Default: `rescia@resciaproperties.com`. Also used as the CC when Lou is the visible sender. |
 | `NEXT_PUBLIC_API_BASE` | no | Different origin for the API, e.g. during dev. Defaults to same-origin. |
 
 Set these on Netlify at **Site settings → Environment variables**. They are
@@ -261,6 +266,49 @@ for the same account). There is no server-side nonce table to maintain.
    - `RESEND_FROM=Rescia Properties <no-reply@mail.resciaproperties.com>`
    - `APP_URL=https://members.resciaproperties.com`
 4. Redeploy. Test with `POST /api/auth/forgot { "email": "your@email" }`.
+
+## Lifecycle drip (12-week member onboarding)
+
+When a member first gets access — either via Stripe checkout or an admin
+grant — `dripAnchorAt` is stamped on their record and the welcome email
+fires immediately. From then on, a daily cron (`scheduled-drip.ts`,
+configured for `0 13 * * *` UTC ≈ 9am ET) walks every active member and
+ships any drip whose `dueDay` has passed.
+
+The 14-email arc lives in `netlify/functions/_lib/drip.ts`:
+
+| ID | Day | Subject (abridged) | From |
+| --- | ---:| --- | --- |
+| `welcome`  |  0 | Welcome — start here | Lou |
+| `w1`  |  7 | Week 1 · MSA & Market Selection | Diva |
+| `w2`  | 14 | Week 2 · Submarket Intelligence | Lou |
+| `w3`  | 21 | Week 3 · Deal Sourcing | Diva |
+| `w4`  | 28 | Week 4 · Underwriting | Lou |
+| `w5`  | 35 | Week 5 · Stress Testing & CapEx | Diva |
+| `w6`  | 42 | Week 6 · Debt Sourcing | Lou |
+| `w7`  | 49 | Week 7 · LOI | Diva |
+| `w8`  | 56 | Week 8 · Capital Raising | Lou |
+| `w9`  | 63 | Week 9 · PPM & Legal | Diva |
+| `w10` | 70 | Week 10 · PSA & Due Diligence | Lou |
+| `w11` | 77 | Week 11 · Property Management | Diva |
+| `w12` | 84 | Week 12 · Exit & Reporting | Lou |
+| `capstone` | 98 | You finished the program | Diva |
+
+Lou and Diva alternate on the From line; the partner who is *not* sending
+that week is automatically CC'd on every send so both have inbox visibility
+and either can reply to a member. Configure display names and reply-to
+addresses via the `DRIP_FROM_NAME_*` and `DRIP_REPLY_TO_*` env vars (table
+above) — defaults are sensible if you set nothing.
+
+Idempotency: each user has a `dripSent` map keyed by drip-id. If the cron
+crashes mid-batch or re-fires, members will not receive duplicates. The
+anchor (`dripAnchorAt`) is set once and never overwritten — a member who
+churns and re-subscribes does NOT re-receive the welcome arc. To restart
+the sequence for a specific member, manually clear their `dripAnchorAt`
+and `dripSent` fields in the `users` blob store.
+
+Pause logic: the cron skips members whose access has lapsed (`hasActiveAccess()`
+returns false). When access is reinstated they pick up where they left off.
 
 ## Billing (Stripe Checkout + Billing Portal)
 

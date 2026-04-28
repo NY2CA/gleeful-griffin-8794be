@@ -5,9 +5,12 @@ import {
   getUserByEmail,
   getUserById,
   saveUser,
+  markAccessGranted,
+  hasActiveAccess,
   type UserRecord,
   type SubscriptionStatus,
 } from './_lib/store';
+import { sendWelcomeNow } from './_lib/drip';
 
 /**
  * POST /api/billing/webhook
@@ -80,7 +83,18 @@ async function handleSubscription(sub: Stripe.Subscription): Promise<void> {
     : undefined;
   user.cancelAtPeriodEnd = Boolean(sub.cancel_at_period_end);
 
+  // If this update is what makes the user "active" for the first time ever,
+  // anchor the drip clock and fire the welcome email. markAccessGranted is
+  // idempotent — a churn → re-sub will NOT re-anchor.
+  const isFirstAccess = hasActiveAccess(user) && markAccessGranted(user);
   await saveUser(user);
+  if (isFirstAccess) {
+    try {
+      await sendWelcomeNow(user);
+    } catch (err) {
+      console.error('[webhook] welcome email failed', err);
+    }
+  }
 }
 
 async function handleCheckoutCompleted(session: Stripe.Checkout.Session): Promise<void> {
@@ -118,7 +132,16 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session): Promis
     } catch {
       /* best-effort */
     }
+    // First-ever access? Anchor the drip + fire welcome.
+    const isFirstAccess = markAccessGranted(user);
     await saveUser(user);
+    if (isFirstAccess) {
+      try {
+        await sendWelcomeNow(user);
+      } catch (err) {
+        console.error('[webhook] welcome email failed', err);
+      }
+    }
     return;
   }
 
