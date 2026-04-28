@@ -31,9 +31,12 @@ export default function DashboardPage() {
   const resume = modules.find((m) => !isComplete(m.id)) ?? modules[0];
   const hasAccess = billing?.hasAccess ?? false;
 
-  // Pull orientation out of the weekly grid so it can render as its own
-  // "Start Here" hero card above the Week 1-12 lineup. This keeps the
-  // curriculum's natural numbering intact (orientation is Week 0, not Week 1).
+  // Pull orientation out of the weekly grid so it doesn't claim the Week 1
+  // slot in the modules section below. The orientation surface itself is
+  // handled by (a) the welcome hero's "Begin orientation" gold CTA when
+  // orientation is the resume target, and (b) the next-action tile's
+  // "Day 1 · your next step" copy. orientationDone is still consumed by
+  // the next-action state machine to detect a "fresh start" past day 1.
   const orientation = modules.find((m) => m.id === 'orientation');
   const weeklyModules = modules.filter((m) => m.id !== 'orientation');
   const orientationDone = orientation ? isComplete(orientation.id) : false;
@@ -142,7 +145,7 @@ export default function DashboardPage() {
                   : progress.percentage === 100
                   ? 'You have completed every module. Bespoke coaching requests are open.'
                   : progress.percentage === 0
-                  ? 'Welcome aboard. Start with the 20-minute orientation below — it sets you up for the 12 weeks ahead.'
+                  ? 'Welcome aboard. Begin with the 20-minute orientation — it sets you up for the 12 weeks ahead.'
                   : `You are ${progress.percentage}% through ${course.title}. Resume where you left off.`}
               </p>
             </div>
@@ -276,66 +279,10 @@ export default function DashboardPage() {
           />
         </section>
 
-        {/* Start Here · Orientation — rendered as a separate hero card so it
-            doesn't shift the Week 1-12 numbering in the modules grid below.
-            Gold accent + prominent CTA so brand-new members know exactly
-            where to begin on day one. */}
-        {orientation && (
-          <section>
-            <Card
-              variant="offer"
-              className="max-w-full"
-              style={{
-                borderColor: 'var(--gold)',
-                borderWidth: 2,
-                borderStyle: 'solid',
-              }}
-            >
-              <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-                <div className="flex flex-col gap-2">
-                  <span className="eyebrow" style={{ color: 'var(--gold-deep)' }}>
-                    Start here · {orientation.duration}
-                  </span>
-                  <h3 className="font-display text-2xl text-navy">
-                    {orientation.title}
-                  </h3>
-                  <p className="text-ink-dim" style={{ maxWidth: 560 }}>
-                    {orientation.description}
-                  </p>
-                </div>
-                {hasAccess ? (
-                  <Link
-                    href={`/course/${orientation.id}`}
-                    className="btn-primary"
-                    style={{
-                      background: 'var(--gold)',
-                      borderColor: 'var(--gold)',
-                      whiteSpace: 'nowrap',
-                    }}
-                  >
-                    {orientationDone ? 'Revisit orientation' : 'Begin orientation'}
-                  </Link>
-                ) : (
-                  <Link
-                    href="/pricing"
-                    className="btn-primary"
-                    style={{
-                      background: 'var(--gold)',
-                      borderColor: 'var(--gold)',
-                      whiteSpace: 'nowrap',
-                    }}
-                  >
-                    Unlock orientation
-                  </Link>
-                )}
-              </div>
-            </Card>
-          </section>
-        )}
-
         {/* Modules grid — iterates over weeklyModules so the orientation
-            (rendered as its own hero card above) doesn't claim the Week 1
-            slot. Re-indexed so Week 1-12 numbering stays accurate. */}
+            (surfaced via the next-action tile and welcome hero CTA) doesn't
+            claim the Week 1 slot. Re-indexed so Week 1-12 numbering stays
+            accurate. */}
         <section>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {weeklyModules.map((m, i) => {
