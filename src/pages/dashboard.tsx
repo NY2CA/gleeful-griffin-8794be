@@ -38,6 +38,61 @@ export default function DashboardPage() {
   const weeklyModules = modules.filter((m) => m.id !== 'orientation');
   const orientationDone = orientation ? isComplete(orientation.id) : false;
 
+  // Next action — a context-aware prompt that tells members exactly what
+  // their single most useful next step is. Driven off `resume` (first
+  // incomplete module) plus the access state. Hidden when access is
+  // pending so the access banner above carries the message.
+  const nextAction: {
+    eyebrow: string;
+    headline: string;
+    body: string;
+    ctaLabel: string;
+    href: string;
+    isExternal?: boolean;
+  } | null = (() => {
+    if (!hasAccess) return null;
+    if (progress.percentage === 100) {
+      return {
+        eyebrow: 'Program complete',
+        headline: 'You have completed every module.',
+        body: 'Bespoke coaching is open. Reach out to plan your first deal close, your next acquisition, or a portfolio review.',
+        ctaLabel: 'Request coaching',
+        href: 'mailto:lou@resciaproperties.com?subject=Bespoke%20coaching%20request',
+        isExternal: true,
+      };
+    }
+    if (resume.id === 'orientation') {
+      return {
+        eyebrow: 'Day 1 · your next step',
+        headline: 'Begin the 20-minute orientation.',
+        body: 'Six topics covering how the program works, how to use each module, and what to do in your first 7 days. Sets up the next 12 weeks.',
+        ctaLabel: 'Begin orientation',
+        href: `/course/${resume.id}`,
+      };
+    }
+    // resume is a weekly module — find which Week number it lives at
+    const weekIndex = weeklyModules.findIndex((m) => m.id === resume.id);
+    const weekNum = weekIndex >= 0 ? weekIndex + 1 : null;
+    const weekTitle = resume.title.replace(/^Week \d+\s·\s/, '');
+    const isFreshStart = progress.completed === 0 || (orientation && progress.completed === 1 && orientationDone);
+    if (isFreshStart && weekNum === 1) {
+      return {
+        eyebrow: 'Up next',
+        headline: `Week 1 · ${weekTitle}`,
+        body: `${resume.duration}. ${resume.description}`,
+        ctaLabel: 'Begin Week 1',
+        href: `/course/${resume.id}`,
+      };
+    }
+    return {
+      eyebrow: weekNum ? `Continue · Week ${weekNum} of 12` : 'Continue',
+      headline: weekNum ? `Week ${weekNum} · ${weekTitle}` : weekTitle,
+      body: `${resume.duration} on this module. You are ${progress.percentage}% through ${course.title} overall.`,
+      ctaLabel: 'Resume module',
+      href: `/course/${resume.id}`,
+    };
+  })();
+
   return (
     <>
     <main className="page">
@@ -147,6 +202,60 @@ export default function DashboardPage() {
                 >
                   Manage billing
                 </Button>
+              )}
+            </div>
+          </Card>
+        )}
+
+        {/* Next action tile — one prominent, context-aware CTA that tells
+            members exactly what to do next. Sits high in the dashboard so
+            it's the first decision they have to make on each visit. */}
+        {nextAction && (
+          <Card
+            variant="offer"
+            className="max-w-full"
+            style={{
+              borderLeftWidth: 6,
+              borderLeftStyle: 'solid',
+              borderLeftColor: 'var(--gold)',
+            }}
+          >
+            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+              <div className="flex flex-col gap-2">
+                <span className="eyebrow" style={{ color: 'var(--gold-deep)' }}>
+                  {nextAction.eyebrow}
+                </span>
+                <h3 className="font-display text-2xl text-navy">
+                  {nextAction.headline}
+                </h3>
+                <p className="text-ink-dim" style={{ maxWidth: 560 }}>
+                  {nextAction.body}
+                </p>
+              </div>
+              {nextAction.isExternal ? (
+                <a
+                  href={nextAction.href}
+                  className="btn-primary"
+                  style={{
+                    background: 'var(--navy)',
+                    borderColor: 'var(--navy)',
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  {nextAction.ctaLabel}
+                </a>
+              ) : (
+                <Link
+                  href={nextAction.href}
+                  className="btn-primary"
+                  style={{
+                    background: 'var(--navy)',
+                    borderColor: 'var(--navy)',
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  {nextAction.ctaLabel}
+                </Link>
               )}
             </div>
           </Card>
