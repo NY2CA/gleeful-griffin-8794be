@@ -179,14 +179,24 @@ export default function CoursePlayerPage() {
     useCourse('multifamily-mastery');
   const { status: billing, loading: billingLoading } = useBilling({ enabled: Boolean(user) });
   const [tab, setTab] = useState<Tab>('deep');
-  // Track which quiz items have had their answer revealed. Reset when the
-  // student navigates to a different module so each one starts fresh.
+  // Track which quiz items have had their answer revealed. For open-ended
+  // items this means the student clicked "Show answer". For MC items this
+  // means the student submitted a selection. Reset when the student
+  // navigates to a different module so each one starts fresh.
   const [revealedAnswers, setRevealedAnswers] = useState<Set<number>>(new Set());
+  // For MC quiz items, track which choice the student has selected before
+  // they submit. After submit (revealedAnswers includes the index) this
+  // map continues to hold their choice so we can show the correct/wrong
+  // indicator on the chosen row.
+  const [selectedChoices, setSelectedChoices] = useState<Map<number, number>>(
+    new Map(),
+  );
   // Same pattern for the upgraded Common Mistakes tab — each card starts
   // collapsed showing the trap, expands to reveal the why + fix.
   const [revealedMistakes, setRevealedMistakes] = useState<Set<number>>(new Set());
   useEffect(() => {
     setRevealedAnswers(new Set());
+    setSelectedChoices(new Map());
     setRevealedMistakes(new Set());
   }, [moduleId]);
 
@@ -310,12 +320,38 @@ export default function CoursePlayerPage() {
             {tab === 'quiz' && (
               <div className="bg-white border border-line rounded-xs p-8 space-y-8">
                 <p className="text-ink-dim text-sm" style={{ marginTop: '-8px' }}>
-                  Try to form your answer first. Then click <strong>Show answer</strong>{' '}
-                  to compare against the model response, with optional reveals for the
-                  reasoning and the most common wrong answer.
+                  Multiple-choice items: pick the answer you believe is right and submit
+                  to see the explanation. Open-ended items: form your answer first,
+                  then reveal the model response and the reasoning behind it.
                 </p>
                 {mod.quiz.map((item, i) => {
                   const revealed = revealedAnswers.has(i);
+                  // MC mode is determined by presence of a `choices` array. The
+                  // schema also requires `correctIndex` when `choices` is set.
+                  const isMC =
+                    Array.isArray(item.choices) &&
+                    item.choices.length > 0 &&
+                    typeof item.correctIndex === 'number';
+                  const selectedIdx = selectedChoices.get(i);
+                  const correctIdx = isMC ? (item.correctIndex as number) : -1;
+                  const isCorrect =
+                    isMC && revealed && selectedIdx === correctIdx;
+
+                  /* Per-item reset clears both the revealed flag and any
+                   * MC selection so a student who re-tries starts fresh. */
+                  const resetItem = () => {
+                    setRevealedAnswers((prev) => {
+                      const next = new Set(prev);
+                      next.delete(i);
+                      return next;
+                    });
+                    setSelectedChoices((prev) => {
+                      const next = new Map(prev);
+                      next.delete(i);
+                      return next;
+                    });
+                  };
+
                   return (
                     <div
                       key={i}
@@ -342,21 +378,166 @@ export default function CoursePlayerPage() {
                         </p>
                       </div>
 
-                      {/* Reveal control / answer block */}
+                      {/* Multiple-choice answer set, when present. The
+                       * choices stay visible after submit so the student can
+                       * see which one was correct relative to their pick. */}
+                      {isMC && (
+                        <div className="mt-4 ml-8 flex flex-col gap-2">
+                          {item.choices!.map((choice, ci) => {
+                            const picked = selectedIdx === ci;
+                            const isCorrectChoice = ci === correctIdx;
+                            // Visual treatment after submit:
+                            //   correct choice → gold left border, gold bg
+                            //   their wrong pick → red-tinted border + bg
+                            //   other unselected → muted
+                            let bg = 'white';
+                            let borderColor = 'var(--line)';
+                            let leftBorder = '1px solid var(--line)';
+                            if (revealed) {
+                              if (isCorrectChoice) {
+                                bg = 'var(--cream-warm)';
+                                borderColor = 'var(--gold)';
+                                leftBorder = '3px solid var(--gold)';
+                              } else if (picked) {
+                                bg = 'rgba(180, 60, 60, 0.06)';
+                                borderColor = 'rgba(180, 60, 60, 0.35)';
+                                leftBorder = '3px solid rgba(180, 60, 60, 0.55)';
+                              }
+                            } else if (picked) {
+                              bg = 'var(--cream-warm)';
+                              borderColor = 'var(--gold)';
+                              leftBorder = '3px solid var(--gold)';
+                            }
+                            const letter = String.fromCharCode(65 + ci); // A, B, C, D
+                            return (
+                              <button
+                                key={ci}
+                                type="button"
+                                disabled={revealed}
+                                onClick={() => {
+                                  if (revealed) return;
+                                  setSelectedChoices((prev) => {
+                                    const next = new Map(prev);
+                                    next.set(i, ci);
+                                    return next;
+                                  });
+                                }}
+                                className="text-left rounded-xs p-3 transition-colors"
+                                style={{
+                                  background: bg,
+                                  border: `1px solid ${borderColor}`,
+                                  borderLeft: leftBorder,
+                                  cursor: revealed ? 'default' : 'pointer',
+                                  display: 'flex',
+                                  gap: 12,
+                                  alignItems: 'flex-start',
+                                }}
+                              >
+                                <span
+                                  className="font-mono"
+                                  style={{
+                                    color:
+                                      revealed && isCorrectChoice
+                                        ? 'var(--gold-deep)'
+                                        : 'var(--ink-dim)',
+                                    fontSize: 12,
+                                    fontWeight: 600,
+                                    paddingTop: 2,
+                                    minWidth: 18,
+                                  }}
+                                >
+                                  {letter}
+                                </span>
+                                <span
+                                  className="text-ink leading-snug"
+                                  style={{ flex: 1 }}
+                                >
+                                  {choice}
+                                </span>
+                                {revealed && isCorrectChoice && (
+                                  <span
+                                    className="font-mono text-[10px] tracking-[0.18em]"
+                                    style={{
+                                      color: 'var(--gold-deep)',
+                                      textTransform: 'uppercase',
+                                      letterSpacing: '0.18em',
+                                      paddingTop: 4,
+                                    }}
+                                  >
+                                    Correct
+                                  </span>
+                                )}
+                                {revealed && picked && !isCorrectChoice && (
+                                  <span
+                                    className="font-mono text-[10px] tracking-[0.18em]"
+                                    style={{
+                                      color: 'rgba(150, 40, 40, 0.85)',
+                                      textTransform: 'uppercase',
+                                      letterSpacing: '0.18em',
+                                      paddingTop: 4,
+                                    }}
+                                  >
+                                    Your pick
+                                  </span>
+                                )}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      )}
+
+                      {/* Reveal control / answer block.
+                       *   MC mode (pre-submit): Submit button, disabled if no pick.
+                       *   MC mode (post-submit): outcome banner + explanation.
+                       *   Open mode: existing Show answer / reveal pane. */}
                       <div className="mt-4 ml-8">
                         {!revealed ? (
                           <button
                             type="button"
+                            disabled={isMC && selectedIdx === undefined}
                             onClick={() =>
                               setRevealedAnswers((prev) => new Set(prev).add(i))
                             }
                             className="btn-secondary"
-                            style={{ fontSize: 13, padding: '8px 16px' }}
+                            style={{
+                              fontSize: 13,
+                              padding: '8px 16px',
+                              opacity:
+                                isMC && selectedIdx === undefined ? 0.5 : 1,
+                              cursor:
+                                isMC && selectedIdx === undefined
+                                  ? 'not-allowed'
+                                  : 'pointer',
+                            }}
                           >
-                            Show answer →
+                            {isMC ? 'Submit answer →' : 'Show answer →'}
                           </button>
                         ) : (
                           <div className="flex flex-col gap-3">
+                            {isMC && (
+                              <div
+                                className="rounded-xs p-3"
+                                style={{
+                                  background: isCorrect
+                                    ? 'var(--cream-warm)'
+                                    : 'rgba(180, 60, 60, 0.06)',
+                                  borderLeft: isCorrect
+                                    ? '3px solid var(--gold)'
+                                    : '3px solid rgba(180, 60, 60, 0.55)',
+                                }}
+                              >
+                                <span
+                                  className="eyebrow"
+                                  style={{
+                                    color: isCorrect
+                                      ? 'var(--gold-deep)'
+                                      : 'rgba(150, 40, 40, 0.85)',
+                                  }}
+                                >
+                                  {isCorrect ? 'Correct' : 'Not quite'}
+                                </span>
+                              </div>
+                            )}
                             <div
                               className="rounded-xs p-4"
                               style={{
@@ -373,7 +554,7 @@ export default function CoursePlayerPage() {
                               <p className="text-ink leading-relaxed">{item.a}</p>
                             </div>
                             {item.why && (
-                              <details className="text-sm">
+                              <details className="text-sm" open={isMC && !isCorrect}>
                                 <summary
                                   className="cursor-pointer eyebrow"
                                   style={{ color: 'var(--gold-deep)' }}
@@ -416,13 +597,7 @@ export default function CoursePlayerPage() {
                               )}
                               <button
                                 type="button"
-                                onClick={() =>
-                                  setRevealedAnswers((prev) => {
-                                    const next = new Set(prev);
-                                    next.delete(i);
-                                    return next;
-                                  })
-                                }
+                                onClick={resetItem}
                                 className="text-xs text-ink-dim underline underline-offset-2 ml-auto"
                                 style={{
                                   background: 'none',
@@ -431,7 +606,7 @@ export default function CoursePlayerPage() {
                                   cursor: 'pointer',
                                 }}
                               >
-                                Hide answer
+                                {isMC ? 'Try again' : 'Hide answer'}
                               </button>
                             </div>
                           </div>

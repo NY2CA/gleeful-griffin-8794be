@@ -29,6 +29,25 @@ export interface Topic {
  * concept/calc, Operator = real-deal judgment call. The `why` and `trap`
  * fields are optional but expected on upgraded modules — they reinforce
  * understanding rather than just confirming the answer.
+ *
+ * RENDER MODES
+ * ────────────────────────────────────────────────────────────────────
+ * Open-ended (legacy / operator-judgment items):
+ *   `choices` is omitted. UI shows the question with a "Reveal answer"
+ *   button; clicking reveals `a`, `why`, and `trap`. No scoring.
+ *
+ * Multiple choice (preferred for foundation-level recall + Foundations):
+ *   `choices` populated with 4 options, `correctIndex` points to the
+ *   right one. UI shows the choices as selectable; on submit, the
+ *   correct/incorrect feedback shows along with `why` and `trap`.
+ *   The `a` field is still authored as the model-answer narrative —
+ *   it is shown alongside the why/trap reveal as the canonical
+ *   explanation, and is also typically the source for the correct
+ *   choice's text (paraphrased to fit a single line).
+ *
+ * Both modes share the same `why` / `trap` / `topicId` / `difficulty`
+ * scaffolding so the UI can present a unified reveal pane regardless
+ * of mode.
  */
 export interface QuizItem {
   /** The question. */
@@ -43,6 +62,17 @@ export interface QuizItem {
   topicId?: string;
   /** Question difficulty, used for the badge in the UI. */
   difficulty?: 'foundation' | 'application' | 'operator';
+  /**
+   * Multiple-choice answer set. When populated (typically 4 items) the UI
+   * renders MC mode with selection + scoring instead of open-ended reveal.
+   * Omit for legacy open-ended items.
+   */
+  choices?: string[];
+  /**
+   * Zero-based index into `choices` of the correct answer. Required when
+   * `choices` is populated. Ignored otherwise.
+   */
+  correctIndex?: number;
 }
 
 /**
@@ -502,6 +532,13 @@ export const COURSES: Course[] = [
             trap: 'The seductive wrong answer is population growth, because it is what brokers and city marketing materials lead with. Population is an outcome variable, not a driver — population growth without wage growth is a retiree or student migration story, not a renter migration story.',
             topicId: 'w1-t01-demand-drivers',
             difficulty: 'foundation',
+            choices: [
+              'Population growth — it is the leading indicator brokers and city marketing materials feature, and renter demand follows people.',
+              'Household formation — every new household needs a lease, so this is the most direct read on rent demand.',
+              'Job growth — more jobs in the MSA mechanically translate to more rent-paying tenants.',
+              'Real wage growth — rent is paid out of take-home pay, and pricing power is bounded by what tenants can actually afford.',
+            ],
+            correctIndex: 3,
           },
           {
             q: 'You need to compare Indianapolis and Charlotte on three dimensions: 24-month supply pipeline, real wage growth, and renter affordability. Which authoritative free data sources do you pull for each, and what is the rough time-to-collect for both MSAs?',
@@ -510,6 +547,13 @@ export const COURSES: Course[] = [
             trap: 'The common error is leaning on a single proprietary tool (Yardi Matrix, CoStar) and treating its blended numbers as ground truth. Those tools are useful, but they do not expose the underlying methodology and their MSA scoring weights are often opaque or biased toward markets where their data is densest.',
             topicId: 'w1-t02-data-sources',
             difficulty: 'application',
+            choices: [
+              'CoStar for all three — supply, wages, and affordability — and budget about 30 minutes per MSA since the export is one click.',
+              'Yardi Matrix for supply, ZIP Recruiter postings for wage growth, and Zillow rent indices for affordability; roughly 45 minutes for two MSAs.',
+              'HUD SoCDS plus planning-department agendas for supply, BEA Regional Economic Accounts plus BLS QCEW for wage growth, and ACS Table S2503 for renter affordability; roughly 60-75 minutes for two MSAs.',
+              'Census ACS S1901 for both wages and affordability, and the local apartment association newsletter for supply; under 30 minutes for two MSAs.',
+            ],
+            correctIndex: 2,
           },
           {
             q: 'An associate hands you an MSA scorecard for Boise. Default weights have wage growth at 25%; Boise scores a 2/5 there. He suggests dropping wage weight to 15% and increasing population weight to 20% so the overall score reflects "what is actually working for Boise." What is your call, and why?',
@@ -518,6 +562,13 @@ export const COURSES: Course[] = [
             trap: 'It feels rigorous to "tailor the scoring to the market." It is the opposite — it is a way to make the math agree with a thesis you have already developed, which is exactly when the math is least useful.',
             topicId: 'w1-t03-msa-scoring-weights',
             difficulty: 'operator',
+            choices: [
+              'Approve the change. Boise is a different market than the default sheet was built for, so tailoring the weights to the local economy is the rigorous move.',
+              'Approve the change but cap the wage adjustment at 20% so the sheet does not drift too far from the default.',
+              'Push back hard. The whole point of a static weighting scheme is that it makes you walk away from markets that have not earned the slot — re-weighting per market turns a screen into a justification document.',
+              'Run two scorecards in parallel — the default and the re-weighted version — and let the deal committee decide which to use.',
+            ],
+            correctIndex: 2,
           },
           {
             q: 'Your proforma rent on a 2-bedroom unit is $1,800/month. The MSA median renter household income (ACS S2503) is $65,000. The MSA current rent-to-income ratio is 28%. Calculate the proforma rent-to-income ratio and tell me whether you have rent-push room or are pushing into a ceiling.',
@@ -526,6 +577,13 @@ export const COURSES: Course[] = [
             trap: 'The most common mistake is using median household income (ACS S1901) instead of median renter household income (S2503). Renter incomes typically run 20-40% lower than overall household incomes, so using S1901 makes your rent-to-income look 5-10 percentage points more affordable than it actually is.',
             topicId: 'w1-t04-rent-to-income',
             difficulty: 'application',
+            choices: [
+              '27.7% — comfortably below the 30% threshold; you have rent-push room.',
+              '33.2% — well above HUD\'s cost-burdened threshold and 5+ points over the MSA average; no headroom, you are pushing into a ceiling.',
+              '28.0% — exactly in line with the MSA; neutral, no clear signal either way.',
+              '21.6% — well below the threshold; the proforma is conservative and you can push rents further.',
+            ],
+            correctIndex: 1,
           },
           {
             q: 'An MSA shows current deliveries at 1.8% of existing stock — comfortably below the yellow-flag line. But the 24-month permit pipeline is running at 4.2%. How do you adjust your rent-growth underwriting for a value-add deal closing this quarter?',
@@ -534,6 +592,13 @@ export const COURSES: Course[] = [
             trap: 'The wrong move is to use today\'s 1.8% deliveries (well below the 2.5% yellow flag) to justify standard rent-growth assumptions. Sponsors who underwrote 3%/yr rent growth in Charlotte at the 2023 peak broke covenant when 2024 deliveries hit; sponsors who underwrote flat for years 1-2 made it through.',
             topicId: 'w1-t05-supply-pipeline',
             difficulty: 'application',
+            choices: [
+              'Underwrite standard 3%/year rent growth — current deliveries at 1.8% are well below the yellow-flag line, and permits often do not deliver.',
+              'Underwrite flat or negative rent growth in years 1-2 with any rent push deferred to years 3-5; the 4.2% permit pipeline lands directly in your value-add execution window.',
+              'Underwrite higher rent growth in years 1-2 to front-load the income before deliveries hit, then taper in years 3-5.',
+              'Use a blended assumption that averages today\'s deliveries and tomorrow\'s permits, then apply standard growth.',
+            ],
+            correctIndex: 1,
           },
           {
             q: 'Phoenix posted +38% rent growth and +19% wage growth from 2019-2022. The wage-rent delta is +19 percentage points. What does this delta tell you about underwriting Phoenix in early 2023, and what is the most defensible rent-growth assumption for years 1-2 of a new acquisition?',
@@ -542,6 +607,13 @@ export const COURSES: Course[] = [
             trap: 'The most common wrong answer is to extrapolate the trailing rent number ("rents grew 8%/year, so I will underwrite 5%/year to be conservative"). That ignores the divergence and is just trend-fitting on the wrong variable. The variable that matters is the gap between rent and wages, not the rent number alone.',
             topicId: 'w1-t06-wage-rent-ratio',
             difficulty: 'operator',
+            choices: [
+              'Underwrite 5%/year rent growth in years 1-2 — a conservative trim of the trailing 8%/year that still rides the trend.',
+              'Underwrite flat to negative rent growth in years 1-2 (mean reversion), with thesis-level growth pushed to years 3-5 once incomes catch up to rents.',
+              'Underwrite 8%/year rent growth in years 1-2 to match the trailing average, then taper to 3% in years 3-5.',
+              'Treat the +19 pp delta as evidence of structural demand strength and underwrite above-market rent growth.',
+            ],
+            correctIndex: 1,
           },
           {
             q: 'An MSA shows net positive return migration on the IRS SOI data — gaining 3,200 returns last year. But net AGI is slightly negative (-$45M). What does this combination tell you about the rent-growth outlook, and what does it imply for your underwrite?',
@@ -550,6 +622,13 @@ export const COURSES: Course[] = [
             trap: 'Sponsors stop at the headline "net positive migration" and underwrite rent growth as if all migrants are equally rent-paying. The IRS AGI data is the cheapest way to catch this distinction — and most sponsors never look at it.',
             topicId: 'w1-t07-migration-signal',
             difficulty: 'application',
+            choices: [
+              'Net positive returns is the headline signal — underwrite rent growth in line with the migration data and treat the AGI line as noise.',
+              'The MSA is gaining people but losing income — inbound filers earn less than outbound ones; this predicts rent deceleration and warrants below-market rent growth or a pass.',
+              'A small negative AGI gap is normal in any growing MSA; ignore it unless it exceeds -$200M.',
+              'The combination is bullish — lower-income arrivals create demand for B and C class units, which is exactly the value-add hunting ground.',
+            ],
+            correctIndex: 1,
           },
           {
             q: 'Your team is excited about an MSA scoring 4.2/5 on the demand and supply weights — strong wages, low deliveries, healthy migration. The regulatory screen comes back: rent stabilization passed last year (3% annual cap), eviction timeline 90 days, transfer tax 0.5%. Two of three regulatory checks are flagged. The deal pipeline in this MSA is unusually strong right now. What is the call?',
@@ -558,6 +637,13 @@ export const COURSES: Course[] = [
             trap: 'The seductive wrong answer is to negotiate a higher cap rate to "price in" the regulatory drag. That works in theory and fails in practice — the value-add IRR uplift you were underwriting depends on rent push that the rent cap explicitly prevents. You cannot price in something that breaks your model.',
             topicId: 'w1-t09-regulatory-screen',
             difficulty: 'operator',
+            choices: [
+              'Negotiate a higher cap rate to "price in" the regulatory drag — every problem has a price, and the demand and supply scoring is unusually strong.',
+              'Proceed but cap your exposure to one deal in the MSA so you can validate the operational drag before committing more capital.',
+              'Walk. The two-of-three flagged regulatory screen disqualifies the MSA, full stop — rent stabilization and a 90-day eviction timeline restructure the entire return profile in ways the demand and supply score cannot offset.',
+              'Override the regulatory screen for this cycle since the rent cap is generous (3%) and your rent push is only 4-5% per year anyway.',
+            ],
+            correctIndex: 2,
           },
           {
             q: 'It is late 2022. The 10-year Treasury has moved from 1.5% to 4.2% over four quarters. Your top-5 market board, built in 2021, is heavily weighted toward growth markets (Phoenix, Austin, Nashville, Tampa, Boise). What specific changes do you make to the scoring weights and the board itself?',
@@ -566,6 +652,13 @@ export const COURSES: Course[] = [
             trap: 'Two failure modes: refusing to update because "the fundamentals have not changed" (true but irrelevant — capitalization has), and overcorrecting by abandoning growth entirely (a normalized regime is the default, not the bottom of a cycle).',
             topicId: 'w1-t10-macro-filters',
             difficulty: 'operator',
+            choices: [
+              'Hold the board steady — the fundamentals in the 2021 markets have not changed, and the rate move is a separate macro story that does not belong in MSA scoring.',
+              'Abandon growth markets entirely and rebuild the board around defensive markets only; growth is a cycle-top trade and we are now past the top.',
+              'Shift weights from growth-leaning factors (wage growth, job growth) toward defensive ones (employment diversity, wage durability, rent-to-income headroom); likely outcome is that Phoenix, Austin, and Boise drop off and Indianapolis, Columbus, and Kansas City replace them.',
+              'Wait for the next cycle to settle before re-ranking — making changes in the middle of a rate move risks whipsawing the board.',
+            ],
+            correctIndex: 2,
           },
           {
             q: 'What are the three discipline mechanisms that separate a working top-5 market board from a vanity document?',
@@ -574,6 +667,13 @@ export const COURSES: Course[] = [
             trap: 'The most common failure is building the board, sharing it with LPs, and then never refreshing. A stale top-5 is worse than no list, because it is now a documented commitment to outdated thinking.',
             topicId: 'w1-t11-market-board',
             difficulty: 'foundation',
+            choices: [
+              'A polished slide format, distribution to LPs every quarter, and consensus among the deal team that the rankings are right.',
+              'A list of at least ten markets, sourced from an industry report, with one paragraph of commentary per market.',
+              'A refresh cadence (quarterly inputs, semiannual re-ranking with willingness to drop an MSA), per-MSA kill criteria (specific metrics that force reassessment), and a two-market backup list so replacements are ranked and not random.',
+              'A scoring formula that uses at least eight factors, weighted by deal-team vote, and updated whenever a deal closes in a new market.',
+            ],
+            correctIndex: 2,
           },
         ],
         mistakes: [
