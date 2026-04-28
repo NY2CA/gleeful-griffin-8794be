@@ -111,10 +111,10 @@ export default function DashboardPage() {
                   activate your access. If you haven&rsquo;t heard from us
                   within one business day, email{' '}
                   <a
-                    href="mailto:lou@resciaproperties.com"
+                    href="mailto:rescia@resciaproperties.com"
                     className="text-navy underline underline-offset-2"
                   >
-                    lou@resciaproperties.com
+                    rescia@resciaproperties.com
                   </a>
                   .
                 </p>
