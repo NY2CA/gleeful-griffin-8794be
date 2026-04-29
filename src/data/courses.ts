@@ -907,6 +907,13 @@ export const COURSES: Course[] = [
             trap: 'A 2015-vintage building with quartz counters in a B-tier submarket is not "A-class" — tier is about the submarket fundamentals, not the building. Sponsors mis-tier their own deal and underwrite A-class assumptions on a B-class location.',
             topicId: 'w2-t01-submarket-tiers',
             difficulty: 'foundation',
+            choices: [
+              'Tier reflects building vintage and finish quality — a 2015-vintage building with quartz and stainless is A-class regardless of where it sits.',
+              'Tier is a rent-band label set by the broker community, and B is targeted because it sits at median rent and offers the largest tenant pool.',
+              'Tier is a function of the institutional buyer pool, and B works because there is less competition from large funds chasing trophy assets.',
+              'Tier reflects submarket fundamentals — rent ceiling, renter elasticity, surrounding stock — and B works because tenants pay for upgrades without jumping the way A-class tenants do.',
+            ],
+            correctIndex: 3,
           },
           {
             q: 'You are screening a candidate submarket in Nashville. Walk through how you would build the drive-time map and what specifically you are looking for.',
@@ -915,6 +922,13 @@ export const COURSES: Course[] = [
             trap: 'Using off-peak drive times. A 15-minute 10pm drive is a 35-minute 8am drive. Always pull peak-hour, never average.',
             topicId: 'w2-t02-drive-time-job-centers',
             difficulty: 'application',
+            choices: [
+              'Pull a 30-minute radius around the CBD using off-peak Google Maps data — wider radius captures more renter pool.',
+              'Identify the top-3 employment centers, draw peak-hour 10/20/30-minute isochrones around each, and target submarkets in the 20-minute overlap of two centers for redundancy.',
+              'Use the highest-population zip codes within the MSA and overlay them with median income to find the renter sweet spot.',
+              'Run a CoStar submarket-rent heatmap and pick the highest-rent submarkets within commuting distance of downtown.',
+            ],
+            correctIndex: 1,
           },
           {
             q: 'A submarket scores Walk Score 72 — solid. Why is that score not enough, and what do you actually look for on the ground?',
@@ -923,6 +937,13 @@ export const COURSES: Course[] = [
             trap: 'Treating Walk Score as the answer. A score of 72 with three of the five anchors missing is worse than a score of 65 with all five present.',
             topicId: 'w2-t03-walk-score-daily-needs',
             difficulty: 'application',
+            choices: [
+              'A 72 is solid — at that level you can use it as the headline walkability metric and move on to other underwriting work.',
+              'Walk Score weights all amenities equally, so cross-check it against a Yelp density count of restaurants and bars within a half-mile radius.',
+              'Walk Score is a noisy composite. Run the five-anchor test inside 1 mile or a 5-minute drive: full-service grocer, pharmacy, two coffee shops, gym, three QSRs. Missing any one pulls rent 5-10%.',
+              'Pull the property-level walkability scores from CoStar, Yardi, and ApartmentList and average them — the composite is more reliable than Walk Score alone.',
+            ],
+            correctIndex: 2,
           },
           {
             q: 'Submarket A has violent-crime rate 4.2 per 1,000 residents (high but trending down 32% over 4 years). Submarket B has violent-crime rate 1.8 per 1,000 (low but trending up 18% over 3 years). Both are priced as "stable" in the market. Which is the rent-growth opportunity, and what does this tell you about how to read crime data?',
@@ -931,6 +952,13 @@ export const COURSES: Course[] = [
             trap: 'Conflating property crime with violent crime. Property crime is weakly correlated with rent; violent crime is strongly correlated. A drop in burglaries with a rise in aggravated assaults is a worsening submarket, not an improving one.',
             topicId: 'w2-t04-crime-trend',
             difficulty: 'operator',
+            choices: [
+              'Submarket B — lower absolute crime rate is what protects rent and occupancy, and the 18% rise is still inside the safer band.',
+              'Neither — both should be passed on, since any crime trend volatility makes underwriting unreliable for institutional debt.',
+              'Submarket A only if you can verify the drop is in property crime; Submarket B only if the rise is concentrated in non-violent categories.',
+              'Submarket A — the 32% downward trend is the leading indicator of rent growth, while Submarket B\'s rising line warns renters will start leaving. Level is already priced in; trend is not.',
+            ],
+            correctIndex: 3,
           },
           {
             q: 'Your associate argues that elementary school ratings do not matter for a 200-unit Class-B property targeting young professional renters with no kids. How do you correct this thinking, and what specific data source do you use?',
@@ -939,6 +967,13 @@ export const COURSES: Course[] = [
             trap: 'Using the district average rating. Districts often span 4-6 schools with rating spreads of 4+ points. The attendance-zone-specific rating is what prices into rent.',
             topicId: 'w2-t05-schools-rent-signal',
             difficulty: 'application',
+            choices: [
+              'Schools matter because rent floors are set by the buy-vs-rent alternative — homebuyers pay a premium for schools, lifting home values and the rent ceiling. Use GreatSchools.org for the specific elementary attendance zone.',
+              'Schools matter only in submarkets with 30%+ family-sized 3BR+ unit mix. For 1BR-heavy young-professional product the effect is negligible.',
+              'Use the school district average rating from the state DOE — it captures the broader area renters and buyers price to.',
+              'Schools matter through the secondary effect on retail vitality. The right metric is per-pupil spending pulled from the federal NCES database.',
+            ],
+            correctIndex: 0,
           },
           {
             q: 'A broker hands you a comp set of six properties. On inspection, two are 2005-vintage (subject is 1992), one has a pool and clubhouse the subject does not, one is in a different submarket, and the broker\'s "asking rents" on all six are pre-concession. Walk through how you build a real comp set.',
@@ -947,6 +982,13 @@ export const COURSES: Course[] = [
             trap: 'Letting the broker curate. Even more dangerous: using "asking rents" without verifying concessions. In oversupplied submarkets concessions run 4-6 weeks — that\'s a 10% effective-rent cut you would otherwise miss.',
             topicId: 'w2-t06-rent-comp-discipline',
             difficulty: 'operator',
+            choices: [
+              'Use all six broker comps but apply a 5-7% haircut to asking rents to estimate effective rents — saves hours and gets you to a number quickly.',
+              'Pull the CoStar comp set for the submarket, filter on vintage and unit count, and trust the platform-effective-rent number for institutional consistency.',
+              'Discard the vintage-mismatched, amenity-mismatched, and cross-submarket comps; build your own 5-7 properties matched on vintage (±10 years), mix (±15%), and amenity tier; call each leasing office for current concessions and use effective rent only.',
+              'Keep the broker\'s six comps as the baseline and add one or two of your own to triangulate — the broker has more local market knowledge than you do.',
+            ],
+            correctIndex: 2,
           },
           {
             q: 'A 240-unit 1995-vintage Indy deal trades at $29M. Calculate cap rate, $/unit, and $/psf if NOI is $1,479,000 and the property is 201,600 sq ft. Then compare to a comp set running 5.0-5.4% cap, $115-128k/unit, $135-150/psf — does the deal triangulate?',
@@ -955,6 +997,13 @@ export const COURSES: Course[] = [
             trap: 'Relying on cap rate alone, especially the broker\'s marketed cap on the broker\'s pro-forma NOI. Always normalize NOI before you divide.',
             topicId: 'w2-t07-sale-comp-discipline',
             difficulty: 'application',
+            choices: [
+              'Cap 5.10%, $/unit $120,833, $/psf $143.85 — all three sit inside the comp ranges, so the deal triangulates on a defensible basis.',
+              'Cap 5.10%, $/unit $115,000, $/psf $145 — cap is in range but $/unit is at the low end, suggesting NOI is overstated.',
+              'Cap 4.90%, $/unit $120,833, $/psf $143.85 — cap rate is below the comp range, indicating a stretched basis on the trailing NOI.',
+              'Cap 5.20%, $/unit $122,500, $/psf $138.50 — all three metrics are inside the band but the spread suggests the broker is using forward-pro-forma NOI.',
+            ],
+            correctIndex: 0,
           },
           {
             q: 'A Charlotte submarket pipeline shows 6.2% deliveries-to-stock for 2024 — well above your 5% red-flag threshold. Your team is ready to walk. What two questions do you ask before retreating?',
@@ -963,6 +1012,13 @@ export const COURSES: Course[] = [
             trap: 'Treating Yardi or CoStar as the complete supply picture. Both miss 12-18 months of lead-time visible only on the planning-commission agenda.',
             topicId: 'w2-t08-submarket-supply-pipeline',
             difficulty: 'operator',
+            choices: [
+              'Whether the seller will accept a price cut to compensate, and whether your equity LPs will tolerate the supply concentration headline.',
+              'How fast wage growth in the submarket is trending, and whether household formation can absorb the deliveries within 24 months.',
+              'What is the product mix of the pipeline (luxury A-class condos do not compete with B-class rentals), and what is the funding status of each project (entitled-but-unfunded routinely slips 12-24 months or dies).',
+              'What CoStar shows for trailing absorption rate, and whether Yardi\'s submarket forecast model agrees with the headline pipeline number.',
+            ],
+            correctIndex: 2,
           },
           {
             q: 'Walk through the structured 90-120 minute submarket site visit protocol. What are the five components, and which is the single most important?',
@@ -971,6 +1027,13 @@ export const COURSES: Course[] = [
             trap: 'Doing the site visit with the broker. They will steer you past the problems. Walk it solo, or with a partner, never with the seller\'s representative.',
             topicId: 'w2-t09-walk-the-block',
             difficulty: 'operator',
+            choices: [
+              'The five components are subject-property tour, broker tour, leasing-agent shop, comp-property tour, and lender drive-by — and the broker tour is most important because it surfaces seller motivation.',
+              'Morning rush, midday retail walk, comp parking-lot scan, evening walk, and structured notes — the evening walk is the most important because it surfaces what the databases miss and the broker tour avoids.',
+              'Daytime property tour, drive-time validation, retail count, demographic confirmation, and pricing review — the demographic confirmation is most important because it ties to your renter income thesis.',
+              'Aerial drone scan, three-comp drive-through, leasing office mystery shop, daytime walk, and crime data overlay — the crime overlay is most important because it validates the NIBRS data.',
+            ],
+            correctIndex: 1,
           },
           {
             q: 'What are the seven required sections of a 1-page submarket memo, and what makes the kill criteria section the most important?',
@@ -979,6 +1042,13 @@ export const COURSES: Course[] = [
             trap: 'Writing a 3-page submarket "overview." Anything longer than one page does not get updated, does not get read, and does not get enforced.',
             topicId: 'w2-t10-submarket-memo',
             difficulty: 'foundation',
+            choices: [
+              'Thesis, rent comps, sale comps, supply pipeline, renter profile, kill criteria, target deal profile — kill criteria is most important because it converts the memo from advocacy document to decision tool with explicit pass triggers.',
+              'Executive summary, market overview, demographic detail, supply-demand model, comp set, financial projection, exit assumptions — the financial projection is most important because it sets LP expectations.',
+              'Thesis, MSA context, employer concentration, transit access, school ratings, retail vibrancy, conclusion — the thesis is most important because the rest flows from it.',
+              'Submarket map, drive-time analysis, rent comp matrix, sale comp matrix, demographic table, capex assumption, and broker contact list — the broker list is most important because it determines deal flow.',
+            ],
+            correctIndex: 0,
           },
         ],
         mistakes: [
@@ -1212,6 +1282,13 @@ export const COURSES: Course[] = [
             trap: 'Treating direct outreach as "free." Done right it costs $300-$800 per qualified conversation between mailers, LinkedIn, skip-tracing tools, and time.',
             topicId: 'w3-t01-sourcing-funnel',
             difficulty: 'foundation',
+            choices: [
+              'Listed/brokered, off-market wholesalers, and 1031-exchange referrals — roughly 50% / 30% / 20% in a typical year.',
+              'Auction platforms, syndicator partnerships, and listed/brokered — roughly 25% / 25% / 50%, balancing speed and pricing.',
+              'Broker first-look, broker call-for-offers, and broker re-trades — roughly 20% / 60% / 20%, all funneling through the same broker network.',
+              'Listed/brokered, direct-to-owner outreach, and distressed/special-servicer — roughly 60-70% / 15-25% / 10-25%, with distressed weighted heavier in 2024-2026.',
+            ],
+            correctIndex: 3,
           },
           {
             q: 'A broker calls and tells you about a deal before the OM is even finalized — pre-emptive opportunity at $X. What did you actually do over the prior 18 months to earn that call?',
@@ -1220,6 +1297,13 @@ export const COURSES: Course[] = [
             trap: 'Asking for first-look before you have closed anything with that broker. The privilege is earned post-close, not pre-.',
             topicId: 'w3-t02-broker-first-look',
             difficulty: 'operator',
+            choices: [
+              'You bid above asking on two prior deals, signaling you are an aggressive buyer the broker can route stretched assignments to.',
+              'You took the broker out for dinner at NMHC and IMN conferences, and you maintain a quarterly check-in cadence so you stay top-of-mind.',
+              'You signed a fee agreement that pre-commits to using their brokerage on the eventual sale, locking in a two-sided economic relationship.',
+              'You sent fast substantive passes, congratulated the broker on closed comparable trades, closed what you contracted without retrade, and reciprocated with referrals on deals outside your box — accumulated over 18-24 months.',
+            ],
+            correctIndex: 3,
           },
           {
             q: 'Your CRM has 400 brokers in it and you have not had a substantive conversation with most in 6+ months. Diagnose the problem and prescribe the fix.',
@@ -1228,6 +1312,13 @@ export const COURSES: Course[] = [
             trap: 'Building the CRM in Salesforce or HubSpot. The tool does not matter — a Google Sheet works. Skipping the weekly review is what kills the system.',
             topicId: 'w3-t03-broker-crm',
             difficulty: 'application',
+            choices: [
+              'CRM is too small in quality terms — migrate from spreadsheet to Salesforce or HubSpot so automated cadence triggers and pipeline scoring keep relationships warm.',
+              'Hire an analyst to do quarterly outreach to all 400 brokers — at scale, even a low touch rate per relationship will generate enough deal flow to stay diversified.',
+              'CRM is too big to maintain — prune to ~85 active (20 top-tier on 30-day cadence, 35 mid on 60-day, 30 occasional on 90-day+), six fields per row, and a non-negotiable Friday-30-minute review ritual.',
+              'Diagnose the issue as a market-coverage gap and add 100 more broker rows to widen the funnel — bigger CRM means more deal flow optionality.',
+            ],
+            correctIndex: 2,
           },
           {
             q: 'You are running a 12-month direct-to-owner campaign on 420 LLCs in three Ohio submarkets. Walk me through the channel mix and what you would expect at the top of the funnel and the bottom.',
@@ -1236,6 +1327,13 @@ export const COURSES: Course[] = [
             trap: 'Mass cold-emailing. It damages your domain reputation, gets you spam-flagged, and burns the ability to use email as a follow-up channel later.',
             topicId: 'w3-t04-direct-to-owner',
             difficulty: 'application',
+            choices: [
+              'Mass cold-email blast 4-5 times across the year — cheapest channel per touch and easy to scale through automation tools.',
+              'Single-channel postcard campaign with 12 mailings per owner — repetition through the same medium drives recall and conversion.',
+              'Mix of postcard, LinkedIn, phone, and email follow-up; 4-6 touches per owner over 12 months rotating channels; expect ~1,800 touches → ~50 conversations → 10-15 LOIs → 1-3 closed deals at ~$8-10k campaign cost.',
+              'Pure phone outreach with three calls per owner over 90 days — highest conversion channel so concentrate the budget there for fastest results.',
+            ],
+            correctIndex: 2,
           },
           {
             q: 'You have an LLC name from the assessor records but no human to call. Walk through the LLC-to-principal resolution workflow and rough cost.',
@@ -1244,6 +1342,13 @@ export const COURSES: Course[] = [
             trap: 'Using free tools for enterprise-scale campaigns. The 20% misdial rate burns reputation when those calls reach the wrong person who then complains to a peer.',
             topicId: 'w3-t05-skip-tracing',
             difficulty: 'application',
+            choices: [
+              'Pull the assessor mailing address and send the postcard there — the LLC owner receives all official property correspondence at that address.',
+              'SOS business-entity search for the manager name; cross-reference in TruePeopleSearch (free) and TLOxp ($200/mo) for current cell numbers; LinkedIn triangulation; property-data platforms (Reonomy/PropertyShark/CoStar) at scale; title-company relationships for the hardest 5-10%. Total tool cost on a 420-LLC campaign ~$900.',
+              'Order a paid Reonomy enterprise subscription — at $1,500/month it resolves every LLC nationally and you skip the multi-tool workflow.',
+              'Hire a dedicated VA to call each LLC\'s registered agent and request the principal\'s contact info — most agents will share if asked professionally.',
+            ],
+            correctIndex: 1,
           },
           {
             q: 'It is 2025 and the bridge-loan distressed wave is live. Name the four player categories in the workout channel and describe how to actually get on their lists.',
@@ -1252,6 +1357,13 @@ export const COURSES: Course[] = [
             trap: 'Treating a stressed borrower as a "desperate seller." They often have more leverage than you think — the lender is the negotiator, not the borrower.',
             topicId: 'w3-t06-special-servicer-lists',
             difficulty: 'operator',
+            choices: [
+              'Special servicers, bridge-lender workout desks, loan-sale advisors, auction platforms — and access is relational, secured through warm intros from your existing agency and bridge lenders, MBA CREF and IMN distressed conferences, and a one-page capability statement (size range, submarkets, close timeline, references).',
+              'CMBS trustees, county sheriff sales, REO listing agents, and FDIC bid lists — secured by paying for subscription access and registering on each agency\'s public buyer portal.',
+              'GSE special-asset desks, CDFI workout teams, opportunity-zone funds, and 1031 intermediaries — accessed through your accountant and tax-counsel network.',
+              'Distressed-debt hedge funds, vulture funds, mezzanine note holders, and REIT recap teams — accessed by purchasing data subscriptions from Trepp and CRE Daily.',
+            ],
+            correctIndex: 0,
           },
           {
             q: 'Compare two postcard copies on a 300-card test in Indianapolis: (A) "We buy apartment buildings — fast cash close, 30-day timeline" — and (B) "We closed on [specific property] in [specific submarket] last year and are looking for a second hold." Predict the response rates and explain why.',
@@ -1260,6 +1372,13 @@ export const COURSES: Course[] = [
             trap: 'Reusing the same copy for 6+ months. Response decays with familiarity. Rotate angle quarterly: subject specificity → market datapoint → recent transaction → specific question.',
             topicId: 'w3-t07-outbound-scripts',
             difficulty: 'application',
+            choices: [
+              'Both copies will perform similarly — postcard response is driven by mailing list quality, not by the message on the card.',
+              'Copy A will outperform — sophisticated owners respond to the certainty of "fast cash, 30-day close" because it removes the friction of a brokered process.',
+              'Copy A will perform around 1-1.5% (~4 of 300); Copy B will perform around 5-7% (~19 of 300), roughly 5x improvement on specificity alone. Sophisticated owners read generic language as wholesaler script and trash-bin it.',
+              'Both will underperform versus phone outreach — postcards are a dying channel and the test simply confirms that physical mail no longer works in 2026.',
+            ],
+            correctIndex: 2,
           },
           {
             q: 'A great-looking deal lands in your inbox at $X/unit, in an MSA that is on your top-5 board, but the submarket is not on your top-5 submarket list. Your team wants to "look closer." Walk through the disciplined response.',
@@ -1268,6 +1387,13 @@ export const COURSES: Course[] = [
             trap: 'Breaking hard filters for "special" deals. The filters exist to protect you from your own excitement. Every exception erodes the discipline; three exceptions erase it.',
             topicId: 'w3-t08-deal-box-discipline',
             difficulty: 'operator',
+            choices: [
+              'Run a full preliminary underwrite first, since the basis looks attractive — if the numbers work, expand the submarket board to include this one as a sixth.',
+              'Pass. Submarket on the top-5 board is a hard filter, full stop. Send a fast 48-hour email explaining the submarket-fit reason. The 4 hours saved funds the next deal that does fit. Hard filters protect you from your own excitement.',
+              'Underwrite at a 75 bps wider exit cap to compensate for the unknown submarket — if the deal still pencils with that conservatism, consider it.',
+              'Refer the deal to another sponsor in your network for a finder\'s fee — keeps the broker relationship warm and turns an off-box look into income.',
+            ],
+            correctIndex: 1,
           },
           {
             q: 'Two Columbus-area sponsors — Sponsor A at 95% close rate, Sponsor B at 72% close rate — start with similar teams in 2020. Predict the divergence in deal flow by 2024 and explain the mechanism.',
@@ -1276,6 +1402,13 @@ export const COURSES: Course[] = [
             trap: 'Going hard to "win" a deal when you know your DD is incomplete. That is a close-rate accident waiting. Going hard early to be "competitive" is the single most common cause of failed closes.',
             topicId: 'w3-t09-first-look-economics',
             difficulty: 'operator',
+            choices: [
+              'Sponsor A is seeing roughly 40% of deals pre-market with basis discounts because the broker steers the seller to the certain buyer; Sponsor B is seeing deals at the call-for-offers paying a 10-15% premium to win. ~40% gap in deals closed over 4 years. Brokers route to maximize (price × close probability), not top bid.',
+              'Both sponsors converge by 2024 because brokers cycle through buyers — close rate fades from memory after 18-24 months and new deal flow is allocated based on current bid strength.',
+              'Sponsor A is at a basis disadvantage because brokers reward premium bids, not certainty — by 2024 Sponsor B has closed more deals through aggressive pricing and is winning on volume.',
+              'Sponsor B catches up by hiring a larger acquisitions team and increasing broker touch frequency — relationship volume overcomes a softer close rate by year 3.',
+            ],
+            correctIndex: 0,
           },
           {
             q: 'Your sourcing dashboard for the trailing 90 days: 60 looks, 18% first-underwrite rate, 50% LOI submission rate, 18% close rate. Compute deals/quarter and diagnose any KPI that is off.',
@@ -1284,6 +1417,13 @@ export const COURSES: Course[] = [
             trap: 'Tracking vanity metrics — emails sent, meetings taken, deals "looked at" — instead of the four KPIs that decompose the actual funnel.',
             topicId: 'w3-t10-sourcing-kpis',
             difficulty: 'foundation',
+            choices: [
+              '60 × 18% × 50% × 18% = 0.97 deals/quarter ≈ 3.9 deals/year. The flag is first-underwrite at 18%, slightly below the 25% healthy band — too many looks falling outside the box at the 20-minute filter, suggesting your box is unknown to top brokers or markets covered have drifted.',
+              '60 × 18% × 50% × 18% = 1.62 deals/quarter ≈ 6.5 deals/year. Healthy across all four metrics — no diagnosis needed, the funnel is performing.',
+              '60 + 18% + 50% + 18% scaled to 0.6 deals/quarter. Close rate at 18% is the flag because it sits at the bottom of the healthy band and signals LOI pricing may be too aggressive.',
+              '60 × 50% × 18% × 18% = 0.97 deals/quarter. LOI submission at 50% is the flag because it sits above the 30-50% healthy band, suggesting you are submitting LOIs without full underwrites.',
+            ],
+            correctIndex: 0,
           },
         ],
         mistakes: [
@@ -1549,6 +1689,13 @@ export const COURSES: Course[] = [
             trap: 'Quoting the OM\'s "effective rent" without seeing the four components separately.',
             difficulty: 'foundation',
             topicId: 'w4-t01-rent-roll-decomposition',
+            choices: [
+              'Vacancy, market rent growth, lease incentives, and tenant turnover — each captured separately by the property management software.',
+              'Physical occupancy loss, loss-to-lease, concessions, and bad debt/delinquency. Each has its own driver and corrective lever, which is why collapsing them into "effective rent" hides where the value lives.',
+              'Gross rent, net rent, effective rent, and street rent — the four pricing metrics every OM should disclose separately.',
+              'Tenant move-outs, eviction filings, rent control caps, and seasonal vacancy patterns — the four economic forces that define rent roll quality.',
+            ],
+            correctIndex: 1,
           },
           {
             q: 'What is the single largest year-1 NOI miss in OM-driven underwriting, and why?',
@@ -1557,6 +1704,13 @@ export const COURSES: Course[] = [
             trap: 'Using the seller\'s in-place property tax as a year-1 line item.',
             difficulty: 'foundation',
             topicId: 'w4-t03-property-tax-reassessment',
+            choices: [
+              'Underwriting insurance at the seller\'s premium when the policy was bound in a softer market — a $100-150k miss in coastal states.',
+              'Forgetting to load benefits and burden onto base wages — typically a 25-35% understatement of payroll line.',
+              'Failing to reassess property tax to post-sale value. In sale-triggered states, a $24M deal can move tax from $165k to $700k+ — a 200+ bps cap-math error that flips the deal. Brokers quote the seller\'s pre-reassessment tax bill.',
+              'Using straight-line rent growth assumptions instead of stacking market growth, LTL burn-off, and renovation premium — a 50-100 bps year-1 NOI miss.',
+            ],
+            correctIndex: 2,
           },
           {
             q: 'A property has 7% loss-to-lease, even lease distribution, and 60% renewal rate. How fast does the LTL gap actually capture?',
@@ -1565,6 +1719,13 @@ export const COURSES: Course[] = [
             trap: 'Modeling LTL as a day-1 NOI step-up.',
             difficulty: 'application',
             topicId: 'w4-t06-loss-to-lease',
+            choices: [
+              'Day 1 — once you raise asking rents to market, all in-place leases reset within the first 30 days through automatic adjustment clauses.',
+              'Roughly 25-30% by month 12 and 50% by month 24, with renewals staying at deep discounts because residents will not absorb large jumps.',
+              'Roughly 55-65% by month 12 and 85-90% by month 18, with a steady-state residual gap of 2-4% as renewals lag the current market curve. Captures only at lease expiration, never on day 1.',
+              '100% by month 6 if you offer renewal incentives at market rates and aggressively non-renew tenants who will not accept the bump.',
+            ],
+            correctIndex: 2,
           },
           {
             q: 'A 1985-vintage Texas B-class deal is showing a 44% expense ratio. What does that tell you?',
@@ -1573,6 +1734,13 @@ export const COURSES: Course[] = [
             trap: 'Treating a low expense ratio as a positive without investigating which line is missing.',
             difficulty: 'application',
             topicId: 'w4-t08-expense-ratios',
+            choices: [
+              'It is operating excellence — the seller is running a tight ship and you should treat the 44% as your baseline year-1 ratio.',
+              'It is in line with national averages for Texas multifamily — the state\'s low utility costs and lack of state income tax pull ratios down across the board.',
+              'It signals an asset class issue — 1985 Texas product should be re-tiered as C-class with a 58-62% expected ratio, so 44% is a major outlier suggesting fabricated financials.',
+              'It is 4-6 points light vs. the 48-55% band for that vintage and geography. Likely culprits: un-reassessed property tax, stale insurance on an expiring policy, or under-staffed payroll. The ratio is a sanity check, not an input.',
+            ],
+            correctIndex: 3,
           },
           {
             q: 'Walk through a defensible year-1 rent growth stack on a B-class value-add deal in a 3.2% market.',
@@ -1581,6 +1749,13 @@ export const COURSES: Course[] = [
             trap: 'Quoting 5-7% flat rent growth for 5 years with no decomposition.',
             difficulty: 'application',
             topicId: 'w4-t09-rent-growth-assumptions',
+            choices: [
+              'Use a flat 5% rent growth assumption for years 1-5 — it averages typical value-add returns and avoids the complexity of stacking components.',
+              'Stack three components: market growth ~3.2%, LTL burn-off ~4.0% (year 1, 55% capture of a 7% gap), renovation premium on turned units ~2.6% blended (~28% of units turn at $155/unit lift). Year 1: ~9.8%; Year 2: ~6.1%; Year 3+: 3.2% market only.',
+              'Apply renovation premium to all units year 1 (~6%), add market growth (3.2%), and ignore LTL since it overlaps with renovation lift — total year 1 ~9.2%.',
+              'Use the seller\'s pro-forma rent growth assumption — they know the market best and the OM has been validated against rent comps.',
+            ],
+            correctIndex: 1,
           },
           {
             q: 'A seller\'s T-12 payroll on a 240-unit value-add Indianapolis property is $198k ($825/unit). What\'s your move?',
@@ -1589,6 +1764,13 @@ export const COURSES: Course[] = [
             trap: 'Using the seller\'s per-unit payroll without a staff-count and ratio sanity check.',
             difficulty: 'application',
             topicId: 'w4-t05-payroll-rightsizing',
+            choices: [
+              'Accept the seller\'s payroll number — they have years of operating history and the staffing level is calibrated to local labor market rates.',
+              'Cut payroll further to $700/unit by outsourcing maintenance to a third-party vendor — value-add is about operating efficiency.',
+              'Rightsize up to $1,170-1,335/unit ($280-320k) — the band for value-add B-class with turn intensity. The $82-122k gap is a real year-1 hit. Don\'t forget the 25-35% benefits/burden load on top of base wages.',
+              'Use the national B-class payroll average of $950/unit and call it conservative — local wage variance averages out across MSAs.',
+            ],
+            correctIndex: 2,
           },
           {
             q: 'Tampa, FL deal — seller\'s insurance premium is $1,583/unit. Why is that not your number?',
@@ -1597,6 +1779,13 @@ export const COURSES: Course[] = [
             trap: 'Using the seller\'s in-place insurance premium in your year-1 underwriting.',
             difficulty: 'operator',
             topicId: 'w4-t04-insurance-reset',
+            choices: [
+              'FL insurance has gone 3-4x since 2019. Fresh post-2024-hurricane-season quote is $2,000-2,500/unit with $100k/unit named-storm deductible (vs seller\'s $50k). Year-1 hit can be $100-150k+ above seller\'s policy. Also budget retained-deductible loss separately.',
+              'The seller\'s premium is your baseline — FL premiums stabilized after the 2023 reform legislation and the policy can usually be assumed at close.',
+              'Add a 10% inflation factor to the seller\'s premium and use that as your year-1 number — it captures the typical premium drift without over-correcting.',
+              'Use the national average of $1,800/unit for FL Class B — more conservative than the seller\'s policy and avoids the cost of soliciting a fresh quote during DD.',
+            ],
+            correctIndex: 0,
           },
           {
             q: 'Which return metric should you lead with when pitching: IRR, equity multiple, or cash-on-cash?',
@@ -1605,6 +1794,13 @@ export const COURSES: Course[] = [
             trap: 'Leading with the metric the deal happens to maximize, regardless of audience.',
             difficulty: 'operator',
             topicId: 'w4-t11-return-metrics',
+            choices: [
+              'Always lead with IRR — it\'s the institutional standard and time-weights the return correctly across hold periods.',
+              'Always lead with equity multiple — total dollars returned is what matters and it works across audiences.',
+              'It depends on the audience. Institutional LPs with IRR targets — lead IRR. Family offices and wealth-preservation capital — lead EM and CoC glide path. Short-hold deals — never lead IRR (it distorts upward). Honest deck shows all three plus year-by-year CoC.',
+              'Always lead with cash-on-cash — it\'s the most conservative metric and avoids accusations of optimistic exit assumptions.',
+            ],
+            correctIndex: 2,
           },
           {
             q: 'On a 200-unit deal where seller "other income" is $360/unit/year, what is the value-add audit picking up?',
@@ -1613,6 +1809,13 @@ export const COURSES: Course[] = [
             trap: 'Treating other income as noise instead of a separate value-add line.',
             difficulty: 'operator',
             topicId: 'w4-t07-other-income',
+            choices: [
+              '$400-700/unit/yr of un-captured ancillary: RUBS implementation (+$300-540/unit/yr), pet rent rightsize (+$140/unit/yr), valet trash (+$180/unit/yr), storage re-leasing, fee structure cleanup. A $144k/yr lift contributes ~$2.6M of capitalized value at a 5.5% cap.',
+              'About $50-75/unit/yr of upside, mostly in late-fee rightsizing — ancillaries are largely fixed by the property management software and can\'t be expanded materially.',
+              'A 10% lift on the $360 baseline — most other-income gains come from raising application fees and pet deposits with new lease signings.',
+              '$1,500-2,000/unit/yr of opportunity by adding short-term rental conversions and corporate housing arbitrage on the most desirable units.',
+            ],
+            correctIndex: 0,
           },
           {
             q: 'You\'re defending a deal at IC where modeled IRR drops from 18% to 13.5% if exit cap widens 75 bps. Is that acceptable?',
@@ -1621,6 +1824,13 @@ export const COURSES: Course[] = [
             trap: 'Reporting the base case without running the +75 bps cap stress.',
             difficulty: 'operator',
             topicId: 'w4-t10-exit-cap-logic',
+            choices: [
+              'No — any drop of more than 200 bps under cap stress signals the deal is not robust and should be passed regardless of base case.',
+              'Yes if the deal still clears your hurdle (typically 12-15% IRR for value-add) under +75 bps stress AND less than 40% of base-case IRR comes from cap-rate assumption. If >40% of return is cap-driven, it\'s a cap-rate bet — pass or restructure.',
+              'Yes — any deal showing a stress IRR above 12% is acceptable since institutional LPs underwrite to that floor and the cap movement is offset by operations.',
+              'No — IC should require the stressed IRR to remain within 100 bps of base case to approve, since wider gaps indicate the underwriting is too cap-dependent regardless of return level.',
+            ],
+            correctIndex: 1,
           },
         ],
         mistakes: [
@@ -1854,6 +2064,13 @@ export const COURSES: Course[] = [
             trap: 'Reporting only base case or running stresses too mild to matter (25 bps cap, 50 bps rate).',
             difficulty: 'foundation',
             topicId: 'w5-t01-three-stress-scenarios',
+            choices: [
+              'Recession scenario, inflation scenario, and supply-shock scenario — each modeled at -200 bps NOI and stressed simultaneously.',
+              'Rent flat 24 months, exit cap +75 bps, and rate +150 bps at refi. Run each independently — a deal that dies under any one alone is not a deal. Combined stress is a separate break-point exercise, not the go/no-go test.',
+              'Cap rate +25 bps, rate +50 bps, and occupancy -100 bps — the standard sensitivity bands every IC memo should include.',
+              'Tenant default wave, eviction moratorium, and major tenant relocation — the three scenarios most likely to break a value-add hold.',
+            ],
+            correctIndex: 1,
           },
           {
             q: 'What is breakeven occupancy and why does it matter more than IRR for sleep at night?',
@@ -1862,6 +2079,13 @@ export const COURSES: Course[] = [
             trap: 'Calculating breakeven only at year 1 instead of tracking it across IO burn-off and refi events.',
             difficulty: 'foundation',
             topicId: 'w5-t02-breakeven-occupancy',
+            choices: [
+              'Breakeven occupancy is just another way of expressing DSCR — once you have DSCR of 1.20x, breakeven is simply 1/1.20 = 83%, no separate calculation needed.',
+              'Breakeven occupancy is the lender\'s required minimum at close; once you\'re above it at acquisition the metric stops mattering for the rest of the hold.',
+              'Breakeven occupancy is a vendor metric calculated by RealPage and Yardi — useful for benchmarking submarket performance but not a sponsor-side underwriting tool.',
+              'Breakeven economic occupancy = (OpEx + Debt Service + Reserves) / GPR. It\'s the level at which NOI exactly covers obligations. IRR tells you what you might earn; breakeven tells you when the deal stops servicing debt — and it climbs as IO burns off and reserves step up.',
+            ],
+            correctIndex: 3,
           },
           {
             q: 'A 1992-vintage B-class with quartz/LVP comps in the submarket. What scope and what premium?',
@@ -1870,6 +2094,13 @@ export const COURSES: Course[] = [
             trap: 'Picking scope based on what looks nice in renderings rather than what the comp set rents at.',
             difficulty: 'application',
             topicId: 'w5-t03-interior-capex-bands',
+            choices: [
+              'Light scope at $3-5k/unit, $50-90/unit/mo premium — already-renovated stock just needs a refresh and the comp set reads it as updated.',
+              'Heavy scope at $11-18k/unit, $200-325/unit/mo premium — always go heavier than the comp set so you can push rents above the band and capture upside.',
+              'Medium scope at $6-10k/unit (LVP, quartz, cabinet fronts, fixtures, appliance package, lighting). Premium band: $125-200/unit/mo. Payback ~24-36 months. Heavy scope only justified if comp set has in-unit W/D you need to match.',
+              'Gut renovation at $20-35k/unit — only this scope re-rates the property to A-minus and supports the rent growth needed for a 5-year value-add hold.',
+            ],
+            correctIndex: 2,
           },
           {
             q: 'Why split a 10-15% contingency into three buckets?',
@@ -1878,6 +2109,13 @@ export const COURSES: Course[] = [
             trap: 'Using a single 10% contingency line and treating headroom as scope-creep budget.',
             difficulty: 'application',
             topicId: 'w5-t07-contingency-planning',
+            choices: [
+              'Surprises arrive in waves with different drivers — scope contingency (5-8%) for within-scope surprises, market contingency (3-5%) for materials/labor inflation, reserve contingency (2-4%) untouched until year 2 for unknown-unknowns. A unified bucket gets exhausted by the first surprise and leaves nothing for the next three.',
+              'Three buckets is overengineering — a single 10% line aligns with industry standard practice and gets approved by lenders without questions.',
+              'Three buckets is required by lender requisition processes — Fannie and Freddie both mandate the segmentation in their underwriting guidelines.',
+              'Three buckets lets you hide line items from LP scrutiny — by spreading contingency across categories you reduce questions about specific overruns at quarterly reporting.',
+            ],
+            correctIndex: 0,
           },
           {
             q: 'On a 240-unit deal with $2.7M of CapEx, walk through a defensible 3-year sequence.',
@@ -1886,6 +2124,13 @@ export const COURSES: Course[] = [
             trap: 'Renovating 30%+ of units in year 1 and watching vacancy drag exceed rent lift captured.',
             difficulty: 'application',
             topicId: 'w5-t06-capex-sequencing',
+            choices: [
+              'Year 1 ~$900k (33%): pre-stabilization light work only. Year 2 ~$1.35M (50%): heavy interior renovation. Year 3 ~$450k (17%): finishing and amenities.',
+              'Front-load 100% of CapEx in year 1 to capture rent premium as fast as possible — vacancy drag is acceptable if the renovation finishes by month 12.',
+              'Year 1 ~$1.85M (68%): exterior curb appeal, clubhouse, amenity refresh, and ~140 interior turns at lease expiration. Year 2 ~$725k (27%): remaining ~100 interior turns + HVAC catch-up + insurance-relevant exteriors. Year 3 ~$125k (5%): stragglers + parking lot. Never more than 15-20% of units down at once.',
+              'Straight-line $900k per year across 3 years — even pacing makes lender requisitions predictable and minimizes operating cash flow strain.',
+            ],
+            correctIndex: 2,
           },
           {
             q: 'You\'re three months into a hold and need to forecast realized premium. What\'s the protocol?',
@@ -1894,6 +2139,13 @@ export const COURSES: Course[] = [
             trap: 'Funding full scope based on the underwriting model and discovering the gap at month 12 across 100+ units.',
             difficulty: 'application',
             topicId: 'w5-t09-realized-rent-lift',
+            choices: [
+              'Run a 3-unit test renovation: similar floor plans, planned scope executed exactly, list at projected rent / +5% / +10%, measure days-on-market and applications at each price. Outcomes: matches projection → proceed; only at market → reduce scope; below market → stop and reconsider thesis. Share data with lender and LPs.',
+              'Trust the underwriting model and proceed with full scope — re-forecasting based on three units adds noise and delays the value-add execution.',
+              'Renovate one model unit at peak finish, photograph for marketing, and use the photo to lift rent perception across the property without changing other units.',
+              'Survey current residents on willingness-to-pay before renovation, then set scope based on the median response — saves capex if residents won\'t support the premium.',
+            ],
+            correctIndex: 0,
           },
           {
             q: 'You\'re bridge-funded with monthly CapEx at ~$85k. Why does that require working capital?',
@@ -1902,6 +2154,13 @@ export const COURSES: Course[] = [
             trap: 'Treating bridge CapEx reserves as accessible cash without budgeting for the lag.',
             difficulty: 'operator',
             topicId: 'w5-t08-capex-lender-approval',
+            choices: [
+              'Bridge CapEx reserves work like a line of credit — you draw against the balance as needed and the lender funds within a few days.',
+              'Working capital isn\'t needed because GCs typically extend 30-60 day payment terms, allowing you to align contractor billing with lender funding cycles.',
+              'You can negotiate advance funding from the lender for the first 90 days of CapEx — most bridge lenders allow this for sponsors with prior deals.',
+              'Lender funds in arrears. Requisition → review → wire takes 21-35 days typical. You front the cost from operating cash flow and get reimbursed later. Working capital reserve = monthly CapEx × (lag days + buffer) / 30 ≈ $85-95k for that pace. Under-budget this and the rehab stalls in months 4-6 waiting on cash.',
+            ],
+            correctIndex: 3,
           },
           {
             q: 'Why does a $45k pool refresh + $65k clubhouse refresh sometimes return more occupancy than a $200k interior renovation?',
@@ -1910,6 +2169,13 @@ export const COURSES: Course[] = [
             trap: 'Deferring the clubhouse and pool refresh to "after stabilization" — the refresh is part of stabilization.',
             difficulty: 'operator',
             topicId: 'w5-t05-amenity-refresh',
+            choices: [
+              'Tour conversion. Pool and clubhouse photos are the first images on every listing and the first room every prospect walks into. A dated leasing office halves tour-to-lease conversion. Amenity refresh moves occupancy 2-4 points within 90 days — often $200-300k/yr of NOI for $130-180k of spend.',
+              'Lender requisition timing — amenity work draws in 30 days while interior renovations require unit-by-unit completion verification, slowing capital recovery.',
+              'Insurance credits — pool and clubhouse upgrades typically reduce premiums by 8-12%, while interior renovations don\'t affect insurance pricing.',
+              'Existing-resident retention — current residents value common amenities more than unit upgrades, so refresh extends their stay and reduces turn cost.',
+            ],
+            correctIndex: 0,
           },
           {
             q: 'Why is exterior CapEx the half of the budget that "rarely drives premium but always drives credibility"?',
@@ -1918,6 +2184,13 @@ export const COURSES: Course[] = [
             trap: 'Mixing exterior and interior into one CapEx line so lenders and LPs can\'t evaluate the breakdown.',
             difficulty: 'operator',
             topicId: 'w5-t04-exterior-capex',
+            choices: [
+              'Exterior items can be deferred indefinitely — they don\'t affect rent and lenders rarely inspect roof or siding once the loan is closed.',
+              'Roof, siding, parking, and windows do not directly raise rent. They drive insurance underwriting (insurance credits depend on completed work), occupancy stability (a leaking roof empties top-floor units), and lender requisition approval (no exterior progress = stalled draws). Skip them and the compounding cost outpaces the savings.',
+              'Exterior work earns CapEx tax depreciation faster than interior work, so the after-tax math justifies the spend even without rent premium.',
+              'Exterior CapEx is required by municipal code enforcement in most B-class submarkets, so the spend is non-discretionary and falls outside the value-add discussion.',
+            ],
+            correctIndex: 1,
           },
           {
             q: 'You\'re defending a $2.7M CapEx budget at IC. What\'s in the documentation pack?',
@@ -1926,6 +2199,13 @@ export const COURSES: Course[] = [
             trap: 'Defending the CapEx budget with assumptions and Home Depot pricing instead of GC bids and named comps.',
             difficulty: 'operator',
             topicId: 'w5-t10-capex-budget-defense',
+            choices: [
+              'A 30-page deck with full property financials, market analysis, GC qualifications, and detailed scope drawings — comprehensive documentation builds IC confidence.',
+              'A single budget summary line tied to industry $/unit benchmarks for that vintage and geography — IC trusts the heuristic and asks fewer line-by-line questions.',
+              'Scope-to-comp mapping for every premium claim ("quartz drives $45/unit at Willow Creek"); two GC bids per major line; PCA support for roof/HVAC/electrical claims; three-bucket contingency structure; commitment to 60-day 3-unit test with measurement protocol; monthly sequencing tied to lender requisitions. Walk top 5 line items in the meeting; the rest rides on the pack.',
+              'A pre-IC walkthrough with each member individually to address concerns ahead of the meeting — saves committee time and pre-empts objections.',
+            ],
+            correctIndex: 2,
           },
         ],
         mistakes: [
@@ -2159,6 +2439,13 @@ export const COURSES: Course[] = [
             trap: 'Modeling debt at the actual coupon and assuming the loan sizes there.',
             difficulty: 'foundation',
             topicId: 'w6-t01-agency-debt',
+            choices: [
+              '≥1.20x DSCR on the actual coupon — agencies size off the quoted rate at close, not on a stress scenario.',
+              '≥1.40x DSCR on a stressed coupon (actual + 100 bps) with 25-year amortization — the conservative band most life-cos require.',
+              '≥1.25x DSCR on a stressed coupon (typically actual coupon + 50 bps), 30-year amortization. Below that, the loan does not size at the requested LTV — proceeds get cut to fit DSCR. Agencies stress against rate normalization, not against the quoted coupon.',
+              '≥1.10x DSCR on the trailing 12-month NOI with full amortization — agencies care primarily about historical coverage, not forward stress.',
+            ],
+            correctIndex: 2,
           },
           {
             q: 'Why is DSCR almost always the binding constraint, not LTV, in rising-rate environments?',
@@ -2167,6 +2454,13 @@ export const COURSES: Course[] = [
             trap: 'Quoting "we got 75% LTV" without checking whether DSCR would have allowed it.',
             difficulty: 'foundation',
             topicId: 'w6-t06-dscr-sizing',
+            choices: [
+              'As stressed coupon rises, debt constant rises, and max loan = NOI / (DSCR × debt constant) shrinks faster than LTV × property value. Between 2022 and 2024, DSCR-based proceeds compressed 15-20% even where LTV capacity was unchanged. The lever is NOI, not LTV negotiation.',
+              'LTV remains the primary constraint at all rate levels — agencies always size to the lower of 80% LTV or DSCR, and LTV is mathematically tighter when cap rates are stable.',
+              'DSCR is binding only when occupancy drops below 90% — at full occupancy LTV always controls and rate environment doesn\'t affect proceeds calculation.',
+              'DSCR and LTV move proportionally because lenders adjust both in tandem — neither is structurally tighter than the other regardless of rate environment.',
+            ],
+            correctIndex: 0,
           },
           {
             q: 'When does a small-balance agency loan (Fannie SBL / Freddie SBL) make sense over standard DUS / Optigo?',
@@ -2175,6 +2469,13 @@ export const COURSES: Course[] = [
             trap: 'Forcing a $9M deal through SBL when full DUS would price 30 bps tighter.',
             difficulty: 'application',
             topicId: 'w6-t02-agency-small-balance',
+            choices: [
+              'For deals over $10M when sponsors want lighter documentation — SBL has the same pricing as DUS but faster underwriting on larger balances.',
+              'Always — SBL is cheaper than DUS at every loan size because the streamlined process reduces lender cost and that savings is passed to borrowers.',
+              'Only for properties under 50 units — SBL has a unit-count cap and any deal above 50 units must go through full DUS regardless of loan amount.',
+              'Deals $2-7M loan amount where DUS overhead is disproportionate, sponsors doing first agency execution, or deals that need to close in 45-60 days. Tradeoff: 25-50 bps wider spread, tighter LTV (75-80% vs. 80%), higher minimum DSCR (1.30-1.40x), and minimal IO (0-2 years vs. 1-7).',
+            ],
+            correctIndex: 3,
           },
           {
             q: 'A 3-year bridge at SOFR+375 with a 5% SOFR floor — what\'s the all-in coupon and what blew up the 2021 vintage?',
@@ -2183,6 +2484,13 @@ export const COURSES: Course[] = [
             trap: 'Underwriting bridge takeout at the SOFR forward curve instead of at SOFR 4.5-5.5% sustained.',
             difficulty: 'application',
             topicId: 'w6-t03-bridge-debt',
+            choices: [
+              'Floor coupon 8.75%; with SOFR at 5.3% the all-in is 9.05%+. The 2021 vintage assumed SOFR would stay near 0% and forward-curve refi at 4.0% all-in agency. SOFR went 0.1% → 5.3% in 18 months and exit caps widened 75-125 bps. The takeout math broke and a wave of forced sales / DPOs followed.',
+              'All-in 3.75% (375 bps spread on a 0% SOFR floor); the 2021 vintage suffered because lenders triggered MAC clauses to call loans early when occupancy softened.',
+              'Floor coupon 5.0% with the floor capping the all-in rate at 5%; the 2021 vintage failed because rate caps expired before SOFR moved, eliminating hedge protection.',
+              'All-in 3.75% as long as SOFR stays below 5%, with the floor only activating at the bottom; the 2021 vintage failed primarily due to insurance cost spikes, not interest rates.',
+            ],
+            correctIndex: 0,
           },
           {
             q: 'You\'re comparing Agency DUS at 5.95% with YM vs. Freddie Optigo at 6.15% with SM for a planned 5-year hold. Which is cheaper?',
@@ -2191,6 +2499,13 @@ export const COURSES: Course[] = [
             trap: 'Awarding debt on lowest coupon without modeling prepay cost at the planned exit.',
             difficulty: 'application',
             topicId: 'w6-t08-prepayment-structure',
+            choices: [
+              'DUS — the 20 bps coupon savings ($40k over 5 years) easily outweighs prepay differences, since YM and SM are functionally similar over short holds.',
+              'Optigo. The 20 bps of coupon savings on DUS = ~$40k over 5 years on $19.5M, but YM cost on a year-5 exit of a 10-year DUS loan can run $700k-1.2M, vs. ~$200-400k for SM. Total cost at exit favors Optigo by $500k+. The honest comparison is total cost at expected exit date, not coupon at close.',
+              'Neither — both should be passed in favor of a 5-year fixed loan that matures at exit, eliminating the prepay question entirely.',
+              'DUS — yield maintenance is partially refundable through Fannie\'s prepayment rebate program if the deal sells to another DUS borrower, neutralizing the SM advantage.',
+            ],
+            correctIndex: 1,
           },
           {
             q: 'What\'s the rate cap discipline — where do you set the strike?',
@@ -2199,6 +2514,13 @@ export const COURSES: Course[] = [
             trap: 'Choosing the cheapest strike to save premium and discovering it doesn\'t protect DSCR.',
             difficulty: 'application',
             topicId: 'w6-t07-rate-caps',
+            choices: [
+              'Set the strike at the lender\'s minimum acceptable level — usually 200-300 bps above current SOFR — to satisfy loan covenants at the lowest premium cost.',
+              'Set the strike at the SOFR forward curve\'s peak projection over the cap term — protects you against the worst case the market has priced in.',
+              'Strike the cap where your DSCR breaks covenant, not where you wish rates would stop. A 6% strike that gives you 1.0x coverage isn\'t insurance — it\'s theater. The strike has to keep DSCR above the covenant trigger (typically 1.15-1.20x). Term must match debt term plus extensions.',
+              'Set the strike 100 bps below current SOFR for maximum protection — even though premium is high, it eliminates rate exposure entirely for the term.',
+            ],
+            correctIndex: 2,
           },
           {
             q: 'A bridge-financed deal trips its 1.20x DSCR covenant at 1.18x in Q3. What happens?',
@@ -2207,6 +2529,13 @@ export const COURSES: Course[] = [
             trap: 'Not modeling covenant tests in the monthly operating plan and discovering the breach when the lender flags it.',
             difficulty: 'operator',
             topicId: 'w6-t09-loan-covenants',
+            choices: [
+              'Cash sweep activates. Excess cash after debt service goes to a lender-controlled reserve, distributions to LPs pause, and the lender wants documentation. Typically curable when DSCR recovers across 1-2 quarters. A material LP communication event — don\'t let it surprise them. Plan mitigation early when trending down.',
+              'The lender immediately accelerates the loan and demands full payoff within 30 days — a 2 bps DSCR breach is treated as a hard default under standard agency documents.',
+              'Nothing material — DSCR is calculated annually at the lender\'s convenience and a small Q3 dip self-cures by Q4 without lender intervention.',
+              'The lender increases the coupon by 50 bps as a non-default penalty rate until DSCR recovers — distributions continue but interest expense rises.',
+            ],
+            correctIndex: 0,
           },
           {
             q: 'When does HUD 223(f) make sense over agency, and what\'s the catch?',
@@ -2215,6 +2544,13 @@ export const COURSES: Course[] = [
             trap: 'Underestimating the closing timeline and HUD compliance overhead — "we\'ll close in 5 months" rarely happens.',
             difficulty: 'operator',
             topicId: 'w6-t05-hud-223f',
+            choices: [
+              'Any deal where you want maximum LTV — HUD goes to 85% with 1.17x DSCR, and the 6-month closing is comparable to standard agency execution.',
+              'True long-hold (10+ years) of workforce housing in primary-secondary MSAs. Lowest coupon in CRE (5.6-6.0% all-in including MIP), 35-year fully amortizing, 85% LTV, 1.17x DSCR. Catch: 9-12 month closing, 10-year prepay lockout, ongoing HUD compliance overhead, repair escrow under HUD inspection.',
+              'Distressed acquisitions where you need flexibility to renovate aggressively — HUD allows substantial rehab under the same 223(f) execution without additional approvals.',
+              'Class-A new-construction deals where the long amortization helps DSCR sizing — HUD\'s 35-year term is designed for newer assets to maximize sponsor leverage.',
+            ],
+            correctIndex: 1,
           },
           {
             q: 'When does life-company fixed-rate debt beat agency, and what\'s the tradeoff?',
@@ -2223,6 +2559,13 @@ export const COURSES: Course[] = [
             trap: 'Quoting life-co for a deal you might refi in 3-5 years — YM cost will eat the spread savings.',
             difficulty: 'operator',
             topicId: 'w6-t04-life-co-fixed',
+            choices: [
+              'Short-hold value-add deals (3-5 years) — life-cos offer the most flexible prepay structures in the market and beat agency on every metric for that hold profile.',
+              'Any 1980s-vintage B-class deal in secondary markets — life-cos compete aggressively on workforce housing and offer the best LTV at that asset profile.',
+              'Long-hold (10+ years) on stabilized 2000+ vintage in top-50 MSAs at $15M+ loan amount. Life-cos price 25-75 bps inside agencies on best deals — $108k/yr savings on a 10-year hold can be $400-700k of total interest savings vs. agency. Tradeoff: tighter LTV (55-65%), 90-120 day close, brutal YM if you exit early, requires mortgage banker with established relationships.',
+              'Bridge takeout immediately after stabilization — life-cos move faster than agency and provide the cleanest exit from a SOFR-floating bridge structure.',
+            ],
+            correctIndex: 2,
           },
           {
             q: 'How does a 5-lender debt shop actually compress spread 25-50 bps?',
@@ -2231,6 +2574,13 @@ export const COURSES: Course[] = [
             trap: 'Sending one email to one lender and accepting the term sheet.',
             difficulty: 'operator',
             topicId: 'w6-t10-debt-shop-process',
+            choices: [
+              'Send the same term sheet request to 30+ lenders and pick whichever returns the lowest coupon — wider distribution always compresses spread further.',
+              'Negotiate exclusively with one trusted agency lender — relationship leverage and repeat-business pricing beats parallel quoting for established sponsors.',
+              'Run an auction-style process where lenders bid against each other in real time over 48 hours — pressure forces tightest spread without the relationship overhead.',
+              'Prepare an OM-lite (5-8 pages); distribute via mortgage banker to 2-3 agency, 1-2 life-co, 1-2 bridge, sometimes a local bank; provide 10-14 day response window; receive quotes; compare on coupon AND structure (LTV/DSCR/IO/prepay/recourse/covenants/timeline); award the best, not necessarily cheapest; keep runner-up warm to compress further 10-25 bps from award to close. Broker fee 0.25-0.50% earns itself back.',
+            ],
+            correctIndex: 3,
           },
         ],
         mistakes: [
