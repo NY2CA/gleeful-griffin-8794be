@@ -2814,6 +2814,13 @@ export const COURSES: Course[] = [
             trap: 'Skipping line-by-line review of the binding section because "it\'s just an LOI."',
             difficulty: 'foundation',
             topicId: 'w7-t01-loi-anatomy',
+            choices: [
+              'The whole document is non-binding until both parties sign the PSA — that\'s the entire point of the LOI as a negotiation instrument.',
+              'Binding from signature: exclusivity, confidentiality, access, and governing law. Non-binding: price, EMD, DD period, closing date, contingencies, cost allocation. The PSA does the deal-binding work.',
+              'Binding: price, earnest money, and closing date because they\'re the economic terms. Non-binding: confidentiality and access because those are operational.',
+              'Only the signature block is binding — everything else is "agreement to negotiate" and either party can walk for any reason without consequence.',
+            ],
+            correctIndex: 1,
           },
           {
             q: 'What is the single most-negotiated line in a multifamily LOI, and why?',
@@ -2822,6 +2829,13 @@ export const COURSES: Course[] = [
             trap: 'Accepting an aggressive go-hard date without a plan to complete DD by that date.',
             difficulty: 'foundation',
             topicId: 'w7-t04-go-hard-date',
+            choices: [
+              'Purchase price — every other term is a function of price, and brokers route to highest price first regardless of certainty.',
+              'The earnest money go-hard date. It allocates risk between buyer and seller — pre-hard the buyer can walk; post-hard the buyer is committed. Sellers push 15-30 days, buyers push 45-60, typical landing zone is 30-45 stabilized / 45-60 value-add.',
+              'Closing date, because it determines when the seller actually gets paid and when 1031 deadlines anchor.',
+              'The exclusivity period — controls whether the seller can shop your offer as a stalking-horse during DD.',
+            ],
+            correctIndex: 1,
           },
           {
             q: 'Walk through a defensible EM structure for a $24M deal.',
@@ -2830,6 +2844,13 @@ export const COURSES: Course[] = [
             trap: 'Letting EM go fully hard at PSA execution without a meaningful DD period.',
             difficulty: 'application',
             topicId: 'w7-t03-earnest-money',
+            choices: [
+              '$1M fully hard at PSA execution — sellers always favor maximum certainty, and a single hard tranche signals strong conviction without operational complexity.',
+              '$50k initial refundable, $50k more at DD expiration, balance hard 5 days before close — keeps buyer optionality maximum and capital exposure minimal until the very end.',
+              'Staged: $250k initial (1%) at PSA; $250k more at day 30 of DD; full $500k hard at day 45 (DD expiration), subject to financing and title; optional bump to $1M hard 10 days before close. Or $500k initial / full hard at DD expiration as a simpler variant.',
+              '3-5% of price upfront, all hard at signing, with no DD-period staging — that matches institutional norms and is what brokers expect from serious bidders.',
+            ],
+            correctIndex: 2,
           },
           {
             q: 'You\'re negotiating a 60-day DD period on a 240-unit value-add. What must be complete by the go-hard date?',
@@ -2838,6 +2859,13 @@ export const COURSES: Course[] = [
             trap: 'Starting DD activities at week 2 instead of day 3 — back half of DD fills with surprises.',
             difficulty: 'application',
             topicId: 'w7-t05-dd-period',
+            choices: [
+              'PCA + Phase I + 25-35% unit walks + T-24 audit + signed lender commitment letter (not term sheet) + bound insurance quote + title commitment with exceptions reviewed + survey delivered + commercial-tenant estoppels lined up. If any item is open, extend with seller consent or walk.',
+              'Title and survey complete. Everything else (PCA, financial audit, insurance, lender) can finish during the closing window post-go-hard since EMD is already deposited.',
+              'Lender term sheet, broker-provided rent roll review, and a windshield tour of the property — anything more delays you and lets a competing bidder catch up.',
+              'A signed commitment letter from the lender — once financing is locked, the rest of DD can be completed any time before closing without affecting EMD.',
+            ],
+            correctIndex: 0,
           },
           {
             q: 'Headline price on a $24M Indianapolis deal — what other components affect the true economic basis?',
@@ -2846,6 +2874,13 @@ export const COURSES: Course[] = [
             trap: 'Modeling against headline price and discovering buyer-side closing costs at the basis-of-cost calculation.',
             difficulty: 'application',
             topicId: 'w7-t02-price-terms',
+            choices: [
+              'Just the broker commission — every other line item is a wash because seller and buyer credits offset each other at closing.',
+              'Buyer-side closing costs (1.5-2.5% = $360-600k): title, buyer\'s legal, lender origination, third-party reports, transfer/recording. Inherited security deposits (offset by seller credit). Unfunded rent concessions (negotiate a credit). Known major deferred-maintenance credits (negotiate from PCA). True basis lands ≈ $24.35M.',
+              'Property tax reassessment risk for year 1 and the unfunded portion of the seller\'s CapEx commitment — those are the only meaningful adjustments to a headline price.',
+              'Loan origination and title insurance — typically 1% combined, so basis adjusts upward by ~$240k on a $24M deal.',
+            ],
+            correctIndex: 1,
           },
           {
             q: 'What\'s the post-DD-to-close timeline, and where does it most often slip?',
@@ -2854,6 +2889,13 @@ export const COURSES: Course[] = [
             trap: 'Single-threading the closing timeline instead of running parallel tracks with weekly status calls.',
             difficulty: 'application',
             topicId: 'w7-t06-closing-timeline',
+            choices: [
+              '15 days — once DD is done and EMD is hard, the rest is title work and a wire. Anything longer is operational laziness.',
+              '60-90 days — closing is heavily front-loaded with lender underwriting, and any timeline shorter than two months guarantees the deal slips.',
+              '30-45 days standard, run as parallel tracks. Week 1: PSA finalized, title commitment, lender package. Week 2: lender credit committee, insurance binder, commercial estoppels. Week 3: loan docs + counsel review, closing statements. Week 4: walk-through, execution, wire, recording, key transfer. Slips most on lender credit committee timing, insurance binding (2-3 weeks in hard markets), and late title exceptions.',
+              '30 days, fully sequential — finalize PSA, then order title, then lender docs, then close. Sequential execution is cleaner than parallel and avoids miscommunication between tracks.',
+            ],
+            correctIndex: 2,
           },
           {
             q: 'How do you protect against being used as a stalking-horse?',
@@ -2862,6 +2904,13 @@ export const COURSES: Course[] = [
             trap: 'Signing exclusivity without specified remedies — silence defaults to state law, which often favors seller.',
             difficulty: 'operator',
             topicId: 'w7-t07-exclusivity',
+            choices: [
+              'Mutual exclusivity / no-shop with hard expiration date (30-45 days), automatic expiration on buyer breach, specified remedies for seller breach: EM refund + DD cost reimbursement up to $50-100k + 30-60 day blackout with the alternative buyer. Avoid one-way exclusivity, open-ended duration, unspecified breach mechanics.',
+              'A handshake with the listing broker that they won\'t shop the deal — broker reputation is sufficient enforcement in most markets.',
+              'A 90-day exclusivity period with no specified breach remedies — the long window itself protects you because most sellers won\'t want to restart marketing.',
+              'A high enough EMD ($1M+) that the seller has no incentive to walk to a stalking-horse — economic alignment beats contractual structure.',
+            ],
+            correctIndex: 0,
           },
           {
             q: 'In a hot competitive market with 5 bids within 1-3% of each other, how do you win without overpaying?',
@@ -2870,6 +2919,13 @@ export const COURSES: Course[] = [
             trap: 'Lowballing in a competitive market — your LOI goes to the bottom of the stack and you don\'t learn anything.',
             difficulty: 'operator',
             topicId: 'w7-t10-loi-leverage',
+            choices: [
+              'Bid 3-5% above the next-highest known offer to differentiate on price — when bids cluster, the only way to win is to clearly outprice the field.',
+              'Match the highest competing bid and add a $250k unrefundable bid-bond — sellers reward economic commitment over execution speed in tight processes.',
+              'Compete on speed and certainty, not price. Shortest DD (30 days), larger initial EM ($500k vs $250k), no financing contingency post-DD, signed lender term sheet attached to the LOI, track record cover page with closed transactions and close rate. The seller routes to highest close-probability, not highest absolute number.',
+              'Submit the LOI with a longer DD and a smaller EMD to preserve buyer optionality — sophisticated sellers value buyers who price discipline ahead of certainty.',
+            ],
+            correctIndex: 2,
           },
           {
             q: 'Your DD reveals a 2014 setback variance for the clubhouse addition recorded with the county. What\'s the move?',
@@ -2878,6 +2934,13 @@ export const COURSES: Course[] = [
             trap: 'Waiting until week 4 of DD to order title and survey — leaves zero time to cure if anything surfaces.',
             difficulty: 'operator',
             topicId: 'w7-t08-title-survey-requirements',
+            choices: [
+              'Confirm the variance is recorded and in force, get a specific title endorsement covering it, resolve in 5 days through counsel. The bigger lesson: order title commitment and survey within the first 5 days of DD (they take 2-4 weeks), so issues surface in week 1, not week 4.',
+              'Re-trade $200k off the price — any zoning irregularity is a material defect even if the variance was duly recorded.',
+              'Walk the deal — a setback variance signals municipal hostility to the property and likely future code enforcement risk.',
+              'Wait for the seller to obtain a new variance from the current planning board — recorded 2014 variances may not survive an ownership transfer in some jurisdictions.',
+            ],
+            correctIndex: 0,
           },
           {
             q: 'When does a residential multifamily deal need tenant estoppels?',
@@ -2886,6 +2949,13 @@ export const COURSES: Course[] = [
             trap: 'Accepting a tenant\'s preferred estoppel form instead of buyer-counsel form.',
             difficulty: 'operator',
             topicId: 'w7-t09-estoppels-snda',
+            choices: [
+              'Always — every tenant on every multifamily deal should sign an estoppel before closing, regardless of property type or lease length.',
+              'Only when the lender specifically requires them in the term sheet — agency lenders rarely ask, so most multifamily deals can skip them entirely.',
+              'Generally not for standard residential — leases are short and verifiable via rent roll. Required for: commercial tenants on the property (retail, daycare, cell tower), specialty residential (student/senior with master leases), major amenity contracts (leased laundry, package lockers). Some lenders also require a sample of 5-10 residential estoppels for CMBS or HUD.',
+              'Only for tenants over $5k/month rent — below that, the rent roll and lease file are sufficient verification.',
+            ],
+            correctIndex: 2,
           },
         ],
         mistakes: [
@@ -3099,6 +3169,13 @@ export const COURSES: Course[] = [
             trap: 'Treating a public LinkedIn post or open webinar as "not really advertising" while running 506(b).',
             difficulty: 'foundation',
             topicId: 'w8-t01-506b-vs-506c',
+            choices: [
+              'They\'re effectively the same offering — the SEC treats both as Reg D and the only practical difference is filing fees, so most sponsors pick whichever counsel suggests first.',
+              '506(b) bans non-accredited investors entirely; 506(c) allows them. Both permit advertising as long as you file Form D within 15 days of first sale.',
+              '506(b) accepts up to 35 sophisticated non-accredited LPs but bans general solicitation — every LP needs a pre-existing substantive relationship. 506(c) allows public advertising (podcasts, paid ads, conference stage) but every LP must be third-party verified accredited (CPA letter, financial docs, or a service like VerifyInvestor at $40-80/LP). The lane choice dictates marketing channels, verification overhead, and which LPs you can talk to.',
+              '506(c) is for institutional capital only and 506(b) is for retail — the dollar threshold per LP is the deciding factor, not the marketing question.',
+            ],
+            correctIndex: 2,
           },
           {
             q: 'Walk through a standard institutional multifamily waterfall and what each tier means.',
@@ -3107,6 +3184,13 @@ export const COURSES: Course[] = [
             trap: 'Accepting a 6% pref because someone suggested it — LPs expect 7-8% in the 2025-2026 rate environment.',
             difficulty: 'foundation',
             topicId: 'w8-t02-prefs-and-promotes',
+            choices: [
+              '50/50 split of all cash flows from day one — a flat split is the cleanest structure and avoids the complexity of pref/promote tiers entirely.',
+              '8% pref (compounding institutionally, simple in smaller deals) accruing to LPs first, then 100% return of capital, then promote split of remaining cash 70/30 or 80/20 LP/GP. Optional IRR hurdle: above 15% LP IRR, catch up to 65/35 or 60/40. The 20-30% GP share above pref is the promote — and on a $10M raise hitting 18% IRR, it\'s $1.5-2.2M of GP wealth creation.',
+              'GP earns a flat 5% of LP equity raised at closing, and LPs receive 100% of all cash flows after — promote is built into the upfront fee.',
+              '12% pref to LPs with no return of capital tier, then 50/50 split — the high pref protects LPs and the simple split avoids waterfall complexity.',
+            ],
+            correctIndex: 1,
           },
           {
             q: 'What does an LP attorney actually read in an 84-page PPM, and where is sponsor liability concentrated?',
@@ -3115,6 +3199,13 @@ export const COURSES: Course[] = [
             trap: 'Copying a peer\'s PPM and not refreshing risk factors to match your specific deal.',
             difficulty: 'application',
             topicId: 'w8-t03-ppm-walkthrough',
+            choices: [
+              'Three sections drive 90% of LP attorney attention: (1) Risk Factors — must be specific to the deal (age of plumbing, flood zone, concentration risk), not boilerplate; generic factors create Rule 10b-5 anti-fraud exposure. (2) Compensation to Sponsor — every fee disclosed with percentage and dollar estimate; total > 5-6% of equity gets pushback. (3) Operating Agreement Summary — distributions, governance, removal, capital calls. The remaining 70 pages are context.',
+              'The Executive Summary and Tax Considerations sections — LPs use the executive summary for the deal pitch and the tax section to model after-tax returns.',
+              'The Sponsor bio and the Use of Proceeds — track record drives the underwriting decision and use of proceeds tells LPs where their money is going.',
+              'The Subscription Documents and Exhibits — these are the binding parts and where LP counsel concentrates because everything else is non-binding marketing material.',
+            ],
+            correctIndex: 0,
           },
           {
             q: 'You need to raise $4M at $75k average check size. Map a realistic LP funnel given typical conversion rates.',
@@ -3123,6 +3214,13 @@ export const COURSES: Course[] = [
             trap: 'Overweighting cold lead volume in the funnel plan when warm referrals convert 3-5x higher.',
             difficulty: 'application',
             topicId: 'w8-t04-investor-funnel',
+            choices: [
+              'Need ~55 committed LPs. Re-up from prior 30 LPs at 50% = 15 LPs (~$1.13M). Warm referrals at 30% conversion: ~135 referrals to land 40 new LPs. Cold podcast/content leads at 5-8%: ~300 cold leads if relying on cold alone. Most blend: 15 re-ups + 30 warm referrals + 10 from cold = 55 LPs. Cadence: PPM ready day 0, soft launch day 10, hard commits day 35-45, raise done by day 60.',
+              'Send a one-time email blast to 800-1,200 contacts — at a 7-8% conversion rate that delivers the LP count without the operational burden of 1:1 calls.',
+              'Hire a placement agent at 2-3% of capital raised — they have the LP relationships and the funnel math is their problem, not yours.',
+              'Paid digital ads to a webinar funnel at $100/lead — at 5% webinar-to-commit conversion, you need 1,100 paid leads which is the most efficient channel for first-time sponsors.',
+            ],
+            correctIndex: 0,
           },
           {
             q: 'How much GP coinvest is the right amount for a first-time sponsor and how is it structured?',
@@ -3131,6 +3229,13 @@ export const COURSES: Course[] = [
             trap: 'Claiming "sweat equity" or rolling acquisition fees twice and calling it coinvest.',
             difficulty: 'application',
             topicId: 'w8-t05-gp-coinvest',
+            choices: [
+              '1-2% of equity is plenty — sponsors should focus their personal capital on operations and the next deal rather than tying it up in coinvest.',
+              '5-10% of equity for a first raise — below 3% signals lack of conviction and anchor LPs will pass. Structure pari passu (GP capital gets the same pref and ROC, then GP earns promote on top of LP-equivalent returns). Sources: personal cash, HELOC, deferred fees rolled into equity, GP partner capital. On a $4.8M raise, 10% = $480k — large enough to feel real downside. Promoted coinvest (GP earning promote on its own capital) is aggressive and LP counsel will flag it.',
+              '20-25% — institutional LPs require sponsors to fund a near-equal share of equity and anything less than a quarter of the raise reads as fee-chasing.',
+              '0% with sweat equity in lieu — if the sponsor is doing all the deal work, that operational labor is the alignment, not cash on the line.',
+            ],
+            correctIndex: 1,
           },
           {
             q: 'Build the three waterfall scenarios you should show LPs and explain why each matters.',
@@ -3139,6 +3244,13 @@ export const COURSES: Course[] = [
             trap: 'Setting base case exit cap tighter than market to make the deal look stronger than peers.',
             difficulty: 'operator',
             topicId: 'w8-t06-waterfall-scenarios',
+            choices: [
+              'Show only the base case at the underwritten exit cap — multiple scenarios confuse LPs and the base case is what you actually believe will happen.',
+              'Two scenarios: base and upside. Skip downside because it sets a negative tone and most institutional LPs have already modeled their own downside privately.',
+              'Five scenarios at 25 bps cap rate increments — granular sensitivity analysis is what separates institutional sponsors from retail.',
+              'Three: downside (exit cap +100 bps, rents flat, CapEx +20%) — LP IRR 6-8%, GP earns fees but no promote, multiple ~1.3x. Base (underwrite hits) — LP IRR 14-16%, promote hits first tier, multiple 1.7-1.9x. Upside (rents +2%, exit cap -50 bps) — LP IRR 20-24%, promote hits second tier, multiple 2.2-2.5x. Build with sensitivity tables on exit cap (±75 bps) and Year 2 rent growth (±200 bps). Walk through live on the LP call — never bury in the appendix.',
+            ],
+            correctIndex: 3,
           },
           {
             q: 'How do you verify accredited status under 506(c), and when must verification happen?',
@@ -3147,6 +3259,13 @@ export const COURSES: Course[] = [
             trap: 'Letting an LP wire on day 30 while verification is "in process" through day 45.',
             difficulty: 'operator',
             topicId: 'w8-t07-accredited-verification',
+            choices: [
+              'Three paths, all third-party documented: (1) CPA or attorney letter dated within 90 days of investment, (2) financial documents — W-2s showing $200k+ ($300k joint) for two years OR brokerage/bank statements showing $1M+ net worth excluding primary residence, (3) third-party verification service (VerifyInvestor, EarlyIQ, ParallelMarkets at $40-80/LP). Verification must complete BEFORE the LP\'s capital is invested. Records retained 5+ years per SEC rules. Self-certification questionnaire alone is not compliant under 506(c).',
+              'Self-certification by checkbox in the subscription documents is acceptable — LPs sign under penalty of perjury and the SEC accepts that representation.',
+              'A signed accredited investor questionnaire from each LP plus a copy of one tax return — this is the safe-harbor process under SEC guidance.',
+              'A net worth statement signed by the LP\'s spouse if joint income — joint accreditation is the most common and only requires the secondary signature for verification.',
+            ],
+            correctIndex: 0,
           },
           {
             q: 'A monthly flash, quarterly LP report, annual letter, and on-time K-1 — why does this cadence drive future raises more than marketing?',
@@ -3155,6 +3274,13 @@ export const COURSES: Course[] = [
             trap: 'Delivering K-1s in April or May when LPs need them for personal tax filing — it does not get forgotten.',
             difficulty: 'operator',
             topicId: 'w8-t08-investor-relations',
+            choices: [
+              'Cadence drives sales conversion the way email blast frequency drives marketing — more touches means more attention. The specific format (flash, report, K-1) is less important than total volume.',
+              'LPs who feel informed re-up at 40-60% on the next deal at 70-90% of prior check size. LPs who get silence for 6 months re-up at 10-20%. Cadence: monthly flash by 15th of following month (occupancy, T3 NOI vs budget, delinquency, narrative), quarterly LP report 30 days after quarter end (full financials, CapEx progress, market commentary), annual letter by March 31, K-1 by March 15 non-negotiable. Late K-1s are the #1 LP complaint and a major re-up killer.',
+              'Most institutional LPs prefer minimal communication — quarterly reports are sufficient because more frequent contact creates noise that crowds out meaningful updates.',
+              'The cadence matters less than the content; an annual investor day with all LPs in person beats 12 monthly reports because relationships are built face-to-face.',
+            ],
+            correctIndex: 1,
           },
           {
             q: 'Distribution cadence, methodology, and reserve policy — what should a first-time sponsor commit to in the OA?',
@@ -3163,6 +3289,13 @@ export const COURSES: Course[] = [
             trap: 'Distributing aggressively in Year 1 to hit the 8% yield and draining reserves before stabilization completes.',
             difficulty: 'operator',
             topicId: 'w8-t09-distribution-mechanics',
+            choices: [
+              'Monthly distributions, full-cash methodology (distribute everything after debt service), and minimal reserves — LPs prefer maximum yield and trust the sponsor to pull from operations if needed.',
+              'Annual distributions tied to refi or sale events only — interim cash flows reinvested into CapEx until exit, simplifying tax timing for LPs.',
+              'Quarterly distributions (institutional standard, lower ops burden than monthly). Cash-on-cash target methodology (distribute to hit 6-8% annualized yield), not "distribute everything after debt service" which drains reserves. Reserve policy: 3 months operating expenses (1-2% of purchase price) + remaining budgeted CapEx + 10-15% contingency + 6 months debt service if lender requires. Spell reserves out in the OA so LPs aren\'t blindsided when Year 1 yields 5% instead of 8%.',
+              'Quarterly distributions sized at the maximum allowable under the lender\'s cash sweep covenant — pushing to the covenant edge maximizes LP yield while staying compliant.',
+            ],
+            correctIndex: 2,
           },
           {
             q: 'Map a 60-day raise timeline backward from closing and identify the most common slip points.',
@@ -3171,6 +3304,13 @@ export const COURSES: Course[] = [
             trap: 'Waiting to engage securities counsel until LOI is hard — PPM drafting takes 3-4 weeks and you will miss closing.',
             difficulty: 'operator',
             topicId: 'w8-t10-raise-timeline',
+            choices: [
+              'Day -60: sign LOI, start outreach. Day -30: engage counsel and draft PPM in parallel with closing diligence. Day -10: collect wires. The compressed front end maximizes runway for negotiation and lets you decide raise size after dd is complete.',
+              'Day -45 (post-LOI): launch the raise broadly to maximize lead count. Day -20: send PPM to anyone who soft-commits. Day -5: collect wires. Slips: investors who do not respond to the broad blast.',
+              'Day -60 to -10 is too long — institutional best practice is a 21-day raise window so urgency drives commits. Anything longer signals the deal is weak and brokers stop sending you product.',
+              'Day -60 (LOI signed): engage securities counsel, draft PPM, start outreach to top 20 LPs. Day -50: PPM ready, soft launch to top tier, target $1.5-2M soft commits by day -42. Day -42: broad launch to full investor list (80-200 contacts), webinar scheduled. Day -35 to -20: convert soft to hard with signed sub docs + wires. Day -20 to -10: gap-fill with anchor top-ups, warm referral re-engagement. Day -10 to 0: all capital wired to escrow 5-7 business days before closing. Slips: counsel engaged too late (PPM takes 3-4 weeks), no buffer between raise close and deal close, daily commit velocity not tracked.',
+            ],
+            correctIndex: 3,
           },
         ],
         mistakes: [
@@ -3384,6 +3524,13 @@ export const COURSES: Course[] = [
             trap: 'Lifting a peer\'s PPM risk factors verbatim because "it\'s the same property type."',
             difficulty: 'foundation',
             topicId: 'w9-t01-ppm-sections',
+            choices: [
+              'Section 4 matters because it sets the legal definition of "material adverse change" — without specific MAC carve-outs the LP can call default at any point. Specificity means listing every dollar amount that triggers a notice obligation.',
+              'Risk factors drive liability primarily because the SEC reviews them pre-launch — specific means matching the exact language the SEC has approved for similar offerings, which is why most sponsors copy from prior approved PPMs.',
+              'It\'s really Section 7 (Use of Proceeds) that drives liability; Risk Factors are mostly templated and rarely litigated. Specificity in risk factors is more about formatting than content.',
+              'Risk Factors anchor Rule 10b-5 anti-fraud exposure — the SEC and plaintiffs\' attorneys both look for material misstatements or omissions. "Specific" means tied to the actual property and offering ("63-year-old building with galvanized steel supply plumbing requiring phased replacement"), not "real estate investments carry risks." Generic boilerplate copied from another PPM creates a record that you did not perform deal-specific disclosure analysis. If a known issue at your property was not disclosed, you have personal liability under 10b-5 even after the offering closed.',
+            ],
+            correctIndex: 3,
           },
           {
             q: 'The PPM and the operating agreement contain similar-looking distribution language — which one governs in a dispute, and why does that matter?',
@@ -3392,6 +3539,13 @@ export const COURSES: Course[] = [
             trap: 'Reading the PPM but not the OA — assuming they say the same thing.',
             difficulty: 'foundation',
             topicId: 'w9-t02-operating-agreement',
+            choices: [
+              'The OA governs. The PPM summarizes the OA for disclosure but the OA is the binding contract courts enforce. Common trap: PPM says "8% preferred return" while OA says "8% non-compounding annual simple return" — different math, OA wins. Inconsistencies create both LP claims (PPM said X, you delivered Y) and 10b-5 exposure. The OA also defines removal mechanics, capital call dilution, transfer restrictions, and dissolution triggers — none of which the PPM controls.',
+              'The PPM controls because it is the document the SEC reviews and signed by the sponsor under penalty of perjury — the OA is essentially a procedural attachment.',
+              'Whichever document the LP signed first controls — typically that is the subscription agreement which incorporates the PPM by reference, so PPM language wins.',
+              'In a dispute the documents are read together and the more LP-favorable language always governs under standard contra proferentem rules — so the difference rarely matters.',
+            ],
+            correctIndex: 0,
           },
           {
             q: 'What does an LP actually sign at investment, and what protects the sponsor from rescission claims later?',
@@ -3400,6 +3554,13 @@ export const COURSES: Course[] = [
             trap: 'Letting an LP sign just the sub agreement and skipping the suitability questionnaire because "they\'re an institution."',
             difficulty: 'application',
             topicId: 'w9-t03-subscription-docs',
+            choices: [
+              'Just the subscription agreement and a wire confirmation — institutional LPs are exempt from suitability questionnaires, and the wire itself is sufficient evidence of accredited status under SEC safe harbor.',
+              'Subscription agreement plus a CPA accreditation letter — that combination has been ruled sufficient by the SEC and replaces the need for a separate suitability rep or bad actor questionnaire.',
+              'Subscription agreement and operating agreement signature page only — the OA contains all the necessary suitability and bad actor language by reference, so a separate questionnaire creates duplicative paperwork.',
+              'The full subscription package: (1) Subscription Agreement (the contractual offer to invest), (2) Investor Questionnaire (accredited / sophisticated certification), (3) Suitability Reps (investor confirms understanding of risk and ability to bear loss), (4) AML/KYC docs, (5) W-9 or W-8BEN, (6) Bad Actor Questionnaire. The Sub Agreement creates the contract; the questionnaire and suitability reps protect the sponsor from rescission claims. Sponsor countersigns and retains everything 7+ years (exceeds SEC 5-year minimum).',
+            ],
+            correctIndex: 3,
           },
           {
             q: 'A potential GP partner discloses they had a 2019 SEC settlement for a separate real estate matter. What is the impact on your 506 offering?',
@@ -3408,6 +3569,13 @@ export const COURSES: Course[] = [
             trap: 'Not running 506(d) bad actor questionnaires on every covered person before launching the offering.',
             difficulty: 'application',
             topicId: 'w9-t04-bad-actor',
+            choices: [
+              'A 2019 SEC settlement is outside the 3-year lookback window for Rule 506 — bad actor only applies to events within the last 36 months, so the partner can join the offering with simple disclosure.',
+              'Rule 506(d) bad actor: a single covered person (sponsor, GP, 20%+ beneficial owner, paid solicitor) with a disqualifying event in the last 5 years — or 10 years for criminal convictions — disqualifies the entire 506 offering. Disqualifying events: SEC sanctions, felony/fraud convictions, regulatory bars. Consequence: LP rescission rights, busted exemption, possible state-level enforcement. Fix: remove the partner from a covered position, document a Rule 506(d) waiver if available (rare), or refile under a different exemption (504 limited; Reg A more burdensome).',
+              'Bad actor only matters if the partner directly receives compensation from the offering — if they take only a profits interest with no fee, the rule does not apply.',
+              'A settlement (vs an adjudicated finding) does not trigger 506(d) because there was no admission of liability — disclosure in the PPM Compensation section is sufficient.',
+            ],
+            correctIndex: 1,
           },
           {
             q: 'You closed a $5M raise with LPs in 11 states. Walk through the Form D and blue sky filings you owe and the timing.',
@@ -3416,6 +3584,13 @@ export const COURSES: Course[] = [
             trap: 'Forgetting that "first sale" starts the 15-day clock — many sponsors think it\'s closing date.',
             difficulty: 'application',
             topicId: 'w9-t05-blue-sky-form-d',
+            choices: [
+              'One Form D filed within 30 days of CLOSING on EDGAR — closing is the trigger because that is when the offering is complete and final LP count is known. State filings are batched annually.',
+              'One Form D filed within 15 days of LAST sale plus state notice filings due at year end. Filing fees are uniform federally ($300 SEC fee) and state fees are waived for accredited-only offerings.',
+              'Form D filed electronically on EDGAR within 15 days of FIRST SALE (first signed sub doc + received wire) — one Form D for the whole offering. Each state where an LP resides also requires a separate notice filing within 15 days of first sale in that state. Filing fees vary widely (CA $300+, TX $500+, others $50-200) — 11 states roughly $1,500-3,000 plus counsel time. Form D amendments required for material changes (offering size, sponsor change, lane shift), and annual update if offering remains open at the anniversary.',
+              'Form D within 15 days of first sale plus a single multi-state filing through NASAA EFD that satisfies all 11 states automatically — no per-state filing required since 2020 reforms.',
+            ],
+            correctIndex: 2,
           },
           {
             q: 'Total sponsor compensation on your $5M raise hits $1.4M (28% of equity). An anchor LP\'s attorney pushes back. How do you respond?',
@@ -3424,6 +3599,13 @@ export const COURSES: Course[] = [
             trap: 'Stacking fees too high (acq 2.5%, AM 2% of EGI, disposition 1.5%, refi 1%, construction mgmt 6%) — total sponsor comp blows past 8% of equity.',
             difficulty: 'operator',
             topicId: 'w9-t06-fee-disclosure',
+            choices: [
+              'The 28% ratio is wrong on its face — total sponsor comp typically runs 4-7% of equity OVER THE FULL HOLD (acquisition + AM + disposition + refi + construction mgmt). At 28%, you\'ve either misclassified promote into "compensation" or your fee structure won\'t pass peer review. Promote (20-30% above pref) is NOT sponsor comp — it is profit-share earned by hitting LP returns. If true comp is high, drop acq fee from 2.0% to 1.5%, AM from 2% of EGI to 1.5%, and remove or cap disposition fee at 0.75%. Document via PPM amendment and walk anchor LPs through the new math.',
+              'Defend the 28% — it reflects the value the GP team brings (deal sourcing, AM expertise, capital relationships). Anchor LPs who do not understand sponsor economics are not the right partners.',
+              'Reduce the AM fee to 0% in Years 1-2 only and keep all other fees intact — that gesture is enough to unblock the anchor without restructuring the broader fee stack.',
+              'Convert all fees into promote (raise the GP catch-up from 80/20 to 70/30) — that hides the comp from the LP attorney\'s spreadsheet because promote is profit-share, not compensation.',
+            ],
+            correctIndex: 0,
           },
           {
             q: 'When does it make sense to launch a fund vehicle instead of running deal-by-deal syndications, and what is the cost/complexity tradeoff?',
@@ -3432,6 +3614,13 @@ export const COURSES: Course[] = [
             trap: 'Launching a fund at $20M AUM because "it sounds bigger" — operating cost eats most of the management fee.',
             difficulty: 'operator',
             topicId: 'w9-t07-fund-vs-deal',
+            choices: [
+              'Launch the fund as soon as you close deal #2 — recurring management fees on $20M AUM ($300-400k/year) easily cover the operational overhead and signal institutional credibility to brokers.',
+              'Funds always beat deal-by-deal once you have repeat LPs — the management fee covers all overhead and LP capital efficiency from blind-pool commitments outweighs every other consideration.',
+              'Stay deal-by-deal indefinitely — funds are an institutional structure that does not fit private syndicators, and the SEC compliance burden is too high for any sponsor under $500M AUM.',
+              'Fund makes sense around $50M+ AUM trajectory with repeat institutional LPs who want diversified blind-pool exposure plus operations infrastructure for quarterly NAV reporting and cross-deal allocation. Cost: $60-100k initial fund docs (vs $18-32k per deal-by-deal raise), $50-100k/year compliance, dedicated controller, third-party fund admin. Tradeoff: deal-by-deal lets LPs pick deals (transparency); fund forces commitment to all deals in the strategy (sponsor efficiency). Most sponsors run deal-by-deal for first 5-8 deals, launch fund #1 in deals 9-12. Hybrid: deal-by-deal with a parallel co-invest fund is common.',
+            ],
+            correctIndex: 3,
           },
           {
             q: 'Your in-house property management company will manage the asset. What disclosure does the PPM require and how do you set the fee defensibly?',
@@ -3440,6 +3629,13 @@ export const COURSES: Course[] = [
             trap: 'Setting in-house PM fees at 6% when third-party benchmark is 4% — and not disclosing the gap.',
             difficulty: 'operator',
             topicId: 'w9-t08-related-party',
+            choices: [
+              'Affiliated PM is exempt from related-party disclosure as long as the fee is below 5% of EGI — that bright line is the SEC safe harbor for vertically-integrated multifamily operators.',
+              'Affiliated PM is a related-party transaction requiring full disclosure: (1) ownership/control relationship between sponsor and PM disclosed in Compensation, (2) fee disclosed at percentage AND dollar amount, (3) representation that fee is at-market with peer benchmark (3.5-5% of EGI for stabilized multifamily, 4-6% for value-add), (4) statement that the affiliated relationship was considered in selection. Best practice: get an independent PM bid for the same scope and disclose the comparison. If your in-house PM bids 4.5% and a third-party bid is 4.0%, either match the third party or document why your PM is worth the premium (vertical integration, faster response, reporting quality).',
+              'Disclose the affiliated relationship in a single sentence in the PPM Risk Factors section — that satisfies SEC related-party rules and avoids burdening LPs with fee benchmark detail.',
+              'Set the fee at the high end of the market range (5% of EGI for stabilized) and rely on the PPM\'s general "fees may be paid to affiliates" language as disclosure — that is what most sponsors do.',
+            ],
+            correctIndex: 1,
           },
           {
             q: 'Your deal distributes promote in Years 1-3 based on interim cash flows but underperforms at exit. Walk through how the clawback provision protects LPs.',
@@ -3448,6 +3644,13 @@ export const COURSES: Course[] = [
             trap: 'Drafting a clawback that survives only 6 months post-dissolution — too short to enforce after a contested exit.',
             difficulty: 'operator',
             topicId: 'w9-t09-clawback',
+            choices: [
+              'A clawback recalculates promote at exit and the GP pays back any excess — but it only applies if the deal sells at a loss. If the deal returns even 1% above original capital the GP keeps everything previously distributed.',
+              'Clawback is a tax provision that reverses Year 1-3 promote distributions for tax purposes only — the GP keeps the cash but reports it as ordinary income to the LPs at exit, restoring their basis.',
+              'Clawback computes the "should-have-been" distribution at final exit using realized cash flows. Compare to what GP actually received during the hold. If GP took $400k of promote in Years 1-3 but final waterfall math at exit shows GP entitled to only $260k given LPs missed pref, GP returns the $140k excess within 90 days of exit. Standard structures: terminal clawback (true-up at dissolution, most common in deal-by-deal); interim clawback (true-up at each distribution event, more LP-friendly but operationally complex); cap at after-tax promote received protects GP from returning pre-tax dollars. Personal guaranty from GP principals is critical — without it, the LLC may have no assets at dissolution to enforce against.',
+              'Clawback is a one-way ratchet — at exit, if total LP IRR is below the pref the GP forfeits all future promote on the next deal in the series. It does not reach back into already-distributed cash because that would create an unenforceable contract under most state LLC statutes.',
+            ],
+            correctIndex: 2,
           },
           {
             q: 'How do you select securities counsel, what do they actually deliver, and where do generalist real-estate attorneys fall short?',
@@ -3456,6 +3659,13 @@ export const COURSES: Course[] = [
             trap: 'Treating counsel as a cost center to optimize down rather than as protection — and ending up with a PPM that lacks specific risk factors.',
             difficulty: 'operator',
             topicId: 'w9-t10-sec-counsel',
+            choices: [
+              'Use a specialist real-estate securities firm drafting 40+ multifamily PPMs/year (Hirschler, Gray Reed, Seyfarth Shaw, Dickinson Wright). Fixed fee $18-32k all-in for a deal-by-deal raise covers PPM ($12-20k), Operating Agreement ($4-8k), Form D + blue sky filings ($1-3k), compliance guidance ($1-2k retained). Specialist delivers first PPM draft in 14-18 days. Generalists fall short on deal-specific risk factors (default to template boilerplate), waterfall clarity (mechanics often don\'t match the OA), Form D timing discipline, multi-state blue sky coordination, and 506(b) vs 506(c) advertising review. Worst mistake: using your local closing attorney "because they did the LOI" — you pay for their learning curve via 3 rounds of LP-side amendments.',
+              'Use the same attorney who handled your LOI and PSA — single-point-of-contact reduces coordination cost, and any real-estate attorney can adapt a PPM template within 2-3 weeks for $8-12k flat fee.',
+              'Hire BigLaw (Latham, Kirkland, Skadden) for the institutional credential — the $80-120k fee is justified by signaling sophistication to anchor LPs and reduces LP-side legal review by 50%+.',
+              'Skip outside counsel entirely and use an online platform (e.g., the same template every syndicator uses) — your money is better spent on raise marketing than on legal documents that LPs rarely read.',
+            ],
+            correctIndex: 0,
           },
         ],
         mistakes: [
@@ -3697,6 +3907,13 @@ export const COURSES: Course[] = [
             trap: 'Accepting "to seller\'s knowledge" qualifiers on every rep — gives seller escape hatches.',
             difficulty: 'foundation',
             topicId: 'w10-t01-psa-redlines',
+            choices: [
+              '(1) Reps & Warranties — broad and specific, not weakened by "to seller\'s knowledge" qualifiers; (2) Survival & Indemnity Cap — push to 9-12 months survival, 1.5-2.5% cap; (3) DD Period — 30-45 days stabilized, 45-75 value-add, with one 15-day extension at buyer\'s sole discretion; (4) Earnest Money Staging — initial refundable, additional hard at end of DD, balance hard 10-14 days pre-close; (5) Termination Rights — for any reason during DD, specific defaults after; (6) Closing Conditions — no MAC, title insurable, estoppels received, all reps still true. These six allocate roughly 90% of the risk between signing and closing.',
+              'Closing date, prorations, broker compensation, title commitment review, signage, and post-closing access — these are the items most often disputed at the closing table.',
+              'Earnest money amount, financing contingency, inspection contingency, appraisal contingency, broker representation, and assignment language — the standard residential redline list adapted to multifamily.',
+              'Indemnity baskets and caps, choice-of-law, venue, attorney fee shifting, dispute escalation procedure, and arbitration vs litigation — these procedural provisions decide who wins post-close disputes.',
+            ],
+            correctIndex: 0,
           },
           {
             q: 'What is a fair rep & warranty survival period and indemnity cap, and what does each side push for?',
@@ -3705,6 +3922,13 @@ export const COURSES: Course[] = [
             trap: 'Accepting 6-month survival because "the seller insisted" without compensating with a higher cap or specific carve-outs for known-risk reps.',
             difficulty: 'foundation',
             topicId: 'w10-t02-reps-warranties',
+            choices: [
+              'Survival should match the title insurance policy duration (typically 10 years) so post-close exposure aligns. Cap is irrelevant because the title policy backstops most claims.',
+              'Buyer-friendly: 12 months survival, 2-3% cap. Seller-friendly: 6 months, 1% cap. Compromise that closes most deals: 9 months, 2% cap. Knowledge qualifiers should be defined as "actual knowledge of named individuals" (typically VP of Operations and CFO) without duty to inquire — accountability without forcing seller to audit every paper. Indemnity basket / threshold (typically $25-50k) prevents nuisance claims for tiny items.',
+              'Industry standard is 24 months survival and 5% cap — anything shorter or smaller signals an unsophisticated buyer, and most LPs will flag it as a red issue at the OA review.',
+              'Survival and cap are negotiable items rarely worth fighting over — buyer\'s real protection is title insurance and the lender\'s due diligence, not the PSA reps. Take whatever the seller offers in their first draft.',
+            ],
+            correctIndex: 1,
           },
           {
             q: 'A monsoon damages 6 units of roofing ($180k repair) on day 23 of contract. PSA has a 5% casualty threshold on a $22M deal. Walk through the buyer\'s decision.',
@@ -3713,6 +3937,13 @@ export const COURSES: Course[] = [
             trap: 'Setting casualty threshold above 10% — buyer faces closing on materially damaged property.',
             difficulty: 'application',
             topicId: 'w10-t03-casualty-condemnation',
+            choices: [
+              'Walk the deal — any casualty after PSA signing is a buyer termination right under the standard PSA, regardless of dollar amount. The 5% threshold only matters for re-trade, not termination.',
+              'Re-trade for the full $180k repair cost plus a 30% contingency — this is below threshold but the seller is contractually obligated to deliver the property in pre-casualty condition.',
+              'File a claim against the lender\'s casualty endorsement — most multifamily loan commitments include casualty coverage that the buyer can claim against post-close, neutralizing the loss.',
+              'Threshold = $1.1M (5% × $22M). Damage = $180k, well below threshold. Buyer must close under the PSA. Seller assigns insurance claim at closing; buyer collects proceeds post-close. Get pre-approval from lender for the assignment — some lenders won\'t fund if a claim is pending. Net buyer cost: deductible + pending-claim discount, typically $20-30k on a $180k claim. Practical: carry buyer-side builder\'s risk insurance from PSA signing ($400-1,200 for 60-day coverage) to protect against gaps in seller\'s policy.',
+            ],
+            correctIndex: 3,
           },
           {
             q: 'A seller\'s T-12 shows $2.34M EGR. After bank reconciliation, you find $92k of one-time cell tower lease bonus, 9 of 148 "occupied" units are 60+ days delinquent, and current insurance renewal is $52k higher than the T-12 figure. Quantify the impact.',
@@ -3721,6 +3952,13 @@ export const COURSES: Course[] = [
             trap: 'Accepting seller T-12 without bank reconciliation — the single most common DD miss.',
             difficulty: 'application',
             topicId: 'w10-t04-financial-dd',
+            choices: [
+              'Year 1 NOI shifts by roughly 4% — within underwriting tolerance — so re-trade is not justified. The cell tower bonus and insurance increase offset each other and the delinquencies will resolve naturally with new ownership.',
+              'Adjusted EGR drops by $92k (one-time bonus stripped) plus 9 of 156 units economically vacant — re-trade for $200k cap rate value and move on. Ignore the insurance number since it postdates the T-12.',
+              'Adjusted EGR: $2.34M − $92k one-time = $2.248M (3.9% lower). Effective economic occupancy: 139/156 = 89%, not the 95% reported. Adjusted Year 1 NOI: subtract $92k revenue + $52k expense increase + roughly $84k of collection-loss reserve on 9 delinquent units = $228k NOI reduction vs underwriting. At a 5.75% exit cap that\'s $3.97M of value impact. Re-trade target: $300-500k purchase price reduction documented with specific variance summary tied to source documents.',
+              'Total NOI reduction = $228k → at 5.75% exit cap that\'s $4M+ of value impact, justifying a re-trade north of $1.5M because buyer should also recover lost upside on stabilization year.',
+            ],
+            correctIndex: 2,
           },
           {
             q: 'On a 240-unit value-add, how many units do you walk during physical DD, and what does the inspection scope cover?',
@@ -3729,6 +3967,13 @@ export const COURSES: Course[] = [
             trap: 'Letting the broker pick the sample units — they\'ll route you to the best ones.',
             difficulty: 'application',
             topicId: 'w10-t05-physical-dd',
+            choices: [
+              'Walk 100% of vacant units plus 5-10% of occupied — that combination gives full visibility into deferred capex (vacant = visible) plus statistical confidence on resident wear (occupied sample). Cost: $6-10k.',
+              'Walk 25-35% of units (60-84 on a 240-unit deal) with a stratified sample: occupied + vacant, recently renovated + classic interior, all building types and floor levels. Inspection: HVAC functional check (every unit), kitchen/bath plumbing, water damage/mold, flooring, paint/wear, appliance age, electrical panel state, window seals, balcony/patio integrity. Common spots: roof from above (drone or ladder), boiler/chiller rooms, electrical rooms, leasing office, fitness, pool, all building exteriors. PCA engineer separately walks roofs, parking, all major systems. 8-12 days field plus 5 days report. Cost: $14-22k for full PCA + buyer walks.',
+              'Walk 10-15% of units (a recognized industry sample size) plus rely on the seller\'s recent PCA — that report is independent and can be relied upon by the buyer at closing for $1-2k transfer fee.',
+              'Walk every unit (100%) — anything less misses defect concentration in specific buildings or floors. 240 units takes 14-18 days but the comprehensive coverage justifies the additional $30-40k cost.',
+            ],
+            correctIndex: 1,
           },
           {
             q: 'Phase I environmental flags an REC (Recognized Environmental Condition) — historical dry cleaner adjacent to the property. What do you do?',
@@ -3737,6 +3982,13 @@ export const COURSES: Course[] = [
             trap: 'Accepting "Phase I clean" without reading the limitations section — most Phase Is exclude operations the seller wouldn\'t disclose.',
             difficulty: 'operator',
             topicId: 'w10-t06-environmental-dd',
+            choices: [
+              'A REC alone does not require Phase II — only Phase II is triggered by an actual Phase I "finding of impact." An adjacent dry cleaner is a historical use, not a finding, so Phase I conclusions stand and you proceed to closing.',
+              'Walk the deal — adjacent dry cleaner sites are uninsurable under most lender environmental policies and CERCLA exposure cannot be quantified during DD windows.',
+              'Re-trade for $50-75k against potential remediation and proceed to close with an environmental indemnity from the seller — that combination protects buyer without slowing the deal.',
+              'Order Phase II — soil and groundwater testing at and around the suspected migration path. Cost: $15-40k. Timeline: 2-4 weeks for sampling + 2-3 weeks for lab and report. If Phase II finds contamination above state thresholds: (1) re-trade for remediation cost + 20-30% contingency, (2) negotiate seller-paid remediation pre-closing, or (3) walk if cleanup cost or liability is open-ended. Get a Letter of Comfort from the state environmental agency confirming no further action required — protects buyer and lender. Lender will require Phase II results in financing package; many won\'t fund without state sign-off.',
+            ],
+            correctIndex: 3,
           },
           {
             q: 'Legal DD turns up a 9-year laundry contract with a 60/40 vendor split (vendor takes 60%) and a $58k early-termination fee. How does this hit your underwriting?',
@@ -3745,6 +3997,13 @@ export const COURSES: Course[] = [
             trap: 'Treating service contracts as routine and not reading them line by line during legal DD.',
             difficulty: 'operator',
             topicId: 'w10-t07-legal-dd',
+            choices: [
+              'Service contracts assigned at closing typically reset to current market terms automatically under standard PSA assignment language — the bad split won\'t survive the sale.',
+              'Notice the seller you\'re terminating the contract pre-closing — buyer has no obligation to assume below-market service contracts under the PSA, and the $58k buyout is the seller\'s problem, not yours.',
+              'Market laundry split is 50/50 to 70/30 owner. A 60/40 vendor-favored contract with 7 years remaining costs the buyer the difference: roughly $8-12k/year of foregone ancillary income vs market = $56-84k present value at a 7% discount rate. Plus the $58k buyout if terminated. Total impact: $114-142k. Re-trade for a price reduction, a seller credit, or specific seller-paid early termination. If neither, model the impact in operations and adjust IRR. Most laundry contracts (WASH, CSC) survive sale and assign automatically — do not assume they go away.',
+              'Laundry economics are immaterial on a $22M deal — the $8-12k/year gap is roughly 0.05% of EGR and not worth the broker friction of re-trading.',
+            ],
+            correctIndex: 2,
           },
           {
             q: 'Operational DD on the on-site team — what do you check, and what is the trigger to replace the PM at closing?',
@@ -3753,6 +4012,13 @@ export const COURSES: Course[] = [
             trap: 'Inheriting the existing PM by default because "they know the property" — they also know the dysfunction.',
             difficulty: 'operator',
             topicId: 'w10-t08-operational-dd',
+            choices: [
+              'Walk the leasing office for 2-3 hours, observe shows-to-leases conversion, review tour notes and prospect database, watch a maintenance ticket flow end-to-end, audit move-in/move-out files for compliance. Interview on-site PM, APM, leasing, and maintenance lead separately. Triggers to replace at closing: (a) systematic compliance issues (security deposits not in escrow, late fees not consistently applied, fair housing missteps); (b) prior PM chronically below market in renewal rates and trade-outs; (c) high turnover (2+ PMs in past 18 months signals dysfunction); (d) reporting quality so poor you can\'t reconstruct what is actually happening. If 2+ triggers fire, plan replacement in advance — broadcast to the team day after close, transition over 30-45 days.',
+              'Run a background check on the on-site PM and review the past 6 months of online reviews — that combination tells you whether the team is functional. Replace only if there is a documented compliance violation.',
+              'Default to keeping the existing team for the first 90-120 days regardless of what DD shows — institutional knowledge of the property is worth more than any operational gap that can be fixed through training.',
+              'Replace the entire on-site team at every acquisition as a matter of policy — fresh start avoids inheriting any prior bad habits and signals to residents that ownership has changed.',
+            ],
+            correctIndex: 0,
           },
           {
             q: 'When are tenant estoppels required, and what does an estoppel actually verify?',
@@ -3761,6 +4027,13 @@ export const COURSES: Course[] = [
             trap: 'Accepting tenant\'s preferred estoppel form because "the tenant won\'t sign ours" — push back through counsel; tenants almost always sign buyer\'s form when properly framed.',
             difficulty: 'operator',
             topicId: 'w10-t09-estoppels',
+            choices: [
+              'Estoppels are required from 100% of residents on every multifamily acquisition — without full coverage, lenders won\'t fund and post-close tenant claims become uninsurable.',
+              'Required for: commercial tenants (retail, daycare, cell tower), specialty residential with master-lease structures (student/senior), major amenity contracts (leased laundry, package lockers), and lender-required residential samples (5-10 estoppels for CMBS or HUD). Standard residential leases generally don\'t need estoppels — rent roll and lease files cover it. The estoppel verifies: (a) lease in full force and effect, (b) no defaults by either party, (c) rent and security deposit amounts as stated, (d) no claims or offsets against the landlord, (e) any side letters or unrecorded amendments. Use buyer-counsel form, not tenant\'s preferred form. Allow 3-4 weeks for delivery — start day 1 of DD.',
+              'Estoppels are only required when the lender specifically demands them and the form is whatever the lender provides — buyer doesn\'t need its own estoppel program because the title policy covers tenant claims.',
+              'Estoppels are optional in multifamily because residential leases are short and rent roll matches lease files — the estoppel exercise is a commercial real estate practice that doesn\'t add value at this asset class.',
+            ],
+            correctIndex: 1,
           },
           {
             q: 'When is a re-trade legitimate vs. reputation-killing, and how do you frame it to keep the deal alive?',
@@ -3769,6 +4042,13 @@ export const COURSES: Course[] = [
             trap: 'Re-trading without a written variance summary — feels like negotiation, reads like bad faith.',
             difficulty: 'operator',
             topicId: 'w10-t11-retrade',
+            choices: [
+              'Re-trade is always reputation-killing — sophisticated buyers price all known and reasonably-discoverable risk into LOI and accept the deal as struck. The only legitimate exit during DD is termination.',
+              'Re-trade discipline is governed by the PSA itself — any item not specifically listed as a re-trade trigger in the contract cannot be raised post-LOI without breaching good-faith obligations.',
+              'You can re-trade for any reason during the DD window — buyer\'s sole-discretion termination right means there\'s no broker reputation cost as long as you stay inside the timeline.',
+              'Three legitimate re-trade triggers: material, quantifiable, previously unknown. Examples: undisclosed environmental REC, rent roll variance vs underwriting (3%+ gap), insurance renewal materially higher than T-12, capital work surfaced by PCA not disclosed at LOI, title issues requiring cure cost. Illegitimate: "the market shifted," "I underwrote wrong," "my LPs want a better number." Framing: deliver a written variance summary with source documents (bank recs, third-party reports, vendor quotes) showing specific dollar impact. Ask: a price reduction, seller credit, or specific repair before close. Sellers who see a documented case generally respond; sellers who feel ambushed walk and tell the broker. Brokers blacklist re-traders fast.',
+            ],
+            correctIndex: 3,
           },
         ],
         mistakes: [
@@ -3982,6 +4262,13 @@ export const COURSES: Course[] = [
             trap: 'Selecting on lowest fee — typically reflects overworked staff, high turnover, and poor reporting.',
             difficulty: 'foundation',
             topicId: 'w11-t01-pm-selection',
+            choices: [
+              'Source one regional PM you have worked with previously, sign their standard contract, and skip the RFP — repeat relationships save 60-90 days of onboarding and avoid the cost of running multiple interviews.',
+              'Send the RFP to 8-12 PMs to maximize fee competition. The lowest two fee responses get interviewed, and the lowest-fee qualified candidate wins. The economics on a 180-unit deal don\'t justify scoring on softer factors.',
+              'Source 3-5 candidates: 1-2 national/regional (Greystar, RPM Living, Pinnacle, BH Management), 2-3 strong regional/local with submarket presence, 1 boutique if the strategy is niche. Send a standardized RFP asking fee structure, submarket portfolio, on-site team, technology stack, KPI commitments, and references. Top 2 get 90-minute interviews with the proposed on-site team. Reference checks: 3 current owner-clients on reporting quality, vacancy/collections, problem communication, would-they-rehire. Score on alignment + submarket presence + team — not on lowest fee. Best PM is rarely the cheapest.',
+              'Pick the largest national PM in the market — scale gives them better data, vendor pricing, and tech stack. Fee is uniform across the top 5 nationals so RFP is unnecessary.',
+            ],
+            correctIndex: 2,
           },
           {
             q: 'What ancillary income streams should the owner retain 100% of, and which are appropriate to split with PM?',
@@ -3990,6 +4277,13 @@ export const COURSES: Course[] = [
             trap: 'Letting the PM\'s default contract language assign ancillary streams without line-by-line review.',
             difficulty: 'foundation',
             topicId: 'w11-t02-fee-structure',
+            choices: [
+              'Owner retains 100%: application fees, late fees, NSF fees, lease transfer fees, lease-break fees, RUBS billings (utility recovery), parking, pet rent. These are owner income — PM has no entitlement. Split candidates: laundry revenue (if PM negotiates and manages the contract), package locker fees (if PM administers), some marketing-driven ancillary like vending or fitness service revenue. Standard PM contract: 100% owner on owner-revenue items, splits only where PM provides additional management work. Confirm split language at contract signing — "PM keeps all ancillary" is a red flag and costs 30-80 bps of NOI.',
+              'PM should retain 100% of application fees and late fees as compensation for the administrative work of processing them — owner keeps RUBS, parking, and pet rent only.',
+              'Industry standard splits 50/50 on every ancillary stream because PM is the operational counterparty making collection happen — owner-only retention is no longer a market term in 2025.',
+              'PM keeps all ancillary income above a baseline number agreed at contract signing — that incentive aligns the PM to maximize fee capture.',
+            ],
+            correctIndex: 0,
           },
           {
             q: 'Walk through a 30/60/90 PM onboarding plan and what must be true at each milestone.',
@@ -3998,6 +4292,13 @@ export const COURSES: Course[] = [
             trap: 'Letting the PM "figure it out" without a written 30/60/90 with named owners and weekly check-ins.',
             difficulty: 'application',
             topicId: 'w11-t03-onboarding',
+            choices: [
+              'Day 30: PM has signed contract and provisioned software access. Day 60: rent roll review complete. Day 90: financial reporting cadence established. Anything more aggressive overwhelms the on-site team and creates errors.',
+              'Day 30: chart of accounts mapped to your owner format, banking + signatory updated, software access provisioned, KPI dashboard delivering weekly numbers, all on-site team interviewed and reviewed (retain/replace decisions made), all vendor contracts catalogued, banking/insurance/utility transitions executed. Day 60: rent roll fully audited and corrected, lease files digitized, market survey complete (5-10 comps weekly), renewal pipeline mapped 90 days out, CapEx kickoff for first 3-5 priority projects, marketing program live (paid + organic + referral). Day 90: full operating cadence — weekly standing call, monthly variance report, quarterly board memo. Lease-up trajectory tracking to underwriting. All replace-decisions on staff executed.',
+              'Day 30: replace 100% of on-site staff to signal new ownership. Day 60: full rent roll re-audit including unit walks. Day 90: launch CapEx scope simultaneously across all units to maximize push-rent timing.',
+              'Day 30: focus exclusively on banking, insurance, and utility transitions. Day 60: introduce KPI tracking. Day 90: begin staff and vendor evaluations. Sequential focus prevents transition errors.',
+            ],
+            correctIndex: 1,
           },
           {
             q: 'What KPIs go on the weekly PM scorecard, and what are the action thresholds for each?',
@@ -4006,6 +4307,13 @@ export const COURSES: Course[] = [
             trap: 'Accepting PM-formatted reports instead of mandating an owner-format dashboard with the KPIs you need to see.',
             difficulty: 'application',
             topicId: 'w11-t04-kpi-pack',
+            choices: [
+              'Monthly only: T-12 NOI, expense category variance, rent roll snapshot, ancillary income capture rate, work order log. Weekly cadence creates noise and burns PM staff time on reporting instead of operations.',
+              'Weekly: physical occupancy, T-12 NOI vs underwriting, debt service coverage, refi eligibility window. Action threshold: 100 bps off plan triggers immediate PM replacement RFP.',
+              'Quarterly only: a comprehensive board pack including occupancy, trade-out, delinquency, renewal trajectory, and CapEx variance. Weekly granularity is appropriate for distressed assets but counterproductive for stabilized properties.',
+              'Weekly: physical occupancy (alert if drops 100+ bps week-over-week), economic occupancy (alert if 200+ bps gap to physical), trade-out new + renewal vs comp set, leased-but-not-occupied pipeline, 30/60/90 delinquency aging, work-order SLA (target 24-48 hrs emergency, 5-7 days standard), prospect-to-tour and tour-to-lease conversion, renewal pipeline 60/90/120 days out, CapEx project status. Monthly: T-3 NOI vs budget, expense category variance, ancillary income capture rate. Action thresholds: 200 bps off plan = same-week investigation; 400 bps = escalate to PM regional. Weekly cadence catches drift before it becomes structural.',
+            ],
+            correctIndex: 3,
           },
           {
             q: 'Your PM is missing trade-out targets by 200-400 bps for two consecutive months. Walk through the accountability conversation and escalation path.',
@@ -4014,6 +4322,13 @@ export const COURSES: Course[] = [
             trap: 'Hoping the gap closes on its own without a written corrective action plan and named owner.',
             difficulty: 'operator',
             topicId: 'w11-t05-accountability',
+            choices: [
+              'Replace the PM immediately at month 1 — 200 bps of trade-out variance is unacceptable on a stabilized property and waiting compounds the loss across the rent roll.',
+              'Allow 6 months for the PM to demonstrate corrective action — multifamily operations are slow to respond and any escalation before month 6 destroys the trust required for the relationship.',
+              'Month 1: weekly call agenda includes specific trade-out variance with units listed. Ask the on-site PM what is driving the gap (pricing, marketing, comp shift, product issue). Document the cause and the corrective action with owner + date. Month 2 same gap: escalate to PM regional. Joint call with regional, on-site, and you. Demand a written 30-day improvement plan. If the cause is on-site pricing dysfunction or staff issues, replace on-site PM. Month 3 still missing: invoke 60-day termination right. Find replacement during the 60-day window. Severity matters — 100 bps off may be market drift; 400 bps is execution failure.',
+              'Reduce the PM\'s management fee by 25% as a penalty for missing trade-out — financial pain is the only effective accountability mechanism and most PM contracts include performance-fee clauses that allow this.',
+            ],
+            correctIndex: 2,
           },
           {
             q: 'When does vertical integration (in-house PM) make economic sense, and what does the buildout look like?',
@@ -4022,6 +4337,13 @@ export const COURSES: Course[] = [
             trap: 'Going vertical at 600 units because "we want control" — overhead crushes economics for 18-24 months.',
             difficulty: 'operator',
             topicId: 'w11-t06-vertical-integration',
+            choices: [
+              '1,500-2,500 units under management with geographic concentration (3-5 properties in one metro) is the threshold. Below that, overhead of regional manager + accounting + HR + state licensing + insurance + tech stack eats fee capture. Buildout: regional manager ($95-130k base + bonus), staff accountant ($70-90k), HR/payroll outsourced initially (Gusto, Rippling), Yardi or RealPage license ($800-2k/property/year), state PM licenses, E&O insurance, brokerage license requirements in some states. Run year 1-3 hybrid: in-house for core metro, third-party for outliers. Fully vertical typically targets 5,000+ units.',
+              'Vertical integration makes sense at 500-700 units — the management fee on $35-50M of value covers regional manager + tech stack with margin to spare, and the operational control is worth the early overhead.',
+              'Vertical integration is always economically inferior to third-party PM at scale because PM platforms have data, vendor relationships, and recruitment infrastructure no in-house team can match. Stay third-party indefinitely.',
+              'The threshold is geographic concentration only, not unit count — if you own 3+ properties in one metro the metro economics make in-house viable regardless of total AUM.',
+            ],
+            correctIndex: 0,
           },
           {
             q: 'What are the standard staff ratios for a 180-unit Class B garden multifamily property, and how do you stress-test them during DD?',
@@ -4030,6 +4352,13 @@ export const COURSES: Course[] = [
             trap: 'Reading payroll line on T-12 without understanding the headcount behind it.',
             difficulty: 'operator',
             topicId: 'w11-t07-staff-ratios',
+            choices: [
+              'Standard for 180 units is 8 FTE: 1 PM, 2 APMs, 2 leasing, 2 maintenance, 1 porter — the higher headcount delivers superior tenant experience and renewal rates that pay back the labor cost.',
+              'Standard is 2 FTE: 1 PM/leasing combined and 1 maintenance — leaner staffing is a 2024-2025 best practice as PM platforms have reduced administrative load through automation.',
+              'Staff ratios are property-specific and there is no benchmark — review payroll on the T-12 and accept what the seller had as the baseline since they were running the property successfully enough to sell.',
+              'Standard: 1 PM (sometimes APM at 200+ units), 1 leasing professional (1 per 100-150 units, depends on lease-up activity), 1 maintenance lead + 1 maintenance tech (1 maintenance per 75-100 units), porter/groundskeeper (often 0.5 FTE for 180 units). Total: ~4-5 FTE for 180 units, payroll $220-310k/yr loaded. Stress-test during DD: review payroll detail by position, observe staff at work for 2-3 hours, check turnover (12-month staff list), audit overtime trends. Red flags: PM also doing maintenance, single leasing person handling 200+ units, 50%+ overtime on maintenance (signals understaffing or training gap).',
+            ],
+            correctIndex: 3,
           },
           {
             q: 'On a Class B stabilized property, what is the renewal rate and renewal trade-out target, and what do deviations signal?',
@@ -4038,6 +4367,13 @@ export const COURSES: Course[] = [
             trap: 'Auto-renewing at 0% bump because the PM is "preserving occupancy" — costs 100-200 bps of trade-out per year.',
             difficulty: 'operator',
             topicId: 'w11-t08-renewals',
+            choices: [
+              'Renewal rate target 70%+ — anything lower indicates execution problems. Trade-out should match new-lease trade-out (3-6%) regardless of market direction because the renewal vs new gap creates resident frustration.',
+              'Renewal rate target 50-58% (national market average). Renewal trade-out +3-6% in normal markets, 0-2% in cooling markets, 6-9% in tight markets. Above 60% renewal rate often signals under-priced renewals — you\'re leaving 100-200 bps of trade-out on the table by being too gentle. Below 45% signals either pricing too aggressive or property quality issues (maintenance, amenities, management). Renewal pipeline should be active 60-120 days before lease expiration with personalized outreach (not just an automated email).',
+              'Renewal rate target 35-45% — high turnover lets you push trade-outs more aggressively on new leases, which is the dominant value-creation lever in stabilized multifamily.',
+              'Renewal rate is irrelevant — trade-out is the only metric that matters. Maximize trade-out at every renewal cycle and let the resident decide whether to stay; market clears.',
+            ],
+            correctIndex: 1,
           },
           {
             q: 'Walk through the delinquency intervention playbook and explain why day-10 phone outreach is critical.',
@@ -4046,6 +4382,13 @@ export const COURSES: Course[] = [
             trap: 'Relying entirely on automated late notices and skipping the day-10 personal call because "the system handles it."',
             difficulty: 'operator',
             topicId: 'w11-t09-delinquency-playbook',
+            choices: [
+              'Day-10 phone outreach is a courtesy that has marginal cure impact — by day 10, residents who are going to pay have paid, and those who haven\'t are entering a structural delinquency the playbook can\'t fix.',
+              'Day 10 is the deadline for filing pay-or-quit notice in most states — phone outreach is a substitute for the formal legal notice and is therefore a compliance shortcut to avoid.',
+              'Day 1-5: standard late notice and late fee assessed, automated email + portal alert. Day 5-10: written notice with cure deadline (state-required language). Day 10-15: PERSONAL phone call from PM or APM. Most important touchpoint. Cure rates: 70%+ at day 10-15, drop to 30-40% by day 30-60. The phone call captures residents who forgot, had a temporary hiccup, or just need a payment plan. Day 15-30: pay-or-quit notice (state-specific timing), payment plan offered. Day 30-45: eviction filing where state allows. Day 45+: writ of possession and execution. Skipping day-10 phone outreach loses 30-40% of cure dollars.',
+              'Day 10 is too early — residents need the full state-mandated grace period (typically 14-30 days) before any owner contact, and earlier outreach can create fair-housing exposure under retaliatory-collection theories.',
+            ],
+            correctIndex: 2,
           },
           {
             q: 'You audit ancillary income on a 144-unit Class B property and find pet rent at $25 vs $50 market, only 58% of parking spaces captured, and no RUBS despite master-metered water. Quantify the opportunity.',
@@ -4054,6 +4397,13 @@ export const COURSES: Course[] = [
             trap: 'Treating ancillary as "small money" and not running the audit at month 2-3 post-close.',
             difficulty: 'operator',
             topicId: 'w11-t10-ancillary-income',
+            choices: [
+              'The opportunity is roughly $30-40k/yr ($210-280k value at cap) — pet rent and parking adjustments are real but RUBS implementation requires lease re-signing on rollover and so the recovery is staged over 18-24 months and not capitalizable upfront.',
+              'Ancillary opportunities like these are typically already captured in the seller\'s T-12 — the audit will surface that the rents are net of these items and the actual incremental opportunity is closer to $25-35k/yr.',
+              'Pet rent is the only opportunity with a clean uplift path — RUBS faces resident pushback that can drive turnover, and parking is best left at the seller\'s capture rate to avoid resident-relations issues at takeover.',
+              'Pet rent gap: $25 × ~30% pet households × 144 units ≈ 43 pets × $25/mo × 12 = $13k/yr (raise to $50 captures another $13k). Parking: assume 144 spaces, 42% captured at $25/mo on 60 spaces = $18k/yr; full assignment via lottery captures additional 84 spaces × $25 × 12 = $25k/yr (at lower fill rate, realistic incremental $20k). RUBS on water/sewer: master-metered water bills typically $42-65/unit/mo recoverable = 144 × $48 × 12 = $83k/yr. Total opportunity: $115-130k/yr of incremental NOI. At 5.75% cap = $2-2.3M of value.',
+            ],
+            correctIndex: 3,
           },
         ],
         mistakes: [
@@ -4267,6 +4617,13 @@ export const COURSES: Course[] = [
             trap: 'Selling because "the deal is at year 5" rather than because the math says exit.',
             difficulty: 'foundation',
             topicId: 'w12-t01-exit-optionality',
+            choices: [
+              'Sell at year 5 regardless of market — calendar discipline preserves LP trust and any deviation creates re-up friction on the next deal.',
+              'Refi-and-hold whenever cap rates have moved against you — interest-rate movement always reverses inside a 24-month window and waiting protects LP IRR.',
+              'The decision turns on remaining hold period in the OA — if the OA has a hard 7-year wind-down clause, sell now; if it has flexibility, refi. The IRR math follows the documents.',
+              'Refi-and-hold makes sense when: (1) cap rates have widened materially vs entry (selling now leaves IRR below underwrite), (2) NOI growth supports a refi that returns 30-60% of original LP equity, (3) remaining business plan still has runway (CapEx not done, rent comps still rising). Test: model exit-now IRR vs refi-and-hold IRR (refi proceeds distributed, then 24-36 month hold, then exit at projected cap). If refi-and-hold beats exit-now by 200+ bps of LP IRR, refi. Communicate clearly to LPs — many prefer exit and a 1031 over an extended hold, even at lower IRR.',
+            ],
+            correctIndex: 3,
           },
           {
             q: 'When should you consider a supplemental loan instead of a full refinance?',
@@ -4275,6 +4632,13 @@ export const COURSES: Course[] = [
             trap: 'Defaulting to a full refi without testing the supplemental option — costs 50-100 bps of LP IRR.',
             difficulty: 'foundation',
             topicId: 'w12-t02-supplementals',
+            choices: [
+              'Supplemental makes sense when: (1) original agency debt has remaining term at a coupon LOWER than current market (preserve the favorable first loan rate), (2) NOI has grown enough to support combined DSCR above 1.30x, (3) combined LTV stays below 75-80%, (4) cost to refinance the entire loan would be a 100-200 bps higher rate plus prepayment penalty. Supplemental is structured as a junior agency loan from the same lender (Fannie or Freddie), typically 70-80% of value uplift. Cost: $20-40k all-in (legal + lender + servicing transfer). Timeline: 45-75 days. Vs full refi: full refi resets the rate and term but if current market is +150 bps vs your existing rate, the supplemental wins on IRR.',
+              'Supplementals only make sense at year 1-2 of the original loan when prepayment penalties on the senior are at peak — by year 3 or later the prepay has dropped enough that full refi is always the better economic answer.',
+              'Supplementals are agency-only and cap out at 70% combined LTV — if you need more proceeds than that, the only path is bridge debt or a full agency refi. The supplemental is rarely the right answer at value-uplift stage.',
+              'Supplementals are dilutive to LP IRR because the second-lien structure adds interest cost without resetting the senior — a full cash-out refi is almost always the cleaner path even at higher coupon, since it consolidates the debt stack.',
+            ],
+            correctIndex: 0,
           },
           {
             q: 'Walk through the 1031 exchange timeline and the structural requirements that void the exchange if missed.',
@@ -4283,6 +4647,13 @@ export const COURSES: Course[] = [
             trap: 'Closing the relinquished property without a QI in place — the moment proceeds touch seller\'s account, the exchange is dead.',
             difficulty: 'application',
             topicId: 'w12-t03-1031',
+            choices: [
+              '60 days to identify, 270 days to close — the longer window gives buyers time to negotiate replacement deals. Funds can sit in the seller\'s operating account during identification as long as they aren\'t spent.',
+              'The exchange is governed by a 90-day identification + 360-day close window under post-2017 reforms — and the QI requirement was eliminated for accredited sellers in 2023.',
+              '45 days from closing the relinquished property to formally identify replacement candidates (up to 3 specific properties under the "3-property rule," or unlimited under the "200% rule" if total fair market value of identified properties is ≤200% of relinquished value). 180 days from relinquished close to close on a replacement. No extensions permitted, including for natural disasters or counterparty delays. A Qualified Intermediary (QI) must be engaged BEFORE close of the relinquished property — seller cannot touch the proceeds at any point. Funds wire from buyer\'s closing to QI account; QI holds and disburses to acquire the replacement property. Missing either deadline OR direct receipt of proceeds voids the exchange and triggers full tax liability on the gain.',
+              '45 days to identify, 180 days to close — but the QI is a procedural formality and the seller can use a personal escrow account as long as the funds are walled off from operating accounts.',
+            ],
+            correctIndex: 2,
           },
           {
             q: 'You\'re selling a 240-unit Indianapolis asset for ~$60M. Walk through the sales process timeline from broker selection to closing.',
@@ -4291,6 +4662,13 @@ export const COURSES: Course[] = [
             trap: 'Picking a broker on lowest commission rather than submarket data and buyer pool quality.',
             difficulty: 'application',
             topicId: 'w12-t04-sales-process',
+            choices: [
+              'List-to-close in 45-60 days with a single broker who has prior buyer relationships — speed signals confidence and avoids exposing the asset to extended market scrutiny.',
+              '60 days pre-list: interview 3-4 brokers (CBRE, Cushman, Newmark, JLL, regional specialists). Score on submarket data, prior comparable sales, OM quality, buyer relationships. 4-6 weeks pre-list: broker engaged, OM drafted (40-60 pages), data room organized (T-36, rent roll, capex history, third-party reports), pricing strategy set. Day 0 listing: OM released to buyer pool (200-400 names typically). Day 14-21: tour week — 8-15 qualified buyers tour over 3-5 days. Day 28-35: call for offers. Day 35-45: best-and-final round with top 3-5 bidders. Day 45: PSA executed with selected buyer. Day 75-105: close. Total list-to-close: 75-105 days for stabilized stable-market asset, 90-120 days for value-add or volatile market.',
+              'Co-list with two brokers (one national, one local) to maximize buyer pool exposure — the dual-broker structure typically lifts price 50-75 bps because of competing networks.',
+              'Run an off-market process by sharing the OM with 5-8 known buyers — avoids broker fees and the price discovery is sufficient for stabilized assets where institutional bid is consistent.',
+            ],
+            correctIndex: 1,
           },
           {
             q: 'How do you structure the tour week to maximize bid quality and competitive tension?',
@@ -4299,6 +4677,13 @@ export const COURSES: Course[] = [
             trap: 'Spreading tours over 3+ weeks — kills competitive tension and signals weak buyer pool.',
             difficulty: 'application',
             topicId: 'w12-t05-tour-strategy',
+            choices: [
+              'Compress tours into 3-5 days within a single week, scheduled in tight back-to-back slots so buyers see each other\'s presence. Limit to 8-15 qualified buyers (broker pre-screens for credibility, capital, track record). Provide a consistent tour package: 90-minute on-site walkthrough led by sponsor + broker, full property + financials Q&A, leasing office + select unit interiors. Distribute updated rent roll, T-3, T-12, and CapEx tracker the morning of tour. Establish call-for-offers date end of tour week + 2 weeks. Best practice: have on-site PM available for operational questions; sponsor handles strategy and value-add narrative.',
+              'Schedule tours over 4-6 weeks to give every interested buyer adequate time to underwrite — rushed tour weeks pressure buyers into low bids and signal seller anxiety.',
+              'Limit to 3-4 institutional buyers only — broad tour pools attract unqualified bidders who waste seller time and rarely close. Smaller pools generate higher-quality bids.',
+              'Run private 1:1 tours with each buyer rather than a tour week — confidentiality and a customized narrative build buyer commitment, which produces stronger best-and-final bids.',
+            ],
+            correctIndex: 0,
           },
           {
             q: 'You receive 9 first-round bids ranging from $58.2M to $63.4M. How do you select which bidders advance to best-and-final?',
@@ -4307,6 +4692,13 @@ export const COURSES: Course[] = [
             trap: 'Advancing only top-3 bidders by gross price without certainty-of-close evaluation.',
             difficulty: 'operator',
             topicId: 'w12-t06-call-for-offers',
+            choices: [
+              'Advance the top 3 bidders strictly by gross price — anything else introduces subjectivity and exposes the sponsor to LP claims of leaving money on the table.',
+              'Advance whichever bidders the broker recommends — they have buyer relationships and certainty-of-close intuition that the sponsor cannot replicate from offer letters alone.',
+              'Eliminate any bidder more than $1.5M below the top number — a wide gap signals weak underwriting and they\'re unlikely to chase in best-and-final regardless of certainty.',
+              'Score on three axes: (1) Price — gross dollars, normalized for unusual structure (seller financing, earnouts, contingencies). (2) Certainty of close — track record (closed deals last 24 months, close rate >85%), source of funds (signed lender term sheet vs "raising equity"), DD period and EM staging (shorter DD + larger EM signals confidence), reps-and-warranty asks. (3) Process behavior — responsive, professional, did the work pre-tour. Advance the top 3-5 to best-and-final. Often the highest gross bid is NOT the best — a $62.8M bid from a first-time buyer with no lender commitment loses to a $61.5M bid from a repeat buyer with signed lender term sheet and 30-day DD.',
+            ],
+            correctIndex: 3,
           },
           {
             q: 'Best-and-final round runs with top 4 bidders. How do you structure it to maximize price without losing the field?',
@@ -4315,6 +4707,13 @@ export const COURSES: Course[] = [
             trap: 'Running multiple BAF rounds — signals weak hand and erodes seller leverage.',
             difficulty: 'operator',
             topicId: 'w12-t07-best-and-final',
+            choices: [
+              'Run 2-3 best-and-final rounds spaced one week apart — each round lets bidders react to softening competitor terms and price discovery improves with iteration.',
+              'Disclose the top bid to all best-and-final participants and ask them to beat it — full transparency is a 2024-2025 best practice that maximizes price by eliminating information asymmetry.',
+              'Single round, written final offers due same day at noon. Brief each bidder beforehand on what would strengthen their bid (typically: shorter DD, larger EM, fewer contingencies, faster close). Disclose nothing about competing bids — only that "competition is strong." Set a firm offer deadline. Evaluate within 24-48 hours. Communicate selection within 72 hours. Bidder you select gets PSA execution within 7-10 days. The 3 not selected get a clean "selected another buyer" message — no whining. Frequent mistake: running 2-3 rounds of best-and-final, which signals weak hand and gives bidders permission to chip away at price across rounds.',
+              'Skip best-and-final and negotiate 1:1 with the top bidder — the leverage gained from exclusivity (and the time pressure on the buyer to sign PSA) typically extracts $200-400k more than a competitive round.',
+            ],
+            correctIndex: 2,
           },
           {
             q: 'How sensitive is exit value to cap rate movement, and how do you decide whether to push closing or accept current rates?',
@@ -4323,6 +4722,13 @@ export const COURSES: Course[] = [
             trap: 'Pushing closing because "we said we\'d exit at year 5" — calendar discipline ignoring market signals.',
             difficulty: 'operator',
             topicId: 'w12-t08-cap-rate-timing',
+            choices: [
+              'A 25 bps cap rate move typically shifts property value 4-5%. On a $35M property, 25 bps = $1.5M of value. On a $60M property, 25 bps = $2.5M. Decision framework: (1) where are cap rates trending — Fed policy, capital markets, transaction velocity in your submarket. Tighter cap rates ahead = wait. (2) What is your remaining business plan optionality — if value-add is fully executed, holding burns time without delivering more NOI. (3) Hold cost — debt service + fees + LP pref while you wait. If 6-month wait costs 200 bps of carry but cap rate compression delivers 400 bps of value, wait. (4) Regulatory or rate environment — if Fed is signaling cuts, wait; if signaling raises, sell now.',
+              'Cap rate movement is unpredictable and trying to time it is a fool\'s errand — sell at the planned exit date and accept the prevailing cap rate. Discipline beats market-timing.',
+              'A 25 bps move shifts value about 1-2% — meaningful but rarely worth altering exit timing. The dominant value driver is NOI growth, so push hard on operations and let cap rate be what it is.',
+              'Tie exit timing strictly to LP IRR threshold in the OA — if you can deliver 14%+ LP IRR at the current cap rate, exit; if not, hold until you can. Cap rate environment is downstream of that calculus.',
+            ],
+            correctIndex: 0,
           },
           {
             q: 'Walk through the exit waterfall for a $60M sale on a $20M equity raise with 8% pref, 80/20 promote, IRR catch to 70/30 above 15% LP IRR. Year 5 exit, 3.5x equity multiple to LPs.',
@@ -4331,6 +4737,13 @@ export const COURSES: Course[] = [
             trap: 'Computing the exit waterfall back-of-envelope and missing the IRR catch-up math.',
             difficulty: 'operator',
             topicId: 'w12-t09-exit-waterfall',
+            choices: [
+              'GP earns the disposition fee plus a flat 20% of net sale proceeds — the catch-up tier is academic since LPs hit it on most stabilized exits and the math reduces to a simple 20% promote.',
+              'Net to LPs is roughly 80% of net sale proceeds; GP receives the remaining 20% plus reimbursement of acquisition + AM fees pro-rated to hold period. Year-by-year cash flow modeling adds complexity without changing the headline result.',
+              'GP promote is computed only at exit on cumulative cash distributions including refis — interim Year 1-4 distributions don\'t flow through the waterfall until terminal sale, which simplifies the calculation.',
+              'Sale price $60M − closing costs ~$1.2M (2%) − mortgage payoff ~$28M − disposition fee ~$600k = $30.2M net proceeds. Cumulative LP distributions over hold (Years 1-5 cash flows + exit): (1) 8% pref accrued and paid: ~$8M cumulative (LP $20M × 8% × 5 years simple), (2) Return of LP capital: $20M, (3) Promote tier 1 (80/20 above pref to 15% LP IRR threshold): split until LPs hit 15% IRR, then catch to 70/30. LP IRR computed at ~22%, multiple 3.5x = $70M LP gross distributions across hold. GP earns: $0 LP-equivalent on coinvest + promote of roughly $4-5M (promote on ~$25-30M of profit dollars distributed). Final waterfall is a model, not back-of-envelope — build with cash flows by quarter.',
+            ],
+            correctIndex: 3,
           },
           {
             q: 'What is the LP communication cadence around an exit, and why does it directly drive re-up rate on the next deal?',
@@ -4339,6 +4752,13 @@ export const COURSES: Course[] = [
             trap: 'Going silent during DD period — LPs interpret silence as trouble.',
             difficulty: 'operator',
             topicId: 'w12-t10-investor-comms',
+            choices: [
+              'Communicate at listing and at close only — over-communicating during the marketing process creates LP-side confusion and increases the volume of inbound questions during DD.',
+              '6 months pre-listing: individual calls with top 8-10 LPs explaining exit thesis and timing. 90 days pre-listing: written notice to all LPs of intent to market. Listing day: notice with broker name, OM availability, expected timeline. PSA execution: notice with selected buyer, price, expected close date. 7-10 days pre-close: distribution memo with full waterfall computation showing per-$100k invested distribution. Day of close: wire confirmation to LPs. Within 30 days post-close: thank-you note + first look at next deal. K-1 by March 15 of following year. Re-up rate on next deal correlates directly to communication discipline — disciplined sponsors hit 50-65%, undisciplined sponsors collapse to 20-30%.',
+              'Send a quarterly LP letter as usual through the marketing process, then a single closing memo when the deal funds — anything beyond that is reporting overhead that LPs do not value.',
+              'Wait until PSA execution is firm before communicating with LPs — premature notice of an exit creates pressure if the deal falls through and damages re-up confidence on the next deal.',
+            ],
+            correctIndex: 1,
           },
         ],
         mistakes: [
