@@ -252,8 +252,8 @@ export default function LiveDashboardPage() {
               <span className="eyebrow" style={{ color: 'var(--gold)' }}>Your curriculum</span>
               <h2 style={{ fontSize: 28, color: 'var(--cream)' }}>All 12 modules · unlocked from day one</h2>
               <p style={{ color: 'rgba(250, 247, 242, 0.62)' }}>
-                Work them in sequence or jump ahead. Diva and Lou track your progress and
-                bring it into coaching.
+                Work them in sequence; the preferred course progression — or jump ahead.
+                Diva and Lou track your progress and bring it into coaching.
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -434,15 +434,14 @@ export default function LiveDashboardPage() {
 // import. Promote to /components when a second Live page reuses them.
 // ─────────────────────────────────────────────────────────────────────
 
-// Inline-flow badge sitting at the top of a Live-only card. Earlier
-// versions positioned this absolutely with `top: -10px` so the badge
-// "stuck out" of the card, but on Retina displays with the offer-card
-// box-shadow above it that ribbon was getting visually clipped.
-// Inline-flow with marginBottom keeps it cleanly inside the card and
-// always fully legible.
+// Block-level badge sitting at the top of a Live-only card. Block
+// display + width:fit-content forces the badge onto its own line so
+// the following eyebrow / heading content starts cleanly on a new
+// line below — earlier inline-block sat next to the eyebrow text on
+// the Deal Memos card and crowded it.
 const liveExclusiveBadge: React.CSSProperties = {
-  display: 'inline-block',
-  alignSelf: 'flex-start',
+  display: 'block',
+  width: 'fit-content',
   fontFamily:
     "'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace",
   fontSize: 10,

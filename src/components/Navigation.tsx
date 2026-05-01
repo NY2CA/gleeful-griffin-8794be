@@ -19,7 +19,7 @@ export default function Navigation() {
             src="/rescia-logo.png"
             alt=""
             aria-hidden
-            style={{ height: 40, width: 'auto', display: 'block' }}
+            style={{ height: 52, width: 'auto', display: 'block' }}
           />
           <span>Rescia Properties</span>
         </Link>
