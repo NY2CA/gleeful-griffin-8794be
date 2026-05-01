@@ -51,6 +51,17 @@ export default function LiveDashboardPage() {
     }
   }, [loading, user, router]);
 
+  // Toggle a body-level class so the global nav style override (defined
+  // in <style jsx global> below) only applies while this route is mounted.
+  // Using a body class instead of a wrapper keeps the override available
+  // for the fixed-position <Navigation /> rendered above by _app.tsx.
+  useEffect(() => {
+    document.body.classList.add('live-dashboard-active');
+    return () => {
+      document.body.classList.remove('live-dashboard-active');
+    };
+  }, []);
+
   if (loading || !user || !user.isAdmin) {
     return (
       <main className="page page-center" style={{ background: 'var(--navy)' }}>
@@ -75,6 +86,25 @@ export default function LiveDashboardPage() {
 
   return (
     <>
+      {/*
+        Per-page CSS overrides. The shared <Navigation /> component is
+        rendered in _app.tsx and uses a translucent cream background
+        (`rgba(250, 247, 242, 0.82)` + backdrop blur) which reads as a
+        muted grey when the page below it is navy. Repaint it white for
+        this route only — scoped via :global() so the override applies
+        only while the Live dashboard is mounted.
+      */}
+      <style jsx global>{`
+        body.live-dashboard-active .nav {
+          background: #ffffff !important;
+          border-bottom-color: rgba(184, 148, 90, 0.18) !important;
+        }
+        body.live-dashboard-active .nav .brand,
+        body.live-dashboard-active .nav .links a {
+          color: var(--navy);
+        }
+      `}</style>
+
       {/* Live dashboard runs in its own visual world — navy background,
           gold accents. Wrapping <main> so the navigation chrome and
           footer (which use cream backgrounds) don't bleed through. */}
@@ -404,19 +434,27 @@ export default function LiveDashboardPage() {
 // import. Promote to /components when a second Live page reuses them.
 // ─────────────────────────────────────────────────────────────────────
 
+// Inline-flow badge sitting at the top of a Live-only card. Earlier
+// versions positioned this absolutely with `top: -10px` so the badge
+// "stuck out" of the card, but on Retina displays with the offer-card
+// box-shadow above it that ribbon was getting visually clipped.
+// Inline-flow with marginBottom keeps it cleanly inside the card and
+// always fully legible.
 const liveExclusiveBadge: React.CSSProperties = {
-  position: 'absolute',
-  top: -10,
-  left: 22,
-  fontFamily: 'var(--font-mono, monospace)',
-  fontSize: 9,
+  display: 'inline-block',
+  alignSelf: 'flex-start',
+  fontFamily:
+    "'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace",
+  fontSize: 10,
   letterSpacing: '0.16em',
   textTransform: 'uppercase',
-  padding: '4px 9px',
+  padding: '5px 10px',
   background: 'var(--gold)',
   color: 'var(--navy)',
   borderRadius: 2,
   fontWeight: 600,
+  marginBottom: 14,
+  lineHeight: 1.2,
 };
 
 function liveModuleStyle(status: 'complete' | 'in-progress' | 'available'): React.CSSProperties {
