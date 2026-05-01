@@ -20,8 +20,16 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import { useEffect, useRef, useState, FormEvent, MouseEvent } from 'react';
+import { useAuth } from '@/hooks/useAuth';
 
 export default function Home() {
+  // ── Auth state — used to swap the "Sign In" nav affordance for a
+  // "Dashboard" link the moment the visitor is already authenticated. The
+  // JWT in localStorage persists across page navigation, so a member who
+  // bounces from /dashboard back to / shouldn't see a "Sign In" prompt
+  // that suggests they need to re-authenticate.
+  const { user } = useAuth();
+
   // ── UI state ────────────────────────────────────────────────────────────
   const [modalOpen, setModalOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -168,7 +176,11 @@ export default function Home() {
             <a href="#results">Results</a>
             <a href="#mentor">Mentor</a>
             <a href="#faq">FAQ</a>
-            <Link href="/login" className="nav-signin">Sign In</Link>
+            {user ? (
+              <Link href="/dashboard" className="nav-signin">Dashboard</Link>
+            ) : (
+              <Link href="/login" className="nav-signin">Sign In</Link>
+            )}
             <a href="#" className="nav-cta" onClick={openModal}>Book Strategy Call</a>
           </div>
         </div>
