@@ -2,15 +2,14 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 /**
- * /live — bare redirect to /live/dashboard so the cohort URL is
- * predictable. Kept as its own page (rather than rewriting in
- * next.config.js) so future per-cohort marketing splash content
- * can live here without a config change.
+ * /live — kept as a redirect so any saved bookmarks or external links to
+ * /live or /live/dashboard land on the unified /dashboard. The Mastery
+ * Live treatment IS the dashboard now (Wave 13 consolidation).
  */
 export default function LiveIndexPage() {
   const router = useRouter();
   useEffect(() => {
-    router.replace('/live/dashboard');
+    router.replace('/dashboard');
   }, [router]);
   return null;
 }
