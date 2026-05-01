@@ -15,11 +15,17 @@ export default function Navigation() {
     <nav className="nav">
       <div className="inner">
         <Link href="/" className="brand" aria-label="Rescia Properties · Multifamily Mastery">
+          {/* `rescia-mark.png` is the building mark cropped out of the
+              full-lockup `rescia-logo.png` (which included a wordmark
+              baked under the building). Using the bare mark here lets
+              us pair it with the typeset "Rescia Properties" wordmark
+              at parity sizes — and lets that 1080x1080 lockup keep
+              living for marketing surfaces / favicons / PDFs. */}
           <img
-            src="/rescia-logo.png"
+            src="/rescia-mark.png"
             alt=""
             aria-hidden
-            style={{ height: 52, width: 'auto', display: 'block' }}
+            style={{ height: 40, width: 'auto', display: 'block' }}
           />
           <span>Rescia Properties</span>
         </Link>
