@@ -146,17 +146,20 @@ export const mockWeeklyReads: WeeklyRead[] = [
     date: 'Apr 29',
     title: 'Multifamily Cap Rates Compress in Sun Belt Submarkets',
     why: "Worth a 10-min read before Tuesday's call — the Garland comps cite this band.",
+    href: 'https://www.cbre.com/insights',
   },
   {
     source: 'Multifamily Executive',
     date: 'Apr 27',
     title: 'Bridge Lender Spreads Tighten 35bp Across Q1',
     why: "If you're financing in the next 90 days, this changes your debt math.",
+    href: 'https://www.multifamilyexecutive.com/',
   },
   {
     source: 'Bisnow Multifamily',
     date: 'Apr 26',
     title: 'Texas Property Tax Reform — What Operators Should Watch in 2026',
     why: 'DFW exposure means this is your tax line on every model.',
+    href: 'https://www.bisnow.com/multifamily',
   },
 ];

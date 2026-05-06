@@ -489,36 +489,65 @@ export default function DashboardPage() {
                   What we&rsquo;re reading this week.
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4" style={{ marginTop: 6 }}>
-                  {mockWeeklyReads.map((r, i) => (
-                    <div
-                      key={i}
-                      style={{
-                        background: 'var(--navy)',
-                        border: '1px solid rgba(184, 148, 90, 0.18)',
-                        borderRadius: 4,
-                        padding: '14px 16px',
-                      }}
-                    >
-                      <div
-                        className="font-mono"
-                        style={{
-                          fontSize: 10,
-                          letterSpacing: '0.12em',
-                          textTransform: 'uppercase',
-                          color: 'var(--gold)',
-                          marginBottom: 4,
+                  {mockWeeklyReads.map((r, i) => {
+                    const cardStyle: React.CSSProperties = {
+                      background: 'var(--navy)',
+                      border: '1px solid rgba(184, 148, 90, 0.18)',
+                      borderRadius: 4,
+                      padding: '14px 16px',
+                      display: 'block',
+                      textDecoration: 'none',
+                      transition: 'border-color 160ms ease, background 160ms ease',
+                    };
+                    const inner = (
+                      <>
+                        <div
+                          className="font-mono"
+                          style={{
+                            fontSize: 10,
+                            letterSpacing: '0.12em',
+                            textTransform: 'uppercase',
+                            color: 'var(--gold)',
+                            marginBottom: 4,
+                          }}
+                        >
+                          {r.source} · {r.date}
+                        </div>
+                        <div className="font-display" style={{ fontSize: 14.5, color: 'var(--cream)', lineHeight: 1.3, marginBottom: 6 }}>
+                          {r.title}
+                          {r.href && (
+                            <span aria-hidden style={{ marginLeft: 6, color: 'var(--gold-bright)', fontFamily: 'var(--mono)', fontSize: 11 }}>
+                              ↗
+                            </span>
+                          )}
+                        </div>
+                        <div style={{ color: 'rgba(250, 247, 242, 0.62)', fontSize: 12, lineHeight: 1.45 }}>
+                          {r.why}
+                        </div>
+                      </>
+                    );
+                    return r.href ? (
+                      <a
+                        key={i}
+                        href={r.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={cardStyle}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.borderColor = 'rgba(184, 148, 90, 0.45)';
+                          e.currentTarget.style.background = '#102240';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.borderColor = 'rgba(184, 148, 90, 0.18)';
+                          e.currentTarget.style.background = 'var(--navy)';
                         }}
                       >
-                        {r.source} · {r.date}
-                      </div>
-                      <div className="font-display" style={{ fontSize: 14.5, color: 'var(--cream)', lineHeight: 1.3, marginBottom: 6 }}>
-                        {r.title}
-                      </div>
-                      <div style={{ color: 'rgba(250, 247, 242, 0.62)', fontSize: 12, lineHeight: 1.45 }}>
-                        {r.why}
-                      </div>
-                    </div>
-                  ))}
+                        {inner}
+                      </a>
+                    ) : (
+                      <div key={i} style={cardStyle}>{inner}</div>
+                    );
+                  })}
                 </div>
               </div>
             </Card>
