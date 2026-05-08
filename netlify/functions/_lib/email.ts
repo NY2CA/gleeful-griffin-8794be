@@ -307,7 +307,6 @@ export async function sendDealUpdateEmail(
     reviewNotes: kind === 'promoted_to_active' || kind === 'notes_updated' ? input.reviewNotes : undefined,
   });
   const text = dealUpdateText({
-    headline: copy.headline,
     firstName,
     body: copy.body,
     ctaLabel: copy.ctaLabel,
@@ -498,7 +497,13 @@ function dealUpdateHtml(v: DealUpdateHtmlVars): string {
 </html>`;
 }
 
-function dealUpdateText(v: DealUpdateHtmlVars): string {
+/**
+ * Plain-text alternative for the deal-update email. Doesn't render the
+ * eyebrow or headline (those are visual chrome for the HTML version), so
+ * the parameter type omits them. Lets the call site avoid passing dead
+ * data while still type-checking strictly.
+ */
+function dealUpdateText(v: Omit<DealUpdateHtmlVars, 'eyebrow' | 'headline'>): string {
   const lines = [
     `Hi ${v.firstName},`,
     '',
