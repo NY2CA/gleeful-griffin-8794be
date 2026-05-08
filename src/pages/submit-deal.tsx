@@ -161,6 +161,15 @@ export default function SubmitDealPage() {
         body.live-dashboard-active .nav .links a {
           color: var(--navy);
         }
+        /* Wave 14.3 placeholder fix · the coaching-focus textarea sits on
+           a navy background with cream text. Browser default placeholder
+           (cream at ~50% opacity) reads as faint. Bump to ~62% opacity
+           for legibility while still being visibly secondary to filled-in
+           text. */
+        body.live-dashboard-active textarea::placeholder {
+          color: rgba(250, 247, 242, 0.62) !important;
+          opacity: 1;
+        }
       `}</style>
       <main className="page" style={{ background: 'var(--navy)', color: 'var(--cream)' }}>
         <div className="container" style={{ maxWidth: 720, margin: '0 auto', paddingTop: 32 }}>
@@ -223,14 +232,24 @@ export default function SubmitDealPage() {
                   value={units}
                   onChange={(e) => setUnits(e.target.value)}
                 />
-                <Input
-                  label="Asset class"
-                  type="text"
-                  name="assetClass"
-                  placeholder="B value-add"
-                  value={assetClass}
-                  onChange={(e) => setAssetClass(e.target.value)}
-                />
+                <div className="form-group">
+                  <label htmlFor="assetClass-select">Asset class</label>
+                  <select
+                    id="assetClass-select"
+                    name="assetClass"
+                    value={assetClass}
+                    onChange={(e) => setAssetClass(e.target.value)}
+                    style={{ ...selectStyle, marginBottom: 0 }}
+                  >
+                    <option value="">Select asset class…</option>
+                    <option value="A-Core">A-Core</option>
+                    <option value="A-Core Plus">A-Core Plus</option>
+                    <option value="B">B</option>
+                    <option value="B-Value-Add">B-Value-Add</option>
+                    <option value="C">C</option>
+                    <option value="C-Value-Add">C-Value-Add</option>
+                  </select>
+                </div>
               </div>
               <Input
                 label="Asking price"

@@ -170,8 +170,24 @@ h1, h2, h3, h4 { font-family: var(--display); color: var(--navy); letter-spacing
   border-radius: 2px;
   transition: border-color 0.2s var(--ease), background 0.2s var(--ease), box-shadow 0.2s var(--ease);
 }
+/* Wave 14.3 · placeholder color bumped from --ink-mute (#8a8a92, ~3.4:1 on
+   white, reads as faint) to --ink-dim (#4a4a52, ~9:1, AAA). Scoped to
+   .form-group only, which always renders on a white/cream input. Inputs
+   on dark backgrounds (e.g. /submit-deal coaching-focus textarea) handle
+   their own placeholder color via styled-jsx in the page. */
 .form-group input::placeholder,
-.form-group textarea::placeholder { color: var(--ink-mute); }
+.form-group textarea::placeholder { color: var(--ink-dim); }
+
+/* Wave 14.3 · field labels on navy-themed pages (Mastery Live dashboard,
+   /submit-deal). The default .form-group label color is --ink-dim, which
+   sits at ~2:1 contrast on var(--navy) — nearly invisible. Brighten to
+   cream-at-72% opacity on body.live-dashboard-active so labels read clearly
+   without competing with the gold section headers (FieldLabel). The
+   admin/deals edit modal renders on a white background and doesn't toggle
+   this class, so it keeps the dark default. */
+body.live-dashboard-active .form-group label {
+  color: rgba(250, 247, 242, 0.72);
+}
 .form-group input:focus,
 .form-group textarea:focus {
   outline: none;

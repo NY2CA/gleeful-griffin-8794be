@@ -253,18 +253,30 @@ export function newDealId(): string {
  * updated active or in_review or submitted deal. Returns undefined if the
  * member has no live deals (closed-won and closed-lost are excluded — those
  * are archives, not active workspaces).
+ *
+ * Kept for backward compat with anything that still expects a single deal.
+ * Wave 14.3 dashboards prefer `findAllActiveDeals()` which returns the full
+ * list so members tracking multiple LOIs see them all.
  */
 export function findActiveDeal(user: UserRecord | null | undefined): Deal | undefined {
-  if (!user?.deals?.length) return undefined;
+  return findAllActiveDeals(user)[0];
+}
+
+/**
+ * Returns every live deal on the user record, sorted most-recently-updated
+ * first. Excludes closed_won / closed_lost (those are archives). Wave 14.3
+ * dashboard renders this as a stack so a member with three open LOIs sees
+ * all three at once.
+ */
+export function findAllActiveDeals(user: UserRecord | null | undefined): Deal[] {
+  if (!user?.deals?.length) return [];
   const live = user.deals.filter((d) =>
     d.status === 'submitted' ||
     d.status === 'in_review' ||
     d.status === 'active' ||
     d.status === 'on_hold'
   );
-  if (!live.length) return undefined;
-  // Most recently updated wins.
-  return live.slice().sort((a, b) => (b.updatedAt > a.updatedAt ? 1 : -1))[0];
+  return live.slice().sort((a, b) => (b.updatedAt > a.updatedAt ? 1 : -1));
 }
 
 /**

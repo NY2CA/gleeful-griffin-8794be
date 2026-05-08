@@ -31,7 +31,7 @@ import {
  *   • Curriculum  — useCourse('multifamily-mastery') (real progress per user)
  *   • Coaching    — mockCoachingCall (Calendly integration is the next wire-up)
  *   • AI tutor    — links into resume module which renders AskAboutTopic
- *   • Your deal   — real per-user data via user.activeDeal (Wave 14.1)
+ *   • Your deal(s) — real per-user data via user.activeDeals[] (Wave 14.3 multi-deal)
  *   • Deal memos  — mockMemos (CMS surface is the next wire-up)
  *   • Weekly reads — mockWeeklyReads (Tuesday cron output is the next wire-up)
  */
@@ -316,7 +316,7 @@ export default function DashboardPage() {
                 }}
               >
                 <span style={liveExclusiveBadge}>Live exclusive</span>
-                <YourDealCard activeDeal={user.activeDeal ?? null} />
+                <YourDealCard activeDeals={user.activeDeals ?? []} />
               </Card>
             </div>
           )}
@@ -553,24 +553,38 @@ export default function DashboardPage() {
                 color: 'var(--cream)',
               }}
             >
-              <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+              <div className="flex flex-col gap-4">
                 <div className="flex flex-col gap-2">
                   <span className="eyebrow" style={{ color: 'var(--gold-bright)' }}>Admin tools</span>
                   <h3 className="font-display" style={{ fontSize: 19, color: 'var(--cream)', margin: 0, fontWeight: 500 }}>
-                    Member management
+                    Coaching workspace · admin
                   </h3>
-                  <p style={{ color: 'rgba(250, 247, 242, 0.62)', maxWidth: 520, margin: 0 }}>
-                    Grant or revoke course access for partners, vendors, and beta members
-                    — independent of Stripe billing.
+                  <p style={{ color: 'rgba(250, 247, 242, 0.62)', maxWidth: 560, margin: 0 }}>
+                    Review submitted deals, promote them to active, and add review
+                    notes for the next coaching call. Or grant/revoke course access
+                    independent of Stripe.
                   </p>
                 </div>
-                <Link
-                  href="/admin/members"
-                  className="btn-secondary"
-                  style={{ borderColor: 'var(--gold)', color: 'var(--gold-bright)' }}
-                >
-                  Open admin
-                </Link>
+                <div className="flex flex-wrap gap-3">
+                  <Link
+                    href="/admin/deals"
+                    className="btn-primary"
+                    style={{
+                      background: 'var(--gold)',
+                      borderColor: 'var(--gold)',
+                      color: 'var(--navy)',
+                    }}
+                  >
+                    Deals queue →
+                  </Link>
+                  <Link
+                    href="/admin/members"
+                    className="btn-secondary"
+                    style={{ borderColor: 'var(--gold)', color: 'var(--gold-bright)' }}
+                  >
+                    Members
+                  </Link>
+                </div>
               </div>
             </Card>
           )}
@@ -690,16 +704,25 @@ function DealRow({ k, v, highlight }: { k: string; v: string; highlight?: boolea
 }
 
 // ─────────────────────────────────────────────────────────────────────
-// YourDealCard · Wave 14.1 (Mastery Live coaching workspace)
+// YourDealCard · Wave 14.3 (Mastery Live coaching workspace)
 //
-// Renders three states:
-//   1. No active deal · empty state with "Submit a deal" CTA
-//   2. Submitted/in-review · awaiting Diva/Lou review
-//   3. Active · populated by admin · full deal dashboard
+// Renders one of:
+//   1. No active deals · empty state with "Submit a deal" CTA
+//   2. Single live deal · full per-status card (same chrome as Wave 14.1)
+//   3. Multiple live deals · "Your deals (N)" stack with one block per deal,
+//      separated by gold dividers
+//
+// Per-status messaging:
+//   submitted  · "Just received. We'll review before your next call."
+//   in_review  · "Diva and Lou are looking at this now. Notes below soon."
+//   active     · full populated card with YOC, IRR, coaching focus, notes
+//   on_hold    · "Paused. Resume at your next coaching call."
 // ─────────────────────────────────────────────────────────────────────
 
+type ActiveDeal = import('@/hooks/useAuth').ActiveDeal;
+
 const STATUS_LABEL: Record<string, string> = {
-  submitted: 'Submitted · in review',
+  submitted: 'Just submitted',
   in_review: 'In review with Diva and Lou',
   active: 'Active in coaching',
   on_hold: 'On hold',
@@ -707,9 +730,22 @@ const STATUS_LABEL: Record<string, string> = {
   closed_lost: 'Closed · walked away',
 };
 
-function YourDealCard({ activeDeal }: { activeDeal: import('@/hooks/useAuth').ActiveDeal | null }) {
-  // ── Empty state · no deal yet ───────────────────────────────────
-  if (!activeDeal) {
+const STATUS_TAGLINE: Record<string, string> = {
+  submitted:
+    "We'll review your underwriting and respond by your next coaching call. " +
+    "Once active, this card shows YOC, IRR, and notes from Diva and Lou.",
+  in_review:
+    "Diva and Lou are looking at this now. " +
+    "Notes will appear below once we promote it to active.",
+  active: '',
+  on_hold:
+    "Paused so it doesn't compete for attention. " +
+    "Reach out when you want to pick it back up.",
+};
+
+function YourDealCard({ activeDeals }: { activeDeals: ActiveDeal[] }) {
+  // ── Empty state · no deals yet ──────────────────────────────────
+  if (!activeDeals.length) {
     return (
       <div className="flex flex-col gap-2">
         <span className="eyebrow" style={{ color: 'var(--gold)' }}>Your deal</span>
@@ -753,28 +789,90 @@ function YourDealCard({ activeDeal }: { activeDeal: import('@/hooks/useAuth').Ac
     );
   }
 
-  // ── Submitted / In review · awaiting admin review ──────────────
-  if (activeDeal.status === 'submitted' || activeDeal.status === 'in_review') {
-    return (
-      <div className="flex flex-col gap-2">
-        <span className="eyebrow" style={{ color: 'var(--gold)' }}>Your deal</span>
-        <h3
-          className="font-display"
+  // ── Multi-deal stack ────────────────────────────────────────────
+  const isMulti = activeDeals.length > 1;
+
+  return (
+    <div className="flex flex-col gap-2">
+      <span className="eyebrow" style={{ color: 'var(--gold)' }}>
+        {isMulti ? `Your deals · ${activeDeals.length} live` : 'Your deal'}
+      </span>
+      {activeDeals.map((deal, i) => (
+        <div
+          key={deal.id}
           style={{
-            fontSize: 19,
-            color: 'var(--gold-bright)',
-            margin: '4px 0 8px',
-            fontWeight: 500,
+            paddingTop: i === 0 ? 4 : 18,
+            marginTop: i === 0 ? 0 : 14,
+            borderTop: i === 0 ? 'none' : '1px solid rgba(184, 148, 90, 0.2)',
           }}
         >
-          {activeDeal.name}
-        </h3>
-        <DealRow k="Status" v={STATUS_LABEL[activeDeal.status] ?? activeDeal.status} highlight />
-        {activeDeal.stage && <DealRow k="Stage" v={activeDeal.stage} />}
-        {activeDeal.units !== undefined && <DealRow k="Units" v={String(activeDeal.units)} />}
-        {activeDeal.askingPrice !== undefined && (
-          <DealRow k="Asking" v={'$' + activeDeal.askingPrice.toLocaleString()} />
-        )}
+          <DealBlock deal={deal} compact={isMulti} />
+        </div>
+      ))}
+      <div style={{ marginTop: 16 }}>
+        <Link
+          href="/submit-deal"
+          style={{
+            fontFamily: 'var(--mono)',
+            fontSize: 11,
+            letterSpacing: '0.08em',
+            color: 'var(--gold-bright)',
+            textDecoration: 'underline',
+            textDecorationColor: 'rgba(184, 148, 90, 0.4)',
+          }}
+        >
+          {isMulti ? 'Submit another deal →' : 'Submit another deal →'}
+        </Link>
+      </div>
+    </div>
+  );
+}
+
+function DealBlock({ deal, compact }: { deal: ActiveDeal; compact: boolean }) {
+  const isAwaiting = deal.status === 'submitted' || deal.status === 'in_review';
+  const isOnHold = deal.status === 'on_hold';
+  const isActive = deal.status === 'active';
+
+  return (
+    <>
+      <h3
+        className="font-display"
+        style={{
+          fontSize: compact ? 17 : 19,
+          color: 'var(--gold-bright)',
+          margin: '0 0 8px',
+          fontWeight: 500,
+        }}
+      >
+        {deal.name}
+      </h3>
+      <DealRow k="Status" v={STATUS_LABEL[deal.status] ?? deal.status} highlight />
+
+      {/* Awaiting-review state · show submission facts */}
+      {isAwaiting && (
+        <>
+          {deal.stage && <DealRow k="Stage" v={deal.stage} />}
+          {deal.units !== undefined && <DealRow k="Units" v={String(deal.units)} />}
+          {deal.askingPrice !== undefined && (
+            <DealRow k="Asking" v={'$' + deal.askingPrice.toLocaleString()} />
+          )}
+        </>
+      )}
+
+      {/* Active state · show underwriting + notes */}
+      {(isActive || isOnHold) && (
+        <>
+          {deal.stage && <DealRow k="Stage" v={deal.stage} />}
+          {deal.underwrittenYoc && <DealRow k="Underwritten YOC" v={deal.underwrittenYoc} />}
+          {deal.targetIrr && <DealRow k="Target IRR" v={deal.targetIrr} />}
+          {deal.coachingFocus && (
+            <DealRow k="Coaching focus" v={deal.coachingFocus.slice(0, 80)} />
+          )}
+        </>
+      )}
+
+      {/* Per-status tagline */}
+      {STATUS_TAGLINE[deal.status] && (
         <p
           style={{
             color: 'rgba(250, 247, 242, 0.62)',
@@ -783,56 +881,12 @@ function YourDealCard({ activeDeal }: { activeDeal: import('@/hooks/useAuth').Ac
             margin: '12px 0 0',
           }}
         >
-          Diva and Lou will review and respond by your next coaching call. Once promoted to
-          active, this card surfaces YOC, IRR, and review notes.
+          {STATUS_TAGLINE[deal.status]}
         </p>
-        <div style={{ marginTop: 12 }}>
-          <Link
-            href="/submit-deal"
-            style={{
-              fontFamily: 'var(--mono)',
-              fontSize: 11,
-              letterSpacing: '0.08em',
-              color: 'var(--gold-bright)',
-              textDecoration: 'underline',
-              textDecorationColor: 'rgba(184, 148, 90, 0.4)',
-            }}
-          >
-            Submit another deal →
-          </Link>
-        </div>
-      </div>
-    );
-  }
+      )}
 
-  // ── Active / On-hold · populated by admin ──────────────────────
-  return (
-    <div className="flex flex-col gap-2">
-      <span className="eyebrow" style={{ color: 'var(--gold)' }}>Your deal</span>
-      <h3
-        className="font-display"
-        style={{
-          fontSize: 19,
-          color: 'var(--gold-bright)',
-          margin: '4px 0 12px',
-          fontWeight: 500,
-        }}
-      >
-        {activeDeal.name}
-      </h3>
-      <DealRow
-        k="Status"
-        v={STATUS_LABEL[activeDeal.status] ?? activeDeal.status}
-        highlight
-      />
-      {activeDeal.underwrittenYoc && (
-        <DealRow k="Underwritten YOC" v={activeDeal.underwrittenYoc} />
-      )}
-      {activeDeal.targetIrr && <DealRow k="Target IRR" v={activeDeal.targetIrr} />}
-      {activeDeal.coachingFocus && (
-        <DealRow k="Coaching focus" v={activeDeal.coachingFocus.slice(0, 80)} />
-      )}
-      {activeDeal.reviewNotes && (
+      {/* Active-only · review notes pane */}
+      {isActive && deal.reviewNotes && (
         <div
           style={{
             marginTop: 12,
@@ -863,10 +917,10 @@ function YourDealCard({ activeDeal }: { activeDeal: import('@/hooks/useAuth').Ac
               whiteSpace: 'pre-wrap',
             }}
           >
-            {activeDeal.reviewNotes}
+            {deal.reviewNotes}
           </p>
         </div>
       )}
-    </div>
+    </>
   );
 }

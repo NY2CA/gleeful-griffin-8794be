@@ -40,9 +40,16 @@ export interface User {
   /** True when the email is in the server-side ADMIN_EMAILS env var. */
   isAdmin?: boolean;
   /**
-   * The most recently updated active/in-review/submitted/on-hold deal,
-   * or null if the member has no live deals. Surfaced on the dashboard's
-   * "Your deal" card. Wave 14.1 · Mastery Live coaching workspace.
+   * Wave 14.3 · every live deal on the user record (submitted, in_review,
+   * active, on_hold), sorted most-recently-updated first. Empty array if
+   * the member has no live deals. Closed deals are excluded. Surfaced on
+   * the dashboard's "Your deals" stack.
+   */
+  activeDeals?: ActiveDeal[];
+  /**
+   * Backward-compat shim for the Wave 14.1 single-deal field. Always equals
+   * `activeDeals[0] ?? null` on a Wave 14.3+ server. New code should read
+   * `activeDeals[]` directly.
    */
   activeDeal?: ActiveDeal | null;
 }
