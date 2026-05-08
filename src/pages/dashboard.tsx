@@ -240,7 +240,14 @@ export default function DashboardPage() {
             </Card>
           )}
 
-          {/* ─── NEXT COACHING CALL · centerpiece (access-only) ─── */}
+          {/* ─── COACHING · evergreen Calendly CTA (Wave 15.4) ───── */}
+          {/* Replaces the legacy "Next coaching call" centerpiece that was
+              rendering mockCoachingCall.whenHuman ("Tuesday, May 5") and a
+              Garland-themed pre-brief to every Live member regardless of
+              their actual schedule. Until a real per-member coaching
+              schedule + admin curation surface is built, this card is a
+              clean, evergreen prompt to book the next session via Calendly.
+              Same gold-bordered centerpiece position; no fake data. */}
           {hasAccess && (
             <Card
               variant="offer"
@@ -253,30 +260,26 @@ export default function DashboardPage() {
               <span style={liveExclusiveBadge}>Live exclusive</span>
               <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                 <div className="flex flex-col gap-2">
-                  <span className="eyebrow" style={{ color: 'var(--gold-bright)' }}>Next coaching call</span>
+                  <span className="eyebrow" style={{ color: 'var(--gold-bright)' }}>Coaching</span>
                   <h3 className="font-display" style={{ fontSize: 26, color: 'var(--gold-bright)', margin: '4px 0', fontWeight: 500 }}>
-                    {mockCoachingCall.whenHuman}
+                    Schedule your next coaching call.
                   </h3>
-                  <p style={{ color: 'rgba(250, 247, 242, 0.78)', maxWidth: 460, margin: 0 }}>
-                    with{' '}
-                    <em style={{ fontStyle: 'italic', color: 'var(--gold-bright)' }}>Diva and Lou</em> —
-                    focus: <strong>{mockCoachingCall.focus}.</strong> {mockCoachingCall.preBrief}
+                  <p style={{ color: 'rgba(250, 247, 242, 0.78)', maxWidth: 520, margin: 0 }}>
+                    Ongoing monthly coaching with{' '}
+                    <em style={{ fontStyle: 'italic', color: 'var(--gold-bright)' }}>Diva and Lou</em>.
+                    Book a slot when you have a deal in flight or a question
+                    you want pressure-tested.
                   </p>
                 </div>
-                <div className="flex flex-col gap-2 md:flex-row" style={{ gap: 10 }}>
+                <div>
                   <a
-                    href={mockCoachingCall.icsHref}
+                    href="https://calendly.com/mastery-live-strategy-call"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="btn-primary"
                     style={{ background: 'var(--gold)', borderColor: 'var(--gold)', color: 'var(--navy)', whiteSpace: 'nowrap' }}
                   >
-                    Add to calendar
-                  </a>
-                  <a
-                    href={mockCoachingCall.questionHref}
-                    className="btn-secondary"
-                    style={{ borderColor: 'var(--gold)', color: 'var(--gold-bright)', whiteSpace: 'nowrap' }}
-                  >
-                    Submit a question
+                    Book coaching call
                   </a>
                 </div>
               </div>
