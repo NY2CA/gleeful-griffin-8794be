@@ -181,24 +181,41 @@ function isValidStatus(s: unknown): s is DealStatus {
 }
 
 /**
+ * The subset of `Deal` keys this endpoint will let an admin patch as a free
+ * string. Constrained to optional `string` fields only, so `delete` and
+ * `assign` operations are type-safe under TS strict mode without casts.
+ *
+ * Property facts (name, address, units, askingPrice, underwrittenNoi, etc.)
+ * are NOT in this list — those are member-attested and we don't want admins
+ * silently rewriting them. Status is handled separately because it has its
+ * own enum validation. Numeric fields would need a different helper.
+ */
+type EditableStringKey =
+  | 'underwrittenYoc'
+  | 'targetIrr'
+  | 'stage'
+  | 'coachingFocus'
+  | 'reviewNotes';
+
+/**
  * Applies an editable optional-string field on a Deal.
  *   undefined  → leave unchanged (key omitted from request)
  *   null / ''  → clear the field
  *   string     → trim, clamp to maxLen, assign
  */
-function applyEditableString<K extends keyof Deal>(
+function applyEditableString(
   target: Deal,
-  key: K,
+  key: EditableStringKey,
   value: string | null | undefined,
   maxLen: number,
 ): void {
   if (value === undefined) return;
   if (value === null || (typeof value === 'string' && value.trim() === '')) {
-    delete (target as Record<string, unknown>)[key as string];
+    delete target[key];
     return;
   }
   if (typeof value !== 'string') return;
-  (target as Record<string, unknown>)[key as string] = value.trim().slice(0, maxLen);
+  target[key] = value.trim().slice(0, maxLen);
 }
 
 export const config: Config = {
