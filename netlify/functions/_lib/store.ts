@@ -29,6 +29,66 @@ export type SubscriptionStatus =
 /** Which paid tier the user is on (if any). */
 export type Plan = 'annual' | 'monthly' | 'lifetime' | null;
 
+/**
+ * Status of a Deal in the Mastery Live coaching workflow.
+ *
+ * Lifecycle:
+ *   submitted   — Member just submitted via /submit-deal. Awaiting Diva/Lou review.
+ *   in_review   — Admin opened it; reviewing the underwriting before next call.
+ *   active      — Promoted to active coaching. Surfaces on dashboard "Your deal" card.
+ *   on_hold     — Temporarily paused (member walked from LOI, exploring next deal).
+ *   closed_won  — Member closed the deal. Archive but keep history.
+ *   closed_lost — Walked away or lost to another bidder. Archive.
+ */
+export type DealStatus =
+  | 'submitted'
+  | 'in_review'
+  | 'active'
+  | 'on_hold'
+  | 'closed_won'
+  | 'closed_lost';
+
+/**
+ * A Deal record · Mastery Live coaching workspace.
+ *
+ * Submitted by the member via /submit-deal, populated/promoted by Diva/Lou
+ * via /admin/deals. Surfaces on the member's /dashboard "Your deal" card
+ * once status is `active`.
+ */
+export interface Deal {
+  id: string;
+  /** ISO timestamp — when the member submitted. */
+  submittedAt: string;
+  /** ISO timestamp — last admin update. */
+  updatedAt: string;
+  status: DealStatus;
+  // ── Property ──────────────────────────────────────────────────────
+  /** Display name · e.g. "Garland · 142-unit Class B". */
+  name: string;
+  /** Full street address. */
+  address?: string;
+  /** Number of units. */
+  units?: number;
+  /** Asset class (B+, B, C+, etc.). */
+  assetClass?: string;
+  /** Asking price in dollars. */
+  askingPrice?: number;
+  // ── Underwriting (member-submitted) ───────────────────────────────
+  /** Underwritten year-1 stabilized NOI. */
+  underwrittenNoi?: number;
+  /** Underwritten YOC, e.g. "7.4%". */
+  underwrittenYoc?: string;
+  /** Target levered IRR, e.g. "17.2%". */
+  targetIrr?: string;
+  /** Where the member is on the deal · "pre-LOI", "in LOI", "in DD", "PSA". */
+  stage?: string;
+  /** What the member wants help with on the next call. */
+  coachingFocus?: string;
+  // ── Admin annotations ─────────────────────────────────────────────
+  /** Notes from Diva/Lou after review. Shown to member on their dashboard. */
+  reviewNotes?: string;
+}
+
 export interface UserRecord {
   id: string;
   email: string;
@@ -70,6 +130,13 @@ export interface UserRecord {
    * 'w1', 'w2', ..., 'w12', 'capstone'.
    */
   dripSent?: Record<string, string>;
+  // ── Mastery Live · deals (Wave 14.1) ───────────────────────────────────
+  /**
+   * Deals the member has submitted for coaching review. Most recent first.
+   * Surfaces on /dashboard "Your deal" card when one is active.
+   * Populated/promoted by Diva/Lou via /admin/deals.
+   */
+  deals?: Deal[];
 }
 
 export type ProgressMap = Record<string, Record<string, boolean>>;
@@ -167,6 +234,37 @@ export function markAccessGranted(user: UserRecord): boolean {
   if (user.dripAnchorAt) return false;
   user.dripAnchorAt = new Date().toISOString();
   return true;
+}
+
+/**
+ * Generates a stable deal id. Format: `d_<timestamp>_<random>`.
+ */
+export function newDealId(): string {
+  return (
+    'd_' +
+    Date.now().toString(36) +
+    '_' +
+    Math.random().toString(36).slice(2, 8)
+  );
+}
+
+/**
+ * Returns the most relevant deal for dashboard rendering: the most recently
+ * updated active or in_review or submitted deal. Returns undefined if the
+ * member has no live deals (closed-won and closed-lost are excluded — those
+ * are archives, not active workspaces).
+ */
+export function findActiveDeal(user: UserRecord | null | undefined): Deal | undefined {
+  if (!user?.deals?.length) return undefined;
+  const live = user.deals.filter((d) =>
+    d.status === 'submitted' ||
+    d.status === 'in_review' ||
+    d.status === 'active' ||
+    d.status === 'on_hold'
+  );
+  if (!live.length) return undefined;
+  // Most recently updated wins.
+  return live.slice().sort((a, b) => (b.updatedAt > a.updatedAt ? 1 : -1))[0];
 }
 
 /**

@@ -10,7 +10,6 @@ import { useCourse } from '@/hooks/useCourse';
 import { useBilling } from '@/hooks/useBilling';
 import {
   mockCoachingCall,
-  mockDeal,
   mockMemos,
   mockWeeklyReads,
 } from '@/data/live';
@@ -32,7 +31,7 @@ import {
  *   • Curriculum  — useCourse('multifamily-mastery') (real progress per user)
  *   • Coaching    — mockCoachingCall (Calendly integration is the next wire-up)
  *   • AI tutor    — links into resume module which renders AskAboutTopic
- *   • Your deal   — mockDeal (deals table + Function is the next wire-up)
+ *   • Your deal   — real per-user data via user.activeDeal (Wave 14.1)
  *   • Deal memos  — mockMemos (CMS surface is the next wire-up)
  *   • Weekly reads — mockWeeklyReads (Tuesday cron output is the next wire-up)
  */
@@ -317,16 +316,7 @@ export default function DashboardPage() {
                 }}
               >
                 <span style={liveExclusiveBadge}>Live exclusive</span>
-                <div className="flex flex-col gap-2">
-                  <span className="eyebrow" style={{ color: 'var(--gold)' }}>Your deal</span>
-                  <h3 className="font-display" style={{ fontSize: 19, color: 'var(--gold-bright)', margin: '4px 0 12px', fontWeight: 500 }}>
-                    {mockDeal.name}
-                  </h3>
-                  <DealRow k="Status" v={mockDeal.status} highlight />
-                  <DealRow k="Underwritten YOC" v={mockDeal.yoc} />
-                  <DealRow k="Target IRR" v={mockDeal.irr} />
-                  <DealRow k="Coaching focus" v={mockDeal.coachingFocus} />
-                </div>
+                <YourDealCard activeDeal={user.activeDeal ?? null} />
               </Card>
             </div>
           )}
@@ -695,6 +685,188 @@ function DealRow({ k, v, highlight }: { k: string; v: string; highlight?: boolea
       >
         {v}
       </span>
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────
+// YourDealCard · Wave 14.1 (Mastery Live coaching workspace)
+//
+// Renders three states:
+//   1. No active deal · empty state with "Submit a deal" CTA
+//   2. Submitted/in-review · awaiting Diva/Lou review
+//   3. Active · populated by admin · full deal dashboard
+// ─────────────────────────────────────────────────────────────────────
+
+const STATUS_LABEL: Record<string, string> = {
+  submitted: 'Submitted · in review',
+  in_review: 'In review with Diva and Lou',
+  active: 'Active in coaching',
+  on_hold: 'On hold',
+  closed_won: 'Closed · won',
+  closed_lost: 'Closed · walked away',
+};
+
+function YourDealCard({ activeDeal }: { activeDeal: import('@/hooks/useAuth').ActiveDeal | null }) {
+  // ── Empty state · no deal yet ───────────────────────────────────
+  if (!activeDeal) {
+    return (
+      <div className="flex flex-col gap-2">
+        <span className="eyebrow" style={{ color: 'var(--gold)' }}>Your deal</span>
+        <h3
+          className="font-display"
+          style={{
+            fontSize: 19,
+            color: 'var(--cream)',
+            margin: '4px 0 8px',
+            fontWeight: 500,
+          }}
+        >
+          No active deal yet.
+        </h3>
+        <p
+          style={{
+            color: 'rgba(250, 247, 242, 0.72)',
+            fontSize: 14,
+            lineHeight: 1.55,
+            margin: '0 0 16px',
+          }}
+        >
+          When you have an LOI in flight or underwriting in progress, submit it here.
+          Diva and Lou will review before your next coaching call.
+        </p>
+        <div>
+          <Link
+            href="/submit-deal"
+            className="btn-primary"
+            style={{
+              background: 'var(--gold)',
+              borderColor: 'var(--gold)',
+              color: 'var(--navy)',
+              fontSize: 13,
+            }}
+          >
+            Submit a deal →
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  // ── Submitted / In review · awaiting admin review ──────────────
+  if (activeDeal.status === 'submitted' || activeDeal.status === 'in_review') {
+    return (
+      <div className="flex flex-col gap-2">
+        <span className="eyebrow" style={{ color: 'var(--gold)' }}>Your deal</span>
+        <h3
+          className="font-display"
+          style={{
+            fontSize: 19,
+            color: 'var(--gold-bright)',
+            margin: '4px 0 8px',
+            fontWeight: 500,
+          }}
+        >
+          {activeDeal.name}
+        </h3>
+        <DealRow k="Status" v={STATUS_LABEL[activeDeal.status] ?? activeDeal.status} highlight />
+        {activeDeal.stage && <DealRow k="Stage" v={activeDeal.stage} />}
+        {activeDeal.units !== undefined && <DealRow k="Units" v={String(activeDeal.units)} />}
+        {activeDeal.askingPrice !== undefined && (
+          <DealRow k="Asking" v={'$' + activeDeal.askingPrice.toLocaleString()} />
+        )}
+        <p
+          style={{
+            color: 'rgba(250, 247, 242, 0.62)',
+            fontSize: 12.5,
+            lineHeight: 1.55,
+            margin: '12px 0 0',
+          }}
+        >
+          Diva and Lou will review and respond by your next coaching call. Once promoted to
+          active, this card surfaces YOC, IRR, and review notes.
+        </p>
+        <div style={{ marginTop: 12 }}>
+          <Link
+            href="/submit-deal"
+            style={{
+              fontFamily: 'var(--mono)',
+              fontSize: 11,
+              letterSpacing: '0.08em',
+              color: 'var(--gold-bright)',
+              textDecoration: 'underline',
+              textDecorationColor: 'rgba(184, 148, 90, 0.4)',
+            }}
+          >
+            Submit another deal →
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  // ── Active / On-hold · populated by admin ──────────────────────
+  return (
+    <div className="flex flex-col gap-2">
+      <span className="eyebrow" style={{ color: 'var(--gold)' }}>Your deal</span>
+      <h3
+        className="font-display"
+        style={{
+          fontSize: 19,
+          color: 'var(--gold-bright)',
+          margin: '4px 0 12px',
+          fontWeight: 500,
+        }}
+      >
+        {activeDeal.name}
+      </h3>
+      <DealRow
+        k="Status"
+        v={STATUS_LABEL[activeDeal.status] ?? activeDeal.status}
+        highlight
+      />
+      {activeDeal.underwrittenYoc && (
+        <DealRow k="Underwritten YOC" v={activeDeal.underwrittenYoc} />
+      )}
+      {activeDeal.targetIrr && <DealRow k="Target IRR" v={activeDeal.targetIrr} />}
+      {activeDeal.coachingFocus && (
+        <DealRow k="Coaching focus" v={activeDeal.coachingFocus.slice(0, 80)} />
+      )}
+      {activeDeal.reviewNotes && (
+        <div
+          style={{
+            marginTop: 12,
+            padding: '10px 12px',
+            background: 'rgba(184, 148, 90, 0.08)',
+            borderLeft: '2px solid var(--gold)',
+            borderRadius: 2,
+          }}
+        >
+          <div
+            style={{
+              fontFamily: 'var(--mono)',
+              fontSize: 9,
+              letterSpacing: '0.16em',
+              textTransform: 'uppercase',
+              color: 'var(--gold-bright)',
+              marginBottom: 4,
+            }}
+          >
+            Notes from Diva and Lou
+          </div>
+          <p
+            style={{
+              color: 'var(--cream)',
+              fontSize: 13,
+              lineHeight: 1.55,
+              margin: 0,
+              whiteSpace: 'pre-wrap',
+            }}
+          >
+            {activeDeal.reviewNotes}
+          </p>
+        </div>
+      )}
     </div>
   );
 }

@@ -7,12 +7,44 @@ import React, {
 } from 'react';
 import { api, ApiError, getToken, setToken } from '@/lib/api';
 
+/**
+ * The active Deal record returned alongside the User from /api/auth/me.
+ * Mirrors the server-side `Deal` interface in `_lib/store.ts` so the
+ * dashboard can render real per-user deal data on the "Your deal" card.
+ *
+ * `null` when the member has no live deals (not yet submitted, or all
+ * deals are closed). The dashboard renders the empty state in that case.
+ */
+export interface ActiveDeal {
+  id: string;
+  submittedAt: string;
+  updatedAt: string;
+  status: 'submitted' | 'in_review' | 'active' | 'on_hold' | 'closed_won' | 'closed_lost';
+  name: string;
+  address?: string;
+  units?: number;
+  assetClass?: string;
+  askingPrice?: number;
+  underwrittenNoi?: number;
+  underwrittenYoc?: string;
+  targetIrr?: string;
+  stage?: string;
+  coachingFocus?: string;
+  reviewNotes?: string;
+}
+
 export interface User {
   id: string;
   name: string;
   email: string;
   /** True when the email is in the server-side ADMIN_EMAILS env var. */
   isAdmin?: boolean;
+  /**
+   * The most recently updated active/in-review/submitted/on-hold deal,
+   * or null if the member has no live deals. Surfaced on the dashboard's
+   * "Your deal" card. Wave 14.1 · Mastery Live coaching workspace.
+   */
+  activeDeal?: ActiveDeal | null;
 }
 
 interface AuthContextValue {
