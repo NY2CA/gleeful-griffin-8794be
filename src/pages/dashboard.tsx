@@ -283,54 +283,70 @@ export default function DashboardPage() {
             </Card>
           )}
 
-          {/* ─── AI TUTOR + YOUR DEAL (access-only) ──────────────── */}
+          {/* ─── AI TUTOR · horizontal banner (Wave 15.3) ─────────── */}
+          {/* Was a half-width 2-col card paired with Your deal; that left the
+              AI tile feeling oversized for its content density and the deals
+              tile awkwardly tall when stacked with multiple deals. New layout
+              mirrors the "Next coaching call" pattern: full-width with the
+              copy on the left and CTA on the right. About half the height. */}
           {hasAccess && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <Card
-                variant="offer"
-                style={{
-                  background: 'linear-gradient(135deg, var(--gold-bright) 0%, var(--gold) 100%)',
-                  color: 'var(--navy)',
-                  border: '1px solid var(--gold)',
-                }}
-              >
-                <span style={{ ...liveExclusiveBadge, background: 'var(--navy)', color: 'var(--gold-bright)' }}>
-                  Live exclusive
-                </span>
-                <div className="flex flex-col gap-3">
+            <Card
+              variant="offer"
+              style={{
+                background: 'linear-gradient(135deg, var(--gold-bright) 0%, var(--gold) 100%)',
+                color: 'var(--navy)',
+                border: '1px solid var(--gold)',
+              }}
+            >
+              <span style={{ ...liveExclusiveBadge, background: 'var(--navy)', color: 'var(--gold-bright)' }}>
+                Live exclusive
+              </span>
+              <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                <div className="flex flex-col gap-2" style={{ flex: 1 }}>
                   <span className="eyebrow" style={{ color: 'rgba(15, 30, 61, 0.65)' }}>AI tutor</span>
                   <h3 className="font-display" style={{ fontSize: 22, color: 'var(--navy)', margin: 0, fontWeight: 500 }}>
                     Stuck on something? Ask the AI.
                   </h3>
-                  <p style={{ color: 'rgba(15, 30, 61, 0.78)', margin: 0, maxWidth: 440 }}>
-                    Trained on the Mastery curriculum and Rescia&rsquo;s deal-by-deal commentary.
-                    Open it from inside any module — ask anything from &ldquo;explain reversion cap rate&rdquo;
-                    to &ldquo;stress my exit assumptions at a 50bp cap expansion.&rdquo;
+                  <p style={{ color: 'rgba(15, 30, 61, 0.78)', margin: 0, maxWidth: 640, lineHeight: 1.5 }}>
+                    Trained on the Mastery curriculum and Rescia&rsquo;s deal-by-deal
+                    commentary. Open it from inside any module — anything from
+                    &ldquo;explain reversion cap rate&rdquo; to &ldquo;stress my exit at a 50bp cap expansion.&rdquo;
                   </p>
-                  <div>
-                    <Link
-                      href={`/course/${resume.id}`}
-                      className="btn-primary"
-                      style={{ background: 'var(--navy)', borderColor: 'var(--navy)', color: 'var(--gold-bright)' }}
-                    >
-                      Open AI tutor
-                    </Link>
-                  </div>
                 </div>
-              </Card>
+                <div style={{ flexShrink: 0 }}>
+                  <Link
+                    href={`/course/${resume.id}`}
+                    className="btn-primary"
+                    style={{
+                      background: 'var(--navy)',
+                      borderColor: 'var(--navy)',
+                      color: 'var(--gold-bright)',
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
+                    Open AI tutor
+                  </Link>
+                </div>
+              </div>
+            </Card>
+          )}
 
-              <Card
-                variant="offer"
-                style={{
-                  background: '#1f315a',
-                  border: '1px solid rgba(184, 148, 90, 0.18)',
-                  color: 'var(--cream)',
-                }}
-              >
-                <span style={liveExclusiveBadge}>Live exclusive</span>
-                <YourDealCard activeDeals={user.activeDeals ?? []} />
-              </Card>
-            </div>
+          {/* ─── YOUR DEAL(S) · full-width row (Wave 15.3) ────────── */}
+          {/* Pulled out of the 2-col grid so it scales naturally with deal
+              count — 1, 3, or 5 deals all read cleanly stacked vertically
+              without the AI banner stretching to match. */}
+          {hasAccess && (
+            <Card
+              variant="offer"
+              style={{
+                background: '#1f315a',
+                border: '1px solid rgba(184, 148, 90, 0.18)',
+                color: 'var(--cream)',
+              }}
+            >
+              <span style={liveExclusiveBadge}>Live exclusive</span>
+              <YourDealCard activeDeals={user.activeDeals ?? []} />
+            </Card>
           )}
 
           {/* ─── CURRICULUM ─────────────────────────────────────── */}
@@ -393,53 +409,58 @@ export default function DashboardPage() {
             </div>
           </section>
 
-          {/* ─── DEAL MEMOS + TOOLKIT ────────────────────────────── */}
+          {/* ─── DEAL MEMOS · solo row when wired (Wave 15.3) ─────── */}
           {/* Wave 15.2 · Deal memos hidden until admin-curated memo system is
-              wired (it was showing fake Plano/West Valley sample content to
-              every member). Toolkit stays — it's a real surface. When mock
-              feeds are re-enabled, the grid wrapper restores 2-col layout. */}
-          {hasAccess && (
-            <div className={SHOW_MOCK_FEEDS ? 'grid grid-cols-1 md:grid-cols-2 gap-6' : ''}>
-              {SHOW_MOCK_FEEDS && (
-                <Card
-                  variant="offer"
-                  style={{
-                    background: '#1f315a',
-                    border: '1px solid rgba(184, 148, 90, 0.18)',
-                    color: 'var(--cream)',
-                  }}
-                >
-                  <span style={liveExclusiveBadge}>Live exclusive</span>
-                  <span className="eyebrow" style={{ color: 'var(--gold)' }}>Deal memos · from the Rescia desk</span>
-                  <div style={{ marginTop: 12 }}>
-                    {mockMemos.map((memo, i) => (
-                      <div
-                        key={i}
-                        style={{
-                          padding: '14px 0',
-                          borderTop: i === 0 ? 'none' : '1px solid rgba(250, 247, 242, 0.08)',
-                        }}
-                      >
-                        <div
-                          className="font-mono"
-                          style={{
-                            fontSize: 11,
-                            letterSpacing: '0.08em',
-                            color: 'var(--gold)',
-                            marginBottom: 4,
-                          }}
-                        >
-                          {memo.date} · {memo.marketTag}
-                        </div>
-                        <div style={{ color: 'var(--cream)', fontSize: 13.5, lineHeight: 1.45 }}>
-                          {memo.title}
-                        </div>
-                      </div>
-                    ))}
+              wired. When SHOW_MOCK_FEEDS flips to true, memos render in their
+              own full-width row above the Toolkit/Admin pair below. */}
+          {hasAccess && SHOW_MOCK_FEEDS && (
+            <Card
+              variant="offer"
+              style={{
+                background: '#1f315a',
+                border: '1px solid rgba(184, 148, 90, 0.18)',
+                color: 'var(--cream)',
+              }}
+            >
+              <span style={liveExclusiveBadge}>Live exclusive</span>
+              <span className="eyebrow" style={{ color: 'var(--gold)' }}>Deal memos · from the Rescia desk</span>
+              <div style={{ marginTop: 12 }}>
+                {mockMemos.map((memo, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      padding: '14px 0',
+                      borderTop: i === 0 ? 'none' : '1px solid rgba(250, 247, 242, 0.08)',
+                    }}
+                  >
+                    <div
+                      className="font-mono"
+                      style={{
+                        fontSize: 11,
+                        letterSpacing: '0.08em',
+                        color: 'var(--gold)',
+                        marginBottom: 4,
+                      }}
+                    >
+                      {memo.date} · {memo.marketTag}
+                    </div>
+                    <div style={{ color: 'var(--cream)', fontSize: 13.5, lineHeight: 1.45 }}>
+                      {memo.title}
+                    </div>
                   </div>
-                </Card>
-              )}
+                ))}
+              </div>
+            </Card>
+          )}
 
+          {/* ─── TOOLKIT + ADMIN TILE · uniform 2-col grid (Wave 15.3) ── */}
+          {/* For admins, Toolkit (member-facing) and the Coaching workspace
+              admin tile sit side-by-side at matching density. For members,
+              Toolkit renders alone full-width (no admin tile). The Admin
+              tile used to live at the bottom of the page — pulled up here so
+              the proportions stay uniform with Toolkit. */}
+          {hasAccess && (
+            <div className={user.isAdmin ? 'grid grid-cols-1 md:grid-cols-2 gap-6' : ''}>
               <Card
                 variant="offer"
                 style={{
@@ -478,6 +499,48 @@ export default function DashboardPage() {
                   </div>
                 </div>
               </Card>
+
+              {user.isAdmin && (
+                <Card
+                  variant="offer"
+                  style={{
+                    background: '#1f315a',
+                    border: '1px solid var(--gold)',
+                    color: 'var(--cream)',
+                  }}
+                >
+                  <div className="flex flex-col gap-3">
+                    <span className="eyebrow" style={{ color: 'var(--gold-bright)' }}>Admin tools</span>
+                    <h3 className="font-display" style={{ fontSize: 19, color: 'var(--cream)', margin: 0, fontWeight: 500 }}>
+                      Coaching workspace · admin
+                    </h3>
+                    <p style={{ color: 'rgba(250, 247, 242, 0.62)', margin: 0 }}>
+                      Review submitted deals, promote them to active, add review notes for
+                      the next call. Or grant/revoke access independent of Stripe.
+                    </p>
+                    <div className="flex flex-wrap gap-3" style={{ marginTop: 6 }}>
+                      <Link
+                        href="/admin/deals"
+                        className="btn-primary"
+                        style={{
+                          background: 'var(--gold)',
+                          borderColor: 'var(--gold)',
+                          color: 'var(--navy)',
+                        }}
+                      >
+                        Deals queue →
+                      </Link>
+                      <Link
+                        href="/admin/members"
+                        className="btn-secondary"
+                        style={{ borderColor: 'var(--gold)', color: 'var(--gold-bright)' }}
+                      >
+                        Members
+                      </Link>
+                    </div>
+                  </div>
+                </Card>
+              )}
             </div>
           )}
 
@@ -564,51 +627,10 @@ export default function DashboardPage() {
             </Card>
           )}
 
-          {/* ─── ADMIN SHORTCUT ─────────────────────────────────── */}
-          {user.isAdmin && (
-            <Card
-              variant="offer"
-              style={{
-                background: '#1f315a',
-                border: '1px solid var(--gold)',
-                color: 'var(--cream)',
-              }}
-            >
-              <div className="flex flex-col gap-4">
-                <div className="flex flex-col gap-2">
-                  <span className="eyebrow" style={{ color: 'var(--gold-bright)' }}>Admin tools</span>
-                  <h3 className="font-display" style={{ fontSize: 19, color: 'var(--cream)', margin: 0, fontWeight: 500 }}>
-                    Coaching workspace · admin
-                  </h3>
-                  <p style={{ color: 'rgba(250, 247, 242, 0.62)', maxWidth: 560, margin: 0 }}>
-                    Review submitted deals, promote them to active, and add review
-                    notes for the next coaching call. Or grant/revoke course access
-                    independent of Stripe.
-                  </p>
-                </div>
-                <div className="flex flex-wrap gap-3">
-                  <Link
-                    href="/admin/deals"
-                    className="btn-primary"
-                    style={{
-                      background: 'var(--gold)',
-                      borderColor: 'var(--gold)',
-                      color: 'var(--navy)',
-                    }}
-                  >
-                    Deals queue →
-                  </Link>
-                  <Link
-                    href="/admin/members"
-                    className="btn-secondary"
-                    style={{ borderColor: 'var(--gold)', color: 'var(--gold-bright)' }}
-                  >
-                    Members
-                  </Link>
-                </div>
-              </div>
-            </Card>
-          )}
+          {/* Wave 15.3 · Admin shortcut moved up next to Toolkit (above)
+              for layout uniformity. The /admin/deals + /admin/members links
+              now live in the "Coaching workspace · admin" tile in the
+              Toolkit row, not as a separate full-width section. */}
 
         </div>
       </main>
