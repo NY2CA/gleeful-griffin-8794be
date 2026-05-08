@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Card from '@/components/Card';
@@ -15,14 +15,29 @@ import {
 } from '@/data/live';
 
 /**
- * Wave 15.2 · master flag for the two mock-content surfaces ("Deal memos ·
- * from the Rescia desk" and "What we're reading this week"). Both were
- * showing fake placeholder content to every Mastery Live member, which was
- * confusing students. Set to `true` once both feeds have a real wire-up:
- *   - Deal memos · admin-curated CMS surface for Diva/Lou to publish memos
- *   - Weekly reads · the Tuesday cron output landing in a real CMS surface
- * Until then, both cards are hidden. Toolkit (real surface) renders full
- * width when the memos card is gated off.
+ * Wave 16.1 · weekly reads article shape (matches the WeeklyReadArticle
+ * type in netlify/functions/_lib/store.ts). Fetched at runtime from
+ * /api/weekly-reads (the public CORS-open endpoint).
+ */
+interface WeeklyReadArticle {
+  source: string;
+  dateLabel: string;
+  title: string;
+  why: string;
+  href: string;
+}
+
+interface WeeklyReadsBlob {
+  publishedAt: string;
+  publishedBy: string;
+  articles: WeeklyReadArticle[];
+}
+
+/**
+ * Wave 15.2 · flag still gates the legacy "Deal memos · from the Rescia
+ * desk" mock card. Memos surface stays hidden until an admin-curated
+ * memo CMS lands. Weekly reads is no longer gated by this flag — it now
+ * fetches a real, admin-published blob from /api/weekly-reads (Wave 16.1).
  */
 const SHOW_MOCK_FEEDS = false;
 
@@ -45,18 +60,42 @@ const SHOW_MOCK_FEEDS = false;
  *   • AI tutor    — links into resume module which renders AskAboutTopic
  *   • Your deal(s) — real per-user data via user.activeDeals[] (Wave 14.3 multi-deal)
  *   • Deal memos  — mockMemos (CMS surface is the next wire-up)
- *   • Weekly reads — mockWeeklyReads (Tuesday cron output is the next wire-up)
+ *   • Weekly reads — real admin-curated blob via /api/weekly-reads (Wave 16.1)
  */
 export default function DashboardPage() {
   const router = useRouter();
   const { user, loading } = useAuth();
   const { course, modules, progress, isComplete } = useCourse('multifamily-mastery');
   const { status: billing, openPortal, startCheckout } = useBilling({ enabled: Boolean(user) });
+  const [weeklyReads, setWeeklyReads] = useState<WeeklyReadsBlob | null>(null);
 
   // Auth guard
   useEffect(() => {
     if (!loading && !user) router.replace('/login');
   }, [loading, user, router]);
+
+  // Wave 16.1 · fetch the current weekly reads blob on mount. Public
+  // endpoint (no auth header), CORS-open. Cache-Control: max-age=60 on
+  // the response, so rapid refreshes don't hammer the Blob store. If
+  // the fetch fails or returns null, the card falls back to a "Reads
+  // are queued — coming soon" empty state instead of breaking layout.
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch('/api/weekly-reads');
+        if (!res.ok) return;
+        const data = (await res.json()) as { blob: WeeklyReadsBlob | null };
+        if (!cancelled) setWeeklyReads(data.blob);
+      } catch {
+        // Silent fail — card just won't render. Network blip / Function down.
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   // White-nav body class — kept while this route is mounted, removed on unmount
   useEffect(() => {
@@ -412,6 +451,97 @@ export default function DashboardPage() {
             </div>
           </section>
 
+          {/* ─── WEEKLY READS · admin-curated, fetched live (Wave 16.1) ── */}
+          {/* Sits underneath the curriculum modules per dashboard layout
+              spec. Pulls from /api/weekly-reads (CORS-open public endpoint)
+              on mount; falls back to nothing if the blob is empty or the
+              fetch failed. Diva and Lou publish the set via /admin/weekly-reads
+              every Tuesday — both Mastery and Self-Study dashboards read
+              the same blob. */}
+          {hasAccess && weeklyReads && weeklyReads.articles.length > 0 && (
+            <Card
+              variant="offer"
+              style={{
+                background: '#1f315a',
+                border: '1px solid rgba(184, 148, 90, 0.18)',
+                color: 'var(--cream)',
+              }}
+            >
+              <div className="flex flex-col gap-3">
+                <span className="eyebrow" style={{ color: 'var(--gold)' }}>
+                  This week&rsquo;s reads · curated Tuesdays
+                </span>
+                <h3 className="font-display" style={{ fontSize: 20, color: 'var(--cream)', margin: 0, fontWeight: 500 }}>
+                  What we&rsquo;re reading this week.
+                </h3>
+                <p style={{ color: 'rgba(250, 247, 242, 0.62)', fontSize: 13.5, margin: '4px 0 8px', maxWidth: 560 }}>
+                  Multifamily articles curated by Diva and Lou — institutional research,
+                  debt market reads, and operator signal. Published every Tuesday.
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4" style={{ marginTop: 6 }}>
+                  {weeklyReads.articles.map((r, i) => {
+                    const cardStyle: React.CSSProperties = {
+                      background: 'var(--navy)',
+                      border: '1px solid rgba(184, 148, 90, 0.18)',
+                      borderRadius: 4,
+                      padding: '14px 16px',
+                      display: 'block',
+                      textDecoration: 'none',
+                      transition: 'border-color 160ms ease, background 160ms ease',
+                    };
+                    return (
+                      <a
+                        key={i}
+                        href={r.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={cardStyle}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.borderColor = 'rgba(184, 148, 90, 0.45)';
+                          e.currentTarget.style.background = '#102240';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.borderColor = 'rgba(184, 148, 90, 0.18)';
+                          e.currentTarget.style.background = 'var(--navy)';
+                        }}
+                      >
+                        <div
+                          className="font-mono"
+                          style={{
+                            fontSize: 10,
+                            letterSpacing: '0.12em',
+                            textTransform: 'uppercase',
+                            color: 'var(--gold)',
+                            marginBottom: 4,
+                          }}
+                        >
+                          {r.source}{r.dateLabel ? ` · ${r.dateLabel}` : ''}
+                        </div>
+                        <div
+                          className="font-display"
+                          style={{ fontSize: 14.5, color: 'var(--cream)', lineHeight: 1.3, marginBottom: 6 }}
+                        >
+                          {r.title}
+                          <span
+                            aria-hidden
+                            style={{ marginLeft: 6, color: 'var(--gold-bright)', fontFamily: 'var(--mono)', fontSize: 11 }}
+                          >
+                            ↗
+                          </span>
+                        </div>
+                        {r.why && (
+                          <div style={{ color: 'rgba(250, 247, 242, 0.62)', fontSize: 12, lineHeight: 1.45 }}>
+                            {r.why}
+                          </div>
+                        )}
+                      </a>
+                    );
+                  })}
+                </div>
+              </div>
+            </Card>
+          )}
+
           {/* ─── DEAL MEMOS · solo row when wired (Wave 15.3) ─────── */}
           {/* Wave 15.2 · Deal memos hidden until admin-curated memo system is
               wired. When SHOW_MOCK_FEEDS flips to true, memos render in their
@@ -540,6 +670,13 @@ export default function DashboardPage() {
                       >
                         Members
                       </Link>
+                      <Link
+                        href="/admin/weekly-reads"
+                        className="btn-secondary"
+                        style={{ borderColor: 'var(--gold)', color: 'var(--gold-bright)' }}
+                      >
+                        Weekly reads
+                      </Link>
                     </div>
                   </div>
                 </Card>
@@ -547,88 +684,9 @@ export default function DashboardPage() {
             </div>
           )}
 
-          {/* ─── WEEKLY READS · curated Tuesdays (access-only) ──── */}
-          {/* Wave 15.2 · hidden until the Tuesday-articles cron is wired into
-              a real CMS surface. Was rendering fake CBRE/MFE/Bisnow article
-              cards to every member. Toggle SHOW_MOCK_FEEDS to bring back. */}
-          {hasAccess && SHOW_MOCK_FEEDS && (
-            <Card
-              variant="offer"
-              style={{
-                background: '#1f315a',
-                border: '1px solid rgba(184, 148, 90, 0.18)',
-                color: 'var(--cream)',
-              }}
-            >
-              <div className="flex flex-col gap-3">
-                <span className="eyebrow" style={{ color: 'var(--gold)' }}>This week&rsquo;s reads · curated Tuesdays</span>
-                <h3 className="font-display" style={{ fontSize: 20, color: 'var(--cream)', margin: 0, fontWeight: 500 }}>
-                  What we&rsquo;re reading this week.
-                </h3>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4" style={{ marginTop: 6 }}>
-                  {mockWeeklyReads.map((r, i) => {
-                    const cardStyle: React.CSSProperties = {
-                      background: 'var(--navy)',
-                      border: '1px solid rgba(184, 148, 90, 0.18)',
-                      borderRadius: 4,
-                      padding: '14px 16px',
-                      display: 'block',
-                      textDecoration: 'none',
-                      transition: 'border-color 160ms ease, background 160ms ease',
-                    };
-                    const inner = (
-                      <>
-                        <div
-                          className="font-mono"
-                          style={{
-                            fontSize: 10,
-                            letterSpacing: '0.12em',
-                            textTransform: 'uppercase',
-                            color: 'var(--gold)',
-                            marginBottom: 4,
-                          }}
-                        >
-                          {r.source} · {r.date}
-                        </div>
-                        <div className="font-display" style={{ fontSize: 14.5, color: 'var(--cream)', lineHeight: 1.3, marginBottom: 6 }}>
-                          {r.title}
-                          {r.href && (
-                            <span aria-hidden style={{ marginLeft: 6, color: 'var(--gold-bright)', fontFamily: 'var(--mono)', fontSize: 11 }}>
-                              ↗
-                            </span>
-                          )}
-                        </div>
-                        <div style={{ color: 'rgba(250, 247, 242, 0.62)', fontSize: 12, lineHeight: 1.45 }}>
-                          {r.why}
-                        </div>
-                      </>
-                    );
-                    return r.href ? (
-                      <a
-                        key={i}
-                        href={r.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={cardStyle}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.borderColor = 'rgba(184, 148, 90, 0.45)';
-                          e.currentTarget.style.background = '#102240';
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.borderColor = 'rgba(184, 148, 90, 0.18)';
-                          e.currentTarget.style.background = 'var(--navy)';
-                        }}
-                      >
-                        {inner}
-                      </a>
-                    ) : (
-                      <div key={i} style={cardStyle}>{inner}</div>
-                    );
-                  })}
-                </div>
-              </div>
-            </Card>
-          )}
+          {/* Wave 16.1 · legacy mockWeeklyReads block removed. Real weekly
+              reads now render right after the curriculum (above) via the
+              admin-curated /api/weekly-reads endpoint. */}
 
           {/* Wave 15.3 · Admin shortcut moved up next to Toolkit (above)
               for layout uniformity. The /admin/deals + /admin/members links
