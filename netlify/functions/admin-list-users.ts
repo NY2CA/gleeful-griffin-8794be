@@ -49,6 +49,8 @@ function projectUser(u: UserRecord) {
     lifetime: Boolean(u.lifetimePurchasedAt),
     adminGrantedAt: u.adminGrantedAt ?? null,
     adminGrantedBy: u.adminGrantedBy ?? null,
+    /** Wave 15.2 · ISO expiry for admin-granted access; null = indefinite. */
+    adminGrantedUntil: u.adminGrantedUntil ?? null,
     currentPeriodEnd: u.currentPeriodEnd ?? null,
     cancelAtPeriodEnd: Boolean(u.cancelAtPeriodEnd),
   };

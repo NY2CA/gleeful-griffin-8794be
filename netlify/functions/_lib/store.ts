@@ -116,6 +116,16 @@ export interface UserRecord {
   adminGrantedAt?: string;
   /** Email of the admin who last granted access. */
   adminGrantedBy?: string;
+  /**
+   * Wave 15.2 · ISO date when admin-granted access expires. Optional —
+   * absent (or undefined) means the grant is indefinite, which is the
+   * default behavior carried over from before this field existed. When
+   * set, hasActiveAccess() returns false once the current time passes
+   * this date. Useful for partner comps with a fixed term, or onboarding
+   * a student who already has X months of mentoring left from a prior
+   * agreement. Lifetime purchases and Stripe subs are unaffected.
+   */
+  adminGrantedUntil?: string;
   // ── Drip campaign ──────────────────────────────────────────────────────
   /**
    * ISO — set the FIRST time access becomes active (admin grant or paid
@@ -190,14 +200,22 @@ export async function saveProgress(userId: string, progress: ProgressMap): Promi
  * Access rules (in priority order):
  *   1. Admins (emails listed in ADMIN_EMAILS env var) always have access.
  *   2. Lifetime purchasers always have access.
- *   3. Users with an active admin grant always have access.
+ *   3. Users with an active admin grant always have access — UNLESS
+ *      `adminGrantedUntil` is set and has passed (Wave 15.2 expiry).
  *   4. Subscribers have access when their subscription is `active` or `trialing`.
  */
 export function hasActiveAccess(user: UserRecord | null | undefined): boolean {
   if (!user) return false;
   if (isAdminEmail(user.email)) return true;
   if (user.lifetimePurchasedAt) return true;
-  if (user.adminGrantedAt) return true;
+  if (user.adminGrantedAt) {
+    // Wave 15.2 · admin grants can carry an optional expiry. If absent,
+    // grant is indefinite. If set and in the future, still active. If set
+    // and in the past, the grant has expired — fall through to other rules.
+    if (!user.adminGrantedUntil) return true;
+    if (new Date(user.adminGrantedUntil).getTime() > Date.now()) return true;
+    // expired admin grant → keep checking other rules below
+  }
   const s = user.subscriptionStatus;
   return s === 'active' || s === 'trialing';
 }

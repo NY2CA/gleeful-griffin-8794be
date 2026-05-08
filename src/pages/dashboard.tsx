@@ -15,6 +15,18 @@ import {
 } from '@/data/live';
 
 /**
+ * Wave 15.2 · master flag for the two mock-content surfaces ("Deal memos ·
+ * from the Rescia desk" and "What we're reading this week"). Both were
+ * showing fake placeholder content to every Mastery Live member, which was
+ * confusing students. Set to `true` once both feeds have a real wire-up:
+ *   - Deal memos · admin-curated CMS surface for Diva/Lou to publish memos
+ *   - Weekly reads · the Tuesday cron output landing in a real CMS surface
+ * Until then, both cards are hidden. Toolkit (real surface) renders full
+ * width when the memos card is gated off.
+ */
+const SHOW_MOCK_FEEDS = false;
+
+/**
  * Member dashboard.
  *
  * Wave 13 unified design: the Mastery Live dashboard treatment is now the
@@ -382,45 +394,51 @@ export default function DashboardPage() {
           </section>
 
           {/* ─── DEAL MEMOS + TOOLKIT ────────────────────────────── */}
+          {/* Wave 15.2 · Deal memos hidden until admin-curated memo system is
+              wired (it was showing fake Plano/West Valley sample content to
+              every member). Toolkit stays — it's a real surface. When mock
+              feeds are re-enabled, the grid wrapper restores 2-col layout. */}
           {hasAccess && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <Card
-                variant="offer"
-                style={{
-                  background: '#1f315a',
-                  border: '1px solid rgba(184, 148, 90, 0.18)',
-                  color: 'var(--cream)',
-                }}
-              >
-                <span style={liveExclusiveBadge}>Live exclusive</span>
-                <span className="eyebrow" style={{ color: 'var(--gold)' }}>Deal memos · from the Rescia desk</span>
-                <div style={{ marginTop: 12 }}>
-                  {mockMemos.map((memo, i) => (
-                    <div
-                      key={i}
-                      style={{
-                        padding: '14px 0',
-                        borderTop: i === 0 ? 'none' : '1px solid rgba(250, 247, 242, 0.08)',
-                      }}
-                    >
+            <div className={SHOW_MOCK_FEEDS ? 'grid grid-cols-1 md:grid-cols-2 gap-6' : ''}>
+              {SHOW_MOCK_FEEDS && (
+                <Card
+                  variant="offer"
+                  style={{
+                    background: '#1f315a',
+                    border: '1px solid rgba(184, 148, 90, 0.18)',
+                    color: 'var(--cream)',
+                  }}
+                >
+                  <span style={liveExclusiveBadge}>Live exclusive</span>
+                  <span className="eyebrow" style={{ color: 'var(--gold)' }}>Deal memos · from the Rescia desk</span>
+                  <div style={{ marginTop: 12 }}>
+                    {mockMemos.map((memo, i) => (
                       <div
-                        className="font-mono"
+                        key={i}
                         style={{
-                          fontSize: 11,
-                          letterSpacing: '0.08em',
-                          color: 'var(--gold)',
-                          marginBottom: 4,
+                          padding: '14px 0',
+                          borderTop: i === 0 ? 'none' : '1px solid rgba(250, 247, 242, 0.08)',
                         }}
                       >
-                        {memo.date} · {memo.marketTag}
+                        <div
+                          className="font-mono"
+                          style={{
+                            fontSize: 11,
+                            letterSpacing: '0.08em',
+                            color: 'var(--gold)',
+                            marginBottom: 4,
+                          }}
+                        >
+                          {memo.date} · {memo.marketTag}
+                        </div>
+                        <div style={{ color: 'var(--cream)', fontSize: 13.5, lineHeight: 1.45 }}>
+                          {memo.title}
+                        </div>
                       </div>
-                      <div style={{ color: 'var(--cream)', fontSize: 13.5, lineHeight: 1.45 }}>
-                        {memo.title}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </Card>
+                    ))}
+                  </div>
+                </Card>
+              )}
 
               <Card
                 variant="offer"
@@ -464,7 +482,10 @@ export default function DashboardPage() {
           )}
 
           {/* ─── WEEKLY READS · curated Tuesdays (access-only) ──── */}
-          {hasAccess && (
+          {/* Wave 15.2 · hidden until the Tuesday-articles cron is wired into
+              a real CMS surface. Was rendering fake CBRE/MFE/Bisnow article
+              cards to every member. Toggle SHOW_MOCK_FEEDS to bring back. */}
+          {hasAccess && SHOW_MOCK_FEEDS && (
             <Card
               variant="offer"
               style={{

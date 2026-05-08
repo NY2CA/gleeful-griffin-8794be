@@ -42,6 +42,10 @@ export default async (req: Request): Promise<Response> => {
 
     user.adminGrantedAt = undefined;
     user.adminGrantedBy = undefined;
+    // Wave 15.2 · also clear the optional expiry so a re-grant later starts
+    // clean (otherwise a stale `adminGrantedUntil` could short-circuit the
+    // next grant's hasActiveAccess check).
+    user.adminGrantedUntil = undefined;
     await saveUser(user);
 
     return json({ ok: true, email: user.email });
