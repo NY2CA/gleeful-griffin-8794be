@@ -45,10 +45,21 @@ export default function Home() {
     goal: '',
   });
 
-  // ── Modal open/close with body-scroll lock + Escape to dismiss ─────────
+  // ── Strategy-call CTA · Wave 15.1 ─────────────────────────────────────
+  // Every "Book Strategy Call" button on this page calls openModal(). We
+  // repointed it at Calendly — visitors book a slot directly, name + email
+  // captured at Calendly's booking step. The legacy custom modal markup
+  // below remains in the JSX as dead code (gated by `modalOpen` which is
+  // never set true now) so the surface can be re-enabled by reverting this
+  // function if Calendly is ever swapped out. Mirrored in pricing.tsx →
+  // STRATEGY_CALL_URL.
+  const STRATEGY_CALL_URL = 'https://calendly.com/mastery-live-strategy-call';
+
   function openModal(e?: MouseEvent) {
     if (e) e.preventDefault();
-    setModalOpen(true);
+    if (typeof window !== 'undefined') {
+      window.open(STRATEGY_CALL_URL, '_blank', 'noopener,noreferrer');
+    }
   }
   function closeModal() {
     setModalOpen(false);
