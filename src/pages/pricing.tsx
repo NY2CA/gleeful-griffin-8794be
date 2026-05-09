@@ -64,7 +64,7 @@ const PLANS: PlanCard[] = [
       'Multifamily basics for first-time investors. Six self-paced modules in Diva’s voice — terminology, market analysis, and the math behind returns.',
     bullets: [
       'Six modules · ~10 hours of focused content',
-      'Self-paced, lifetime access',
+      'Self-paced · 1 year of access',
       'Glossary, returns calculator, deal anatomy',
       'Self-assessment + module one-pagers',
       'Upgrade credit toward Self-Study available',
@@ -82,11 +82,11 @@ const PLANS: PlanCard[] = [
     blurb:
       'The full twelve-week Multifamily Mastery curriculum, self-paced. Underwriting models, legal templates, and the same playbook Lou uses on live deals.',
     bullets: [
-      'Twelve modules · ~60 hours of focused content',
-      'Excel underwriting + LOI + PPM outline included',
+      'Eight modules · 60 topics · submarket through property management',
+      'Excel underwriting + LOI + PPM outline + DD checklists',
       'Quiz + common-mistakes library per module',
-      'Lifetime access · all future updates included',
-      'Coaching not included — add it via Mastery Live',
+      '12 months of access',
+      'Tuition credits toward Mastery Live',
     ],
     ctaLabel: 'Enroll in Self-Study →',
     ctaUrl: SELFSTUDY_URL,
