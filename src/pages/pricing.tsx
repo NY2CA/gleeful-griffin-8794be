@@ -57,7 +57,7 @@ const PLANS: PlanCard[] = [
   {
     id: 'foundations',
     eyebrow: 'Start here',
-    label: 'Foundations',
+    label: 'Multifamily 101',
     price: '$99',
     cadence: 'one-time',
     blurb:
@@ -69,7 +69,7 @@ const PLANS: PlanCard[] = [
       'Self-assessment + module one-pagers',
       'Upgrade credit toward Self-Study available',
     ],
-    ctaLabel: 'Start with Foundations →',
+    ctaLabel: 'Start with Multifamily 101 →',
     ctaUrl: FOUNDATIONS_URL,
     ctaExternal: true,
   },
@@ -237,7 +237,7 @@ export default function PricingPage() {
         >
           <p>
             Not sure which fits? Most operators start with{' '}
-            <strong style={{ color: 'var(--navy)' }}>Foundations</strong> if
+            <strong style={{ color: 'var(--navy)' }}>Multifamily 101</strong> if
             multifamily is new to them, jump straight to{' '}
             <strong style={{ color: 'var(--navy)' }}>Self-Study</strong> if
             they already know the basics, and book a{' '}
