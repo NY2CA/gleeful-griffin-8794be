@@ -102,7 +102,7 @@ const PLANS: PlanCard[] = [
     blurb:
       'The full curriculum plus ongoing monthly coaching with Diva Rescia and Lou Lopez. Submit deals for review; we work them with you call by call.',
     bullets: [
-      'Everything in Self-Study',
+      'Twelve modules · 126 topics · ~60 hours of focused content',
       'Ongoing monthly coaching with Diva and Lou',
       'Submit deals through the member dashboard for review',
       'Diva and Lou pressure-test your underwriting and notes',
