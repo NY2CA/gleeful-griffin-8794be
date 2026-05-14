@@ -59,7 +59,7 @@ export const PLAN_DEFINITIONS: Array<{
     bullets: [
       '12-week Multifamily Mastery program',
       'All underwriting models, LOI, PPM outline',
-      'Quarterly live Q&A with Lou Rescia',
+      'Quarterly live Q&A with Diva Rescia and Lou Lopez',
       'New content and templates as they ship',
     ],
   },
