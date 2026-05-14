@@ -462,7 +462,7 @@ function senderProfile(persona: SenderPersona): SenderProfile {
   }
   // diva
   const displayName =
-    process.env.DRIP_FROM_NAME_DIVA || 'Diva Lopez — Rescia Properties';
+    process.env.DRIP_FROM_NAME_DIVA || 'Diva Rescia — Rescia Properties';
   const replyTo = process.env.DRIP_REPLY_TO_DIVA || 'rescia@resciaproperties.com';
   return {
     fromLine: `${displayName} <${sendingAddress}>`,
